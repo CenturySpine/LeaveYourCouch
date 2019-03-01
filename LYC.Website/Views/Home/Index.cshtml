@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="container">
+
+    <form>
+        <div class="form-group">
+            <label>Search city</label>
+            <input id="searchCityInput" class="form-control" onchange="getPlaces()" placeholder="City...">
+        </div>
+
+        <button type="button" class="btn btn-primary">Search !</button>
+    </form>
+    <hr />
+    <ul id="cityList"></ul>
+</div>
+
+<script type="text/javascript">
+
+    function getPlaces() {
+        var e = $("#searchCityInput");
+        var cityinput = e[0].value;
+
+        $.ajax({
+            url: "/Home/SearchCity",
+            type: "GET",
+            data: {
+                input: cityinput
+            },
+            success: function (response) {
+                var list = $("#cityList");
+                list.empty();
+                var body = JSON.parse(response);
+                var results = body.geonames;
+                for (i = 0; i < results.length; i++) {
+                    var cityDescription = results[i].name;
+                    var cntry = results[i].countryCode;
+                    list.append('<li>' + cityDescription + ', ' + cntry + '</li>');
+                }
+
+            }
+
+        });
+        //var result = $.get("/Home/SearchCity?input=" + input);
+
+
+        //var ulrRequest = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + input + '&radius=2000&key=AIzaSyDtDGjLnw-S73R1l2VcS-5mKZi42R9JXkE';
+        //$.ajax({
+        //    url: ulrRequest,
+        //    type: 'GET',
+        //    success: function (res) {
+        //        alert(res.status); //responds with "OK"
+        //    }
+        //});
+    }
+</script>
