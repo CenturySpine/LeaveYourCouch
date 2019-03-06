@@ -1,0 +1,4 @@
+steps:
+- name: 'gcr.io/cloud-builders/dotnet'
+  args: ['build', '-t', '.']
+  timeout: 500s
