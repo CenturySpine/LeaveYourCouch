@@ -5,5 +5,5 @@ name: 'gcr.io/cloud-builders/dotnet'
   timeout: 500s
   - id:'build solution' 
   name: 'gcr.io/cloud-builders/dotnet'
-  args: ['restore']
+  args: ['build']
   timeout: 500s
