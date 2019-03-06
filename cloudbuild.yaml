@@ -1,4 +1,9 @@
 steps:
-- name: 'gcr.io/cloud-builders/dotnet'
-  args: ['build', '-t', '.']
+-id:'nuget restore' 
+name: 'gcr.io/cloud-builders/dotnet'
+  args: ['restore']
+  timeout: 500s
+  - id:'build solution' 
+  name: 'gcr.io/cloud-builders/dotnet'
+  args: ['restore']
   timeout: 500s
