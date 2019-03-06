@@ -233,7 +233,6 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <None Include="cloudbuild.yaml" />
     <None Include="Properties\PublishProfiles\LeaveYourCouch - Web Deploy.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />

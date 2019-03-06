@@ -5,6 +5,11 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LYC.Website", "LYC.Website\LYC.Website.csproj", "{5BD2092F-BF07-43CF-AB39-E7556198B2DD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{949B0266-8772-4EF2-8D20-0F8E211AADD8}"
+	ProjectSection(SolutionItems) = preProject
+		cloudbuild.yaml = cloudbuild.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,14 +26,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {704F674E-E009-42A0-80A7-1FE2FE3AA292}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://lycwebsite.visualstudio.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = LYC.Website\\LYC.Website.csproj
-		SccProjectName1 = LYC.Website
-		SccLocalPath1 = LYC.Website
 	EndGlobalSection
 EndGlobal
