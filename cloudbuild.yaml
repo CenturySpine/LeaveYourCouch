@@ -1,9 +1,7 @@
 steps:
--id:'nuget restore' 
-name: 'gcr.io/cloud-builders/dotnet'
-  args: ['restore']
-  timeout: 500s
-  - id:'build solution' 
-  name: 'gcr.io/cloud-builders/dotnet'
-  args: ['build']
-  timeout: 500s
+ - name: 'gcr.io/cloud-builders/dotnet'
+   args: ['restore','--packages', '/packages']
+   timeout: 500s
+ - name: 'gcr.io/cloud-builders/dotnet'
+   args: ['build','-c','Release']
+   timeout: 500s
