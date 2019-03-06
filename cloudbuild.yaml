@@ -1,6 +1,6 @@
 steps:
  - name: 'gcr.io/cloud-builders/dotnet'
-   args: ['restore','--packages', '/packages']
+   args: ['restore']
    timeout: 500s
  - name: 'gcr.io/cloud-builders/dotnet'
    args: ['build','-c','Release']
