@@ -16,8 +16,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveYourCouch.UnitTests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveYourCouch.Services", "LeaveYourCouch.Services\LeaveYourCouch.Services.csproj", "{98B81154-9535-45BC-AEBF-0A6A85F4A6D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveYourCouch.Api", "LeaveYourCouch.Api\LeaveYourCouch.Api.csproj", "{0A0FF64F-04F2-4AB8-B99A-B53F088192A3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,10 +34,6 @@ Global
 		{98B81154-9535-45BC-AEBF-0A6A85F4A6D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98B81154-9535-45BC-AEBF-0A6A85F4A6D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98B81154-9535-45BC-AEBF-0A6A85F4A6D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A0FF64F-04F2-4AB8-B99A-B53F088192A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A0FF64F-04F2-4AB8-B99A-B53F088192A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A0FF64F-04F2-4AB8-B99A-B53F088192A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A0FF64F-04F2-4AB8-B99A-B53F088192A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

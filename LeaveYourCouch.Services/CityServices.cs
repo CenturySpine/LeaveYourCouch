@@ -5,9 +5,9 @@ using Newtonsoft.Json;
 
 namespace LeaveYourCouch.Services
 {
-    public class CityServices
+    internal class CityServices : ICityServices
     {
-        public async Task<string> SearchCity(string input)
+        public async Task<object> SearchCity(string input)
         {
             var ulrRequest = $@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input={input}&types=(regions)&language=fr&components=country:fr&radius=50000&key=AIzaSyDtDGjLnw-S73R1l2VcS-5mKZi42R9JXkE";
             HttpClient httpcli = new HttpClient();
@@ -26,17 +26,20 @@ namespace LeaveYourCouch.Services
 
                 var geocodeurl = $@"http://api.geonames.org/findNearbyPlaceNameJSON?lat={poco.result.geometry.location.lat}&lng={poco.result.geometry.location.lng}&style=short&cities=cities5000&radius=30&maxRows=30&username=centuryspine";
                 var geocodenearby = await httpcli.GetStringAsync(geocodeurl);
-                return 
-                    //Json(
-                    geocodenearby
-                    //, JsonRequestBehavior.AllowGet)
-                    ;
+
+                return JsonConvert.DeserializeObject(geocodenearby);
+
+                //return 
+                //    //Json(
+                //    geocodenearby
+                //    //, JsonRequestBehavior.AllowGet)
+                //    ;
 
             }
 
             return 
                 //Json(
-                    result
+                    new geoname[0];
                     //, JsonRequestBehavior.AllowGet)
                 ;
         }

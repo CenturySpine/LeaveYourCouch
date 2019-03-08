@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GooglePlaceApiModels\AutocompleteResult.cs" />
+    <Compile Include="GooglePlaceApiModels\geonames.cs" />
     <Compile Include="GooglePlaceApiModels\structured_formatting.cs" />
     <Compile Include="GooglePlaceApiModels\geometry.cs" />
     <Compile Include="GooglePlaceApiModels\location.cs" />
