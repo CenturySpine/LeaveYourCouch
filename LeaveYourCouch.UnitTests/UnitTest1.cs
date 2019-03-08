@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
-using LeaveYourCouch.Api.Controllers;
+
+using LeaveYourCouch.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LeaveYourCouch.UnitTests
@@ -12,15 +13,15 @@ namespace LeaveYourCouch.UnitTests
         public void TestGoogleApiCitySearchSequence()
         {
 
-            HomeController hc = new HomeController();
+            CityServices hc = new CityServices();
 
             var result = hc.SearchCity("Lyon").Result;
 
-            Assert.IsInstanceOfType(result, typeof(JsonResult));
-            JsonResult routeResult = result as JsonResult;
+            //Assert.IsInstanceOfType(result, typeof(JsonResult));
+            //JsonResult routeResult = result as JsonResult;
             
-            Assert.IsTrue(routeResult.Data.ToString().Contains("Villeurbanne"));
-            Assert.IsTrue(routeResult.Data.ToString().Contains("Tassin"));
+            Assert.IsTrue(result.Contains("Villeurbanne"));
+            Assert.IsTrue(result.Contains("Tassin"));
         }
     }
 }
