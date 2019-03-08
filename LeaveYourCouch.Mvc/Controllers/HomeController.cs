@@ -28,21 +28,8 @@ namespace LeaveYourCouch.Mvc.Controllers
 
             return View();
         }
-        [HttpGet]
-        
-        public async Task<ActionResult> Search(string input)
-        {
-            try
-            {
-                var res = await Bootstrapper.CityService().SearchCity(input);
-                return Json(res, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
 
-                return Json("no data");
-            }
-        }
+
 
 
 
