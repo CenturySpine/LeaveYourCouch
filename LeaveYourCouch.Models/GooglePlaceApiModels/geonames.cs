@@ -27,8 +27,12 @@ namespace LeaveYourCouch.Models.GooglePlaceApiModels
         
     }
 
-    public class geonames : List<geoname>
+    public class nearbyplaces
     {
-
+        public nearbyplaces()
+        {
+            geonames = new List<geoname>();
+        }
+        public List<geoname> geonames { get; set; }
     }
 }

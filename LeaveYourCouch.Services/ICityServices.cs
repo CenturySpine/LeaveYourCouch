@@ -5,6 +5,6 @@ namespace LeaveYourCouch.Services
 {
     public interface ICityServices
     {
-        Task<object> SearchCity(string input);
+        Task<nearbyplaces> SearchCity(string input);
     }
 }
