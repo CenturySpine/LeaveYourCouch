@@ -32,9 +32,9 @@ namespace LeaveYourCouch.Mvc.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -61,18 +61,51 @@ namespace LeaveYourCouch.Mvc.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                    :message==ManageMessageId.PersonnalInfos?"Your personal infos have been updated."
                 : "";
 
             var userId = User.Identity.GetUserId();
+            var mail = await UserManager.GetEmailAsync(userId);
+            var currentuserModel = UserManager.Users.FirstOrDefault(u => u.Email == mail);
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                UserId = userId,
+
             };
+            if (currentuserModel != null)
+            {
+                model.PostalCode = currentuserModel.PostalCode;
+                model.Pseudo = currentuserModel.Pseudo;
+                model.FirstName = currentuserModel.FirstName;
+
+            }
             return View(model);
+
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SavePersonalData(IndexViewModel viewmodel)
+        {
+
+            using (var db = ApplicationDbContext.Create())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Id == viewmodel.UserId);
+                if (user != null)
+                {
+                    user.Pseudo = viewmodel.Pseudo;
+                    user.FirstName = viewmodel.FirstName;
+                    user.PostalCode = viewmodel.PostalCode;
+                    await db.SaveChangesAsync();
+                }
+            }
+
+            return RedirectToAction("Index", new { Message = ManageMessageId.PersonnalInfos });
         }
 
         //
@@ -333,7 +366,7 @@ namespace LeaveYourCouch.Mvc.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -381,9 +414,10 @@ namespace LeaveYourCouch.Mvc.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
-            Error
+            Error,
+            PersonnalInfos
         }
 
-#endregion
+        #endregion
     }
 }

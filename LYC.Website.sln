@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{949B0266-8772-4EF2-8D20-0F8E211AADD8}"
 	ProjectSection(SolutionItems) = preProject
 		cloudbuild.yaml = cloudbuild.yaml
+		dbCreation.sql = dbCreation.sql
 		nuget.config = nuget.config
 		temp code.txt = temp code.txt
 	EndProjectSection

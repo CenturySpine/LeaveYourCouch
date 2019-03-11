@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,6 +17,10 @@ namespace LeaveYourCouch.Mvc.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string FirstName { get; set; }
+        public string PostalCode { get; set; }
+        public string Pseudo { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -28,6 +33,20 @@ namespace LeaveYourCouch.Mvc.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        public static string UserPseudo(string username)
+        {
+            using (var db = ApplicationDbContext.Create())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Email == username);
+                if (user != null && !string.IsNullOrEmpty(user.Pseudo))
+                {
+                    return user.Pseudo;
+                }
+            }
+
+            return username;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
@@ -12,6 +13,20 @@ namespace LeaveYourCouch.Mvc.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+
+        public string UserId { get; set; }
+
+        [Required(), StringLength(5)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+        [Required(), StringLength(5)]
+        [Display(Name = "User Name")]
+        public string Pseudo { get; set; }
+        [Required(), StringLength(5)]
+        
+        [Display(Name = "Postal code")]
+        [DataType(DataType.PostalCode)]
+        public string PostalCode { get; set; }
     }
 
     public class ManageLoginsViewModel
