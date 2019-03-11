@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -22,7 +23,18 @@ namespace LeaveYourCouch.Mvc
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Database.SetInitializer<ApplicationDbContext>(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+            try
+            {
+                Database.SetInitializer<ApplicationDbContext>(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+            }
+            catch (Exception ex)
+            {
+
+                using (var txt = new StreamWriter("efdbmigration.logs"))
+                {
+                    txt.Write(ex.ToString());
+                }
+            }
         }
     }
 }
