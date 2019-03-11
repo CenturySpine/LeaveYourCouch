@@ -28,7 +28,8 @@ namespace LeaveYourCouch.Mvc.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
-            
+            SimpleLogger.Log("ApplicationDbContext.Ctor", "Db context contructor");
+
         }
 
         public static ApplicationDbContext Create()
