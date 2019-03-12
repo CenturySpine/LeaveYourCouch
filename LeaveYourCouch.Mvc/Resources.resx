@@ -124,7 +124,13 @@
     <value>Organize events. Meet people. Make new friends.</value>
   </data>
   <data name="jumbohome_sub" xml:space="preserve">
-    <value>Free. No adds. Multi-devices.</value>
+    <value>Free.</value>
+  </data>
+  <data name="jumbohome_sub1" xml:space="preserve">
+    <value>No adds. </value>
+  </data>
+  <data name="jumbohome_sub2" xml:space="preserve">
+    <value>Multi-devices.</value>
   </data>
   <data name="nav_link_about" xml:space="preserve">
     <value>About</value>
@@ -137,5 +143,14 @@
   </data>
   <data name="nav_link_home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="nav_login" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="nav_logoff" xml:space="preserve">
+    <value>Log off</value>
+  </data>
+  <data name="nav_register" xml:space="preserve">
+    <value>Sign up</value>
   </data>
 </root>

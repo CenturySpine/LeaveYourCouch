@@ -79,11 +79,29 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Free. No adds. Multi-devices..
+        ///   Looks up a localized string similar to Free..
         /// </summary>
         public static string jumbohome_sub {
             get {
                 return ResourceManager.GetString("jumbohome_sub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No adds. .
+        /// </summary>
+        public static string jumbohome_sub1 {
+            get {
+                return ResourceManager.GetString("jumbohome_sub1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multi-devices..
+        /// </summary>
+        public static string jumbohome_sub2 {
+            get {
+                return ResourceManager.GetString("jumbohome_sub2", resourceCulture);
             }
         }
         
@@ -120,6 +138,33 @@ namespace Resources {
         public static string nav_link_home {
             get {
                 return ResourceManager.GetString("nav_link_home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign in.
+        /// </summary>
+        public static string nav_login {
+            get {
+                return ResourceManager.GetString("nav_login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log off.
+        /// </summary>
+        public static string nav_logoff {
+            get {
+                return ResourceManager.GetString("nav_logoff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign up.
+        /// </summary>
+        public static string nav_register {
+            get {
+                return ResourceManager.GetString("nav_register", resourceCulture);
             }
         }
     }
