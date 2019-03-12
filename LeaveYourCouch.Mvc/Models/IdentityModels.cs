@@ -34,4 +34,19 @@ namespace LeaveYourCouch.Mvc.Models
         public string MeetingDetails { get; set; }
         public bool IsPrivate { get; set; }
     }
+
+    public class UserRelationship
+    {
+        public int Id { get; set; }
+        public ApplicationUser Issuer { get; set; }
+        public ApplicationUser Recipient { get; set; }
+        public RelationshipStatus Status { get; set; }
+    }
+
+    public enum RelationshipStatus
+    {
+        Pending,
+        Accepted,
+        Rejected
+    }
 }

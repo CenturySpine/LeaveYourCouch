@@ -37,5 +37,6 @@ namespace LeaveYourCouch.Mvc.Models
         }
 
         public DbSet<Event> Events { get; set; }
+        public DbSet<UserRelationship> Relations { get; set; }
     }
 }
