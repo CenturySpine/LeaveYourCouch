@@ -117,10 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Target" xml:space="preserve">
-    <value>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</value>
+  <data name="appname" xml:space="preserve">
+    <value>Leave Your Couch</value>
   </data>
-  <data name="DefaultSchema" xml:space="preserve">
-    <value>dbo</value>
+  <data name="jumbohome" xml:space="preserve">
+    <value>Organize des sorties. Recontre des gens. Fais toi de nouveaux amis.</value>
+  </data>
+  <data name="jumbohome_sub" xml:space="preserve">
+    <value>Gratuit. Pas de pubs. Multi supports.</value>
+  </data>
+  <data name="nav_link_about" xml:space="preserve">
+    <value>A propos</value>
+  </data>
+  <data name="nav_link_contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="nav_link_events" xml:space="preserve">
+    <value>Sorties</value>
+  </data>
+  <data name="nav_link_home" xml:space="preserve">
+    <value>Accueil</value>
   </data>
 </root>

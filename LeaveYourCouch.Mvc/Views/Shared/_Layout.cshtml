@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -12,31 +13,29 @@
 <body>
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <span class="fas fa-couch">
-            
-        </span>
-        @Html.ActionLink("Leave.Your.Couch", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+        @Html.ActionLink(Resources.Global.appname, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="\Home\Index">Home</a>
+                    <a class="nav-link" href="\Home\Index">@Resources.Global.nav_link_home</a>
                 </li>
                 @if (Request.IsAuthenticated)
                 {
                     <li class="nav-item active">
-                        <a class="nav-link" href="\Events\Index">Events</a>
+                        <a class="nav-link" href="\Events\Index">@Resources.Global.nav_link_events</a>
 
                     </li>
                 }
                 <li class="nav-item">
-                    <a class="nav-link" href="\Home\About">About</a>
+                    <a class="nav-link" href="\Home\About">@Resources.Global.nav_link_events</a>
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="\Home\Contact">Contact</a>
+                    <a class="nav-link" href="\Home\Contact">@Resources.Global.nav_link_contact</a>
 
                 </li>
             </ul>
@@ -53,7 +52,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Leave Your Couch</p>
+            <p>&copy; @DateTime.Now.Year - @Resources.Global.appname</p>
         </footer>
     </div>
 

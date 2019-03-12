@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Optimization;
+using LeaveYourCouch.Mvc.App_Start;
 
 namespace LeaveYourCouch.Mvc
 {
@@ -25,6 +26,8 @@ namespace LeaveYourCouch.Mvc
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            FontAwesomeBundleConfig.RegisterBundles();
         }
     }
 }
