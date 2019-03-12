@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Security.AccessControl;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -20,6 +21,7 @@ namespace LeaveYourCouch.Mvc.Models
         public string FirstName { get; set; }
         public string PostalCode { get; set; }
         public string Pseudo { get; set; }
+        public Gender Gender { get; set; }
     }
 
 
@@ -47,6 +49,13 @@ namespace LeaveYourCouch.Mvc.Models
     {
         Pending,
         Accepted,
-        Rejected
+        Rejected,
+        Blacklisted
+    }
+
+    public enum Gender
+    {
+        Female,
+        Male,
     }
 }

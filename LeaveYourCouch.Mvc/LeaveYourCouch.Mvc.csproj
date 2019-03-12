@@ -194,10 +194,16 @@
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RelationsController.cs" />
     <Compile Include="Controllers\RemoteToolsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903121919105_UserGenderAndRelationsip.cs" />
+    <Compile Include="Migrations\201903121919105_UserGenderAndRelationsip.Designer.cs">
+      <DependentUpon>201903121919105_UserGenderAndRelationsip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RelationShipsViewModel.cs" />
     <Compile Include="Resources.fr.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -340,6 +346,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\Relations\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -367,6 +374,9 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201903121919105_UserGenderAndRelationsip.resx">
+      <DependentUpon>201903121919105_UserGenderAndRelationsip.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources.fr.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.fr.Designer.cs</LastGenOutput>

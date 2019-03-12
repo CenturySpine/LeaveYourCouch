@@ -1,0 +1,31 @@
+﻿
+@model LeaveYourCouch.Mvc.Models.RelationShipsViewModel
+@{
+    ViewBag.Title = "title";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="container" style="margin: 10px;">
+    <h2>Relations</h2>
+    <h3>Friends</h3>
+    <ul>
+        @foreach (var relat in Model.Friends)
+        {
+            <li>@relat.FirstName,@relat.UserName</li>
+        }
+    </ul>
+    <h3>Pending</h3>
+    <ul>
+        @foreach (var relat in Model.Pendings)
+        {
+            <li>@relat.FirstName,@relat.UserName</li>
+        }
+    </ul>
+    <h3>Blacklist</h3>
+    <ul>
+        @foreach (var relat in Model.BlackList)
+        {
+            <li>@relat.FirstName,@relat.UserName</li>
+        }
+    </ul>
+</div>

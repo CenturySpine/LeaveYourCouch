@@ -2,7 +2,7 @@
 @using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm(Resources.Resources.nav_logoff, "Account", FormMethod.Post, new { id = "logoutForm", @class = "form-inline mt-2 mt-md-0" }))
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "form-inline mt-2 mt-md-0" }))
     {
         @Html.AntiForgeryToken()
 
@@ -10,7 +10,7 @@
             <li>
                 @Html.ActionLink( ApplicationDbContext.UserPseudo(User.Identity.GetUserName()), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log off</a></li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">@Resources.Resources.nav_logoff</a></li>
         </ul>
     }
 }
