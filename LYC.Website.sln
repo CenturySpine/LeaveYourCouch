@@ -6,10 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{949B0266-8772-4EF2-8D20-0F8E211AADD8}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		cloudbuild.yaml = cloudbuild.yaml
-		dbCreation.sql = dbCreation.sql
 		nuget.config = nuget.config
-		temp code.txt = temp code.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveYourCouch.Models", "LeaveYourCouch.Models\LeaveYourCouch.Models.csproj", "{2D7CD3AE-DCAD-4989-9E07-5E4996579BEB}"
