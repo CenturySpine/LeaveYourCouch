@@ -6,7 +6,23 @@ using Microsoft.Owin.Security;
 
 namespace LeaveYourCouch.Mvc.Models
 {
-    public class IndexViewModel
+
+    public class SharedPersonalInfos
+    {
+        [Required(), StringLength(100, MinimumLength = 3, ErrorMessage = "The {0} must be at least {2} characters long and maximum {1} characters long.")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required(), StringLength(30, MinimumLength = 3, ErrorMessage = "The {0} must be at least {2} characters long and maximum {1} characters long.")]
+        [Display(Name = "User Name")]
+        public string Pseudo { get; set; }
+
+        [Required(), StringLength(5, MinimumLength = 5, ErrorMessage = "The {0} must be at least {2} characters long and maximum {1} characters long.")]
+        [Display(Name = "Postal code")]
+        [DataType(DataType.PostalCode)]
+        public string PostalCode { get; set; }
+    }
+    public class IndexViewModel : SharedPersonalInfos
     {
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
@@ -16,17 +32,7 @@ namespace LeaveYourCouch.Mvc.Models
 
         public string UserId { get; set; }
 
-        [Required(), StringLength(5)]
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
-        [Required(), StringLength(5)]
-        [Display(Name = "User Name")]
-        public string Pseudo { get; set; }
-        [Required(), StringLength(5)]
-        
-        [Display(Name = "Postal code")]
-        [DataType(DataType.PostalCode)]
-        public string PostalCode { get; set; }
+
     }
 
     public class ManageLoginsViewModel

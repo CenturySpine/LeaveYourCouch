@@ -62,7 +62,7 @@ namespace LeaveYourCouch.Mvc.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterViewModel
+    public class RegisterViewModel : SharedPersonalInfos
     {
         [Required]
         [EmailAddress]
@@ -79,6 +79,8 @@ namespace LeaveYourCouch.Mvc.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel

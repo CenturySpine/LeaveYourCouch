@@ -152,6 +152,9 @@ namespace LeaveYourCouch.Mvc.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                user.Pseudo = model.Pseudo;
+                user.FirstName = model.FirstName;
+                user.PostalCode = model.PostalCode;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
