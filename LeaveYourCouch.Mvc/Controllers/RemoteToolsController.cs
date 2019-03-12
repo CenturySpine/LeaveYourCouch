@@ -9,7 +9,7 @@ namespace LeaveYourCouch.Mvc.Controllers
     [Authorize]
     public class RemoteToolsController : ApiController
     {
-        public static string _language = "en-US";
+        public static string _language = "";
         [HttpGet]
         [Route("api/tools/creatdb")]
         
@@ -21,7 +21,7 @@ namespace LeaveYourCouch.Mvc.Controllers
             return Json("Terminated. See logs for details");
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/tools/setculture/{lng}")]
 
         public async Task<IHttpActionResult> SetCulture(string lng)

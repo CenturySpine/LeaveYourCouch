@@ -21,7 +21,7 @@ namespace LeaveYourCouch.Mvc
         protected void Application_Start()
         {
             SimpleLogger.Log("MvcApplication.Application_Start", "Starting app");
-            ControllerBuilder.Current.SetControllerFactory(new DefaultControllerFactory(new CultureAwareControllerActivator()));
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -66,7 +66,7 @@ namespace LeaveYourCouch.Mvc
     {
         public static void Log(string source, string message, Exception ex = null)
         {
-            using (var txt = new StreamWriter(@"C:\Users\Public\website.logs",true))
+            using (var txt = new StreamWriter(@"C:\Users\Public\website.logs", true))
             {
                 string exformat = ex != null ? "\r\n" + ex.ToString() : string.Empty;
                 txt.WriteLine($"{DateTime.Now.ToLongTimeString()} - {source} - {message}{exformat}");
@@ -74,20 +74,32 @@ namespace LeaveYourCouch.Mvc
         }
     }
 
-    public class CultureAwareControllerActivator : IControllerActivator
+
+
+    public class CultureFilter : IAuthorizationFilter
     {
-        public IController Create(RequestContext requestContext, Type controllerType)
+        private readonly string defaultCulture;
+
+        public CultureFilter(string defaultCulture)
         {
-            //Get the {language} parameter in the RouteData
-            string language = requestContext.RouteData.Values["language"] == null ?
-                "fr" : requestContext.RouteData.Values["language"].ToString();
+            this.defaultCulture = defaultCulture;
+        }
 
-            //Get the culture info of the language code
-            CultureInfo culture = CultureInfo.GetCultureInfo(language);
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
+        public void OnAuthorization(AuthorizationContext filterContext)
+        {
+            string culture = "en-US";
+            if (filterContext.HttpContext.Request.UserLanguages != null && filterContext.HttpContext.Request.UserLanguages.Length > 0)
+            {
+                culture = filterContext.HttpContext.Request.UserLanguages[0];
+            }
+            //var values = filterContext.RouteData.Values;
 
-            return DependencyResolver.Current.GetService(controllerType) as IController;
+            //string culture = (string)values["culture"] ?? this.defaultCulture;
+
+            CultureInfo ci = new CultureInfo(culture);
+
+            Thread.CurrentThread.CurrentCulture = ci;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(ci.Name);
         }
     }
 }

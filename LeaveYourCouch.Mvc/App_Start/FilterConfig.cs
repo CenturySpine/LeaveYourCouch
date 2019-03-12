@@ -7,6 +7,7 @@ namespace LeaveYourCouch.Mvc
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            filters.Add(new CultureFilter(defaultCulture: "fr-FR"));
             filters.Add(new HandleErrorAttribute());
         }
     }
