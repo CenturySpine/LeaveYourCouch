@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LeaveYourCouch.UnitTests
 {
+    [Ignore]
     [TestClass]
     public class EmailServiceTest
     {
