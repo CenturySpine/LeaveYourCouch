@@ -69,6 +69,7 @@
     <Compile Include="CityServices.cs" />
     <Compile Include="ICityServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecretConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LeaveYourCouch.Models\LeaveYourCouch.Models.csproj">

@@ -49,6 +49,23 @@ namespace LeaveYourCouch.Mvc.Controllers
                 _userManager = value;
             }
         }
+        [HttpPost]
+        public async Task<ActionResult> ConfirmEmailAsync()
+        {
+            string user;
+            using (var db = new ApplicationDbContext())
+            {
+                user = db.Users.FirstOrDefault(u => u.Email == User.Identity.Name)?.Id;
+                
+            }
+             
+                //Task.Delay(2000)
+              await  ConfirmPasswordHelper.confirm(UserManager, user, Request, Url)
+                ;
+            return RedirectToAction("Index", "Manage", new { Message = ManageMessageId.EmailconfirmationSent });
+
+            //return RedirectToAction("Index", new { Message = ManageMessageId.EmailconfirmationSent });
+        }
 
         //
         // GET: /Manage/Index
@@ -62,6 +79,7 @@ namespace LeaveYourCouch.Mvc.Controllers
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                     :message==ManageMessageId.PersonnalInfos?"Your personal infos have been updated."
+                    :message==ManageMessageId.EmailconfirmationSent?"Confirmation e-mail has been successfuly sent."
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -83,6 +101,7 @@ namespace LeaveYourCouch.Mvc.Controllers
                 model.PostalCode = currentuserModel.PostalCode;
                 model.Pseudo = currentuserModel.Pseudo;
                 model.FirstName = currentuserModel.FirstName;
+                model.EmailIsconfirmed = currentuserModel.EmailConfirmed;
 
             }
             return View(model);
@@ -156,7 +175,7 @@ namespace LeaveYourCouch.Mvc.Controllers
                 var message = new IdentityMessage
                 {
                     Destination = model.Number,
-                    Body = "Your security code is: " + code
+                    Body = "Your security code is: " + code + "\r\nPlease do not respond to this email."
                 };
                 await UserManager.SmsService.SendAsync(message);
             }
@@ -415,9 +434,12 @@ namespace LeaveYourCouch.Mvc.Controllers
             RemoveLoginSuccess,
             RemovePhoneSuccess,
             Error,
-            PersonnalInfos
+            PersonnalInfos,
+            EmailconfirmationSent
         }
 
         #endregion
+
+
     }
 }

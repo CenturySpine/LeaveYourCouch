@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using LeaveYourCouch.Mvc.Models;
+using LeaveYourCouch.Services;
 
 namespace LeaveYourCouch.Mvc
 {
@@ -54,15 +55,15 @@ namespace LeaveYourCouch.Mvc
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: SecretConfiguration.Get("Authentication:Facebook:AppId"),
+               appSecret: SecretConfiguration.Get("Authentication:Facebook:AppSecret"));
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = SecretConfiguration.Get("Authentication:Google:ClientId"),
+                ClientSecret = SecretConfiguration.Get("Authentication:Google:ClientSecret")
+            });
         }
     }
 }

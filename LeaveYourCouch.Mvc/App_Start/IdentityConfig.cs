@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -11,6 +13,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using LeaveYourCouch.Mvc.Models;
+using LeaveYourCouch.Services;
 
 namespace LeaveYourCouch.Mvc
 {
@@ -19,7 +22,20 @@ namespace LeaveYourCouch.Mvc
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            SmtpClient client = new SmtpClient("in-v3.mailjet.com");
+            client.Port = 587;
+            client.EnableSsl = true;
+
+            //If you need to authenticate
+            client.Credentials = new NetworkCredential(SecretConfiguration.Get("mailjet:appid"), SecretConfiguration.Get("mailjet:appsecret"));
+
+            MailMessage messagetosend = new MailMessage("admin@leaveyourcouch.com", message.Destination, message.Subject, message.Body);
+            messagetosend.IsBodyHtml = true;
+            //return Task.Delay(1500);
+
+            return client.SendMailAsync(messagetosend);
+
+
         }
     }
 

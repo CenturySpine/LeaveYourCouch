@@ -21,6 +21,8 @@ namespace LeaveYourCouch.Mvc.Models
         [Display(Name = "Postal code")]
         [DataType(DataType.PostalCode)]
         public string PostalCode { get; set; }
+
+        public bool EmailIsconfirmed { get; set; }
     }
     public class IndexViewModel : SharedPersonalInfos
     {
