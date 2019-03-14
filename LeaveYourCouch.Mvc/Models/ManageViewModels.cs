@@ -16,7 +16,7 @@ namespace LeaveYourCouch.Mvc.Models
 
         [Required(), StringLength(30, MinimumLength = 3, ErrorMessage = "The {0} must be at least {2} characters long and maximum {1} characters long.")]
         [Display(Name = "User Name")]
-        [Remote("doesUserNameExist", "Users", HttpMethod = "POST", ErrorMessage = "User name already exists. Please enter a different user name.")]
+        [Remote("DoesUserNameExist", "AccountValidation", HttpMethod = "POST", ErrorMessage = "User name already exists. Please enter a different user name.")]
         public string Pseudo { get; set; }
 
         [Required(), StringLength(5, MinimumLength = 5, ErrorMessage = "The {0} must be at least {2} characters long and maximum {1} characters long.")]

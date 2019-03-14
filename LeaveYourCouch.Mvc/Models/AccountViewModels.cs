@@ -68,7 +68,7 @@ namespace LeaveYourCouch.Mvc.Models
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
-        [Remote("doesUserEmailExist", "Users", HttpMethod = "POST", ErrorMessage = "E-mail already exists. Please enter a different e-mail address.")]
+        [Remote("DoesUserEmailExist", "AccountValidation", HttpMethod = "POST", ErrorMessage = "E-mail already exists. Please enter a different e-mail address.")]
 
         public string Email { get; set; }
 
