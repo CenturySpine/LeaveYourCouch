@@ -1,0 +1,38 @@
+﻿
+html, body {
+    height: 100%;
+}
+
+.loginback {
+    background: #f9fafa;
+    text-align: center;
+}
+
+.form-signin {
+    
+    max-width: 400px;
+    padding: 15px;
+    margin: 0 auto;
+    border-style: solid;
+    border-color: #e6e6e6;
+    border-width: 1px;
+    background: white;
+    border-radius: 3px;
+}
+
+.form-control {
+    margin: auto;
+}
+
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+.field-validation-error {
+    font-size: 0.8rem;
+    display: inherit;
+    text-align: center;
+    clear: both;
+}

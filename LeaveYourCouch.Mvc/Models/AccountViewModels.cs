@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace LeaveYourCouch.Mvc.Models
 {
@@ -67,6 +68,8 @@ namespace LeaveYourCouch.Mvc.Models
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
+        [Remote("doesUserEmailExist", "Users", HttpMethod = "POST", ErrorMessage = "E-mail already exists. Please enter a different e-mail address.")]
+
         public string Email { get; set; }
 
         [Required]
@@ -77,7 +80,7 @@ namespace LeaveYourCouch.Mvc.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
 
@@ -98,7 +101,7 @@ namespace LeaveYourCouch.Mvc.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

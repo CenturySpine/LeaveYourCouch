@@ -1,4 +1,4 @@
-﻿@model LeaveYourCouch.Mvc.Models.IndexViewModel
+﻿@model LeaveYourCouch.Mvc.Models.ManageIndexViewModel
 @{
     ViewBag.Title = "Manage";
 }
@@ -35,8 +35,8 @@
         </div>
         <div class="form-group row">
             @Html.LabelFor(p => p.Pseudo, new { @class = "col-sm-2 col-form-label" })
-            @Html.TextBoxFor(p => p.Pseudo, null, new { @class = "form-control", placeholder = "Pseudonym", type = "text" })
-            @Html.ValidationMessageFor(m => m.Pseudo)
+            @Html.TextBoxFor(p => p.Pseudo, null, new { @class = "form-control", placeholder = "Pseudonym", type = "text" ,disabled="" })
+            
         </div>
         <div class="form-group row">
             @Html.LabelFor(p => p.PostalCode, new { @class = "col-sm-2 col-form-label" })

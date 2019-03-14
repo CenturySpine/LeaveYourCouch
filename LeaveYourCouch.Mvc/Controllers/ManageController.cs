@@ -86,7 +86,7 @@ namespace LeaveYourCouch.Mvc.Controllers
             var mail = await UserManager.GetEmailAsync(userId);
             var currentuserModel = UserManager.Users.FirstOrDefault(u => u.Email == mail);
 
-            var model = new IndexViewModel
+            var model = new ManageIndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
@@ -109,7 +109,7 @@ namespace LeaveYourCouch.Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SavePersonalData(IndexViewModel viewmodel)
+        public async Task<ActionResult> SavePersonalData(ManageIndexViewModel viewmodel)
         {
 
             using (var db = ApplicationDbContext.Create())

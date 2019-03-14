@@ -1,58 +1,80 @@
 ﻿@model LeaveYourCouch.Mvc.Models.RegisterViewModel
-@{
-    ViewBag.Title = "Register";
-}
+<link rel="stylesheet" href="~/Content/AccountForms.css" />
+
+<div class="form-signin text-center">
 
 
 
-<div class="container" style="margin: 10px;">
-    <h2>@ViewBag.Title.</h2>
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-group", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h4>Create a new account.</h4>
-        <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group row">
-            @Html.LabelFor(m => m.Email, new { @class = "col-sm-2 col-form-label" })
+        <span style="font-size: 3em; color: black; margin: 5px;">
+            <i class="fas fa-couch"></i>
+        </span>
+        <h3>@Resources.Resources.appname </h3>
+                                         <hr/>
+        <h5> Register</h5>
+        if (ViewData.ModelState.Keys.Any(k => ViewData.ModelState[k].Errors.Any()))
+        {
+            foreach (var modelStateKey in ViewData.ModelState.Keys)
+            {
+                foreach (var error in @ViewData.ModelState[modelStateKey].Errors)
+                {
+                    <div class="alert alert-danger">
+                        <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        @error.ErrorMessage
+                    </div>
+                }
 
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "E-mail" })
+            }
 
-        </div>
-        <div class="form-group row">
-            @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-2 col-form-label" })
+        }
+        <div class="form-group  ">
+            @*@Html.LabelFor(m => m.Email, new { @class = "col-sm-2 col-form-label" })*@
 
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "First Name" })
-
-        </div>
-        <div class="form-group row">
-            @Html.LabelFor(m => m.Pseudo, new { @class = "col-sm-2 col-form-label" })
-
-            @Html.TextBoxFor(m => m.Pseudo, new { @class = "form-control", placeholder = "User Name" })
-
-        </div>
-        <div class="form-group row">
-            @Html.LabelFor(m => m.PostalCode, new { @class = "col-sm-2 col-form-label" })
-
-            @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control", placeholder = "Postal Code" })
-
-        </div>
-        <div class="form-group row">
-            @Html.LabelFor(m => m.Password, new { @class = "col-sm-2 col-form-label" })
-
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control text-center ", placeholder = "E-mail" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger " })
 
         </div>
-        <div class="form-group row">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-2 col-form-label" })
+        <div class="form-group  ">
+            @*@Html.LabelFor(m => m.FirstName, new { @class = "col-sm-2 col-form-label" })*@
 
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control text-center ", placeholder = "First Name" })
+            @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger ", })
 
         </div>
-        <div class="form-group row">
-            <div class="col-sm-10">
-                <input type="submit" class="btn btn-primary" value="Register" />
-            </div>
+        <div class="form-group  ">
+            @*@Html.LabelFor(m => m.Pseudo, new { @class = "col-sm-2 col-form-label" })*@
+
+            @Html.TextBoxFor(m => m.Pseudo, new { @class = "form-control text-center ", placeholder = "UserName" })
+            @Html.ValidationMessageFor(m => m.Pseudo, "", new { @class = "text-danger " })
+
+        </div>
+        <div class="form-group  ">
+            @*@Html.LabelFor(m => m.PostalCode, new { @class = "col-sm-2 col-form-label" })*@
+
+            @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control text-center ", placeholder = "Postal Code" })
+            @Html.ValidationMessageFor(m => m.PostalCode, "", new { @class = "text-danger ", })
+
+        </div>
+        <div class="form-group  ">
+            @*@Html.LabelFor(m => m.Password, new { @class = "col-sm-2 col-form-label" })*@
+
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control text-center ", placeholder = "Password" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger " })
+
+        </div>
+        <div class="form-group  ">
+            @*@Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-2 col-form-label" })*@
+
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control text-center ", placeholder = "Confirm Password" })
+            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger ", })
+
+        </div>
+        <div class="form-group ">
+
+            <button type="submit" class=" btn btn-primary">Register</button>
+
         </div>
     }
 </div>
@@ -60,3 +82,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script type="text/javascript" src="~/Scripts/AccountForms.js"></script>

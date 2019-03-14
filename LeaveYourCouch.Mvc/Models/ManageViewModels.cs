@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
@@ -15,6 +16,7 @@ namespace LeaveYourCouch.Mvc.Models
 
         [Required(), StringLength(30, MinimumLength = 3, ErrorMessage = "The {0} must be at least {2} characters long and maximum {1} characters long.")]
         [Display(Name = "User Name")]
+        [Remote("doesUserNameExist", "Users", HttpMethod = "POST", ErrorMessage = "User name already exists. Please enter a different user name.")]
         public string Pseudo { get; set; }
 
         [Required(), StringLength(5, MinimumLength = 5, ErrorMessage = "The {0} must be at least {2} characters long and maximum {1} characters long.")]
@@ -24,7 +26,7 @@ namespace LeaveYourCouch.Mvc.Models
 
         public bool EmailIsconfirmed { get; set; }
     }
-    public class IndexViewModel : SharedPersonalInfos
+    public class ManageIndexViewModel : SharedPersonalInfos
     {
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
@@ -58,7 +60,7 @@ namespace LeaveYourCouch.Mvc.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -77,7 +79,7 @@ namespace LeaveYourCouch.Mvc.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 
