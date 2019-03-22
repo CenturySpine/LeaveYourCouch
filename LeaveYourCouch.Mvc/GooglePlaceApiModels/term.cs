@@ -1,4 +1,4 @@
-﻿namespace LeaveYourCouch.Models.GooglePlaceApiModels
+﻿namespace LeaveYourCouch.Mvc.GooglePlaceApiModels
 {
     public class term
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using LeaveYourCouch.Models.GooglePlaceApiModels;
+using LeaveYourCouch.Mvc.GooglePlaceApiModels;
 
-namespace LeaveYourCouch.Services
+namespace LeaveYourCouch.Mvc.Business.Services
 {
     public interface ICityServices
     {

@@ -7,18 +7,29 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using LeaveYourCouch.Mvc.Business;
+using LeaveYourCouch.Mvc.Business.Services.Events;
 using LeaveYourCouch.Mvc.Models;
 
 namespace LeaveYourCouch.Mvc.Controllers
 {
     public class Events1Controller : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _db;
+        private readonly IApiHelper _apiHelper;
+        private readonly IEventsBuilder _eventBuilder;
+
+        public Events1Controller(ApplicationDbContext db, IApiHelper apiHelper, IEventsBuilder eventBuilder)
+        {
+            _db = db;
+            _apiHelper = apiHelper;
+            _eventBuilder = eventBuilder;
+        }
 
         // GET: Events1
         public async Task<ActionResult> Index()
         {
-            return View(await db.Events.ToListAsync());
+            return View(await _db.Events.ToListAsync());
         }
 
         // GET: Events1/Details/5
@@ -28,12 +39,19 @@ namespace LeaveYourCouch.Mvc.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = await db.Events.FindAsync(id);
+            Event @event = await _db.Events.Include(e => e.Owner).FirstOrDefaultAsync(r => r.Id == id);
             if (@event == null)
             {
                 return HttpNotFound();
             }
-            return View(@event);
+
+            //the user did not display the event yet, so we have to retreive the personnal informations regarding distance and duration
+            //and save it to avoid requesting data on next visit
+            var dataDuration = await _eventBuilder.GetUserEventInfos(@event);
+
+
+
+            return View(dataDuration);
         }
 
         // GET: Events1/Create
@@ -51,8 +69,8 @@ namespace LeaveYourCouch.Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Events.Add(@event);
-                await db.SaveChangesAsync();
+                _db.Events.Add(@event);
+                await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +84,7 @@ namespace LeaveYourCouch.Mvc.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = await db.Events.FindAsync(id);
+            Event @event = await _db.Events.FindAsync(id);
             if (@event == null)
             {
                 return HttpNotFound();
@@ -83,8 +101,8 @@ namespace LeaveYourCouch.Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(@event).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                _db.Entry(@event).State = EntityState.Modified;
+                await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(@event);
@@ -97,7 +115,7 @@ namespace LeaveYourCouch.Mvc.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = await db.Events.FindAsync(id);
+            Event @event = await _db.Events.FindAsync(id);
             if (@event == null)
             {
                 return HttpNotFound();
@@ -110,9 +128,9 @@ namespace LeaveYourCouch.Mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Event @event = await db.Events.FindAsync(id);
-            db.Events.Remove(@event);
-            await db.SaveChangesAsync();
+            Event @event = await _db.Events.FindAsync(id);
+            _db.Events.Remove(@event);
+            await _db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +138,7 @@ namespace LeaveYourCouch.Mvc.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

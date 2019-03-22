@@ -165,9 +165,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -198,6 +195,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Business\ApiHelper.cs" />
+    <Compile Include="Business\Services\Bootstrapper.cs" />
+    <Compile Include="Business\Services\CityServices.cs" />
+    <Compile Include="Business\Services\Events\EventsBuilder.cs" />
+    <Compile Include="Business\Services\ICityServices.cs" />
+    <Compile Include="Business\Services\SecretConfiguration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountValidationControler.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
@@ -209,6 +212,34 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GooglePlaceApiModels\AutocompleteResult.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\Bounds.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\DirectionObject.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\Distance.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\Distance2.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\Duration.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\Duration2.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\EndLocation.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\EndLocation2.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\GeocodedWaypoint.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\Leg.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\Northeast.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\OverviewPolyline.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\Polyline.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\Route.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\Southwest.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\StartLocation.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\StartLocation2.cs" />
+    <Compile Include="GooglePlaceApiModels\DirectionApi\Step.cs" />
+    <Compile Include="GooglePlaceApiModels\geometry.cs" />
+    <Compile Include="GooglePlaceApiModels\geonames.cs" />
+    <Compile Include="GooglePlaceApiModels\location.cs" />
+    <Compile Include="GooglePlaceApiModels\MatchedSubstring.cs" />
+    <Compile Include="GooglePlaceApiModels\placedetailresult.cs" />
+    <Compile Include="GooglePlaceApiModels\PlacesResult.cs" />
+    <Compile Include="GooglePlaceApiModels\Prediction.cs" />
+    <Compile Include="GooglePlaceApiModels\structured_formatting.cs" />
+    <Compile Include="GooglePlaceApiModels\term.cs" />
     <Compile Include="Migrations\201903121919105_UserGenderAndRelationsip.cs" />
     <Compile Include="Migrations\201903121919105_UserGenderAndRelationsip.Designer.cs">
       <DependentUpon>201903121919105_UserGenderAndRelationsip.cs</DependentUpon>
@@ -220,6 +251,22 @@
     <Compile Include="Migrations\201903221339597_ModificationEventObject1.cs" />
     <Compile Include="Migrations\201903221339597_ModificationEventObject1.Designer.cs">
       <DependentUpon>201903221339597_ModificationEventObject1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903221522525_EventUserDistances.cs" />
+    <Compile Include="Migrations\201903221522525_EventUserDistances.Designer.cs">
+      <DependentUpon>201903221522525_EventUserDistances.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903221551071_EventUserDistances1.cs" />
+    <Compile Include="Migrations\201903221551071_EventUserDistances1.Designer.cs">
+      <DependentUpon>201903221551071_EventUserDistances1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903221607382_EventUserDistances2.cs" />
+    <Compile Include="Migrations\201903221607382_EventUserDistances2.Designer.cs">
+      <DependentUpon>201903221607382_EventUserDistances2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903221611199_EventUserDistances3.cs" />
+    <Compile Include="Migrations\201903221611199_EventUserDistances3.Designer.cs">
+      <DependentUpon>201903221611199_EventUserDistances3.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\CreateEventViewModel.cs" />
     <Compile Include="Models\RelationShipsViewModel.cs" />
@@ -376,23 +423,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Business\" />
     <Folder Include="Views\Cities\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LeaveYourCouch.Models\LeaveYourCouch.Models.csproj">
-      <Project>{2d7cd3ae-dcad-4989-9e07-5e4996579beb}</Project>
-      <Name>LeaveYourCouch.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LeaveYourCouch.Services\LeaveYourCouch.Services.csproj">
-      <Project>{98B81154-9535-45BC-AEBF-0A6A85F4A6D8}</Project>
-      <Name>LeaveYourCouch.Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -409,6 +445,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903221339597_ModificationEventObject1.resx">
       <DependentUpon>201903221339597_ModificationEventObject1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221522525_EventUserDistances.resx">
+      <DependentUpon>201903221522525_EventUserDistances.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221551071_EventUserDistances1.resx">
+      <DependentUpon>201903221551071_EventUserDistances1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221607382_EventUserDistances2.resx">
+      <DependentUpon>201903221607382_EventUserDistances2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221611199_EventUserDistances3.resx">
+      <DependentUpon>201903221611199_EventUserDistances3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.fr.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

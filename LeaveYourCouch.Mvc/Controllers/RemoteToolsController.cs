@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http;
-using LeaveYourCouch.Models.GooglePlaceApiModels;
-using LeaveYourCouch.Services;
 
 namespace LeaveYourCouch.Mvc.Controllers
 {

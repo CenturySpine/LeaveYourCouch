@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LeaveYourCouch.Models.GooglePlaceApiModels
+namespace LeaveYourCouch.Mvc.GooglePlaceApiModels
 {
     public class structured_formatting
     {

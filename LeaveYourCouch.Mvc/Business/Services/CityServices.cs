@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using LeaveYourCouch.Models.GooglePlaceApiModels;
+using LeaveYourCouch.Mvc.GooglePlaceApiModels;
 using Newtonsoft.Json;
 
-namespace LeaveYourCouch.Services
+namespace LeaveYourCouch.Mvc.Business.Services
 {
     internal class CityServices : ICityServices
     {

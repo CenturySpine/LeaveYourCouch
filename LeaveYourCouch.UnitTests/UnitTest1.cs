@@ -1,6 +1,6 @@
 ﻿using System;
 using LeaveYourCouch.Mvc;
-using LeaveYourCouch.Services;
+using LeaveYourCouch.Mvc.Business.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

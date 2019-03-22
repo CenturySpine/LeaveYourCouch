@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Security;
-using LeaveYourCouch.Models.GooglePlaceApiModels;
-using LeaveYourCouch.Services;
+using LeaveYourCouch.Mvc.Business.Services;
+using LeaveYourCouch.Mvc.GooglePlaceApiModels;
 using Newtonsoft.Json;
 
 namespace LeaveYourCouch.Mvc.Controllers

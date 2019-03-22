@@ -1,4 +1,5 @@
 ﻿using System;
+using LeaveYourCouch.Mvc.Business.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -6,7 +7,6 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using LeaveYourCouch.Mvc.Models;
-using LeaveYourCouch.Services;
 using SimpleInjector;
 
 namespace LeaveYourCouch.Mvc

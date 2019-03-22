@@ -66,6 +66,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -95,17 +96,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LeaveYourCouch.Models\LeaveYourCouch.Models.csproj">
-      <Project>{2d7cd3ae-dcad-4989-9e07-5e4996579beb}</Project>
-      <Name>LeaveYourCouch.Models</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LeaveYourCouch.Mvc\LeaveYourCouch.Mvc.csproj">
       <Project>{EBD78A03-2608-43C8-8FF7-AF99B18C99C5}</Project>
       <Name>LeaveYourCouch.Mvc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LeaveYourCouch.Services\LeaveYourCouch.Services.csproj">
-      <Project>{98B81154-9535-45BC-AEBF-0A6A85F4A6D8}</Project>
-      <Name>LeaveYourCouch.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

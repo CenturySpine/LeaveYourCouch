@@ -21,15 +21,15 @@
         <th>
             @Html.DisplayNameFor(model => model.MaxSeats)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Address)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.MeetingDetails)
-        </th>
-        <th>
+        </th>*@
+        @*<th>
             @Html.DisplayNameFor(model => model.IsPrivate)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Date)
         </th>
@@ -50,17 +50,18 @@
         <td>
             @Html.DisplayFor(modelItem => item.MaxSeats)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Address)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.MeetingDetails)
-        </td>
-        <td>
+        </td>*@
+        @*<td>
             @Html.DisplayFor(modelItem => item.IsPrivate)
-        </td>
+        </td>*@
         <td>
-            @Html.DisplayFor(modelItem => item.Date)
+            @item.Date.ToShortDateString()
+            @*@Html.DisplayFor(modelItem => item.Date)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Time)

@@ -4,8 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using LeaveYourCouch.Services;
-using LeaveYourCouch.Models.GooglePlaceApiModels;
+
 namespace LeaveYourCouch.Mvc.Controllers
 {
     public class HomeController : Controller
