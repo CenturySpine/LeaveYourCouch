@@ -12,7 +12,7 @@ namespace LeaveYourCouch.Mvc.Business.Services
 
         private static Dictionary<string, string> _secdic;
 
-        
+
         static SecretConfiguration()
         {
             using (var secrets = new StreamReader(path))
@@ -20,6 +20,11 @@ namespace LeaveYourCouch.Mvc.Business.Services
             {
                 var content = secrets.ReadToEnd();
                 _secdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(content);
+            }
+
+            foreach (var VARIABLE in _secdic)
+            {
+                SimpleLogger.Log("SecretConfiguration.ctor", "Key Found:" + VARIABLE.Key + " : " + VARIABLE.Value);
             }
         }
 
