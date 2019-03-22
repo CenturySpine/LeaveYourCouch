@@ -7,13 +7,13 @@ namespace LeaveYourCouch.Mvc.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class ModificationEventObject1 : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ModificationEventObject1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201903221339597_ModificationEventObject1"; }
+            get { return "201903221702308_Initial"; }
         }
         
         string IMigrationMetadata.Source

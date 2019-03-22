@@ -240,37 +240,9 @@
     <Compile Include="GooglePlaceApiModels\Prediction.cs" />
     <Compile Include="GooglePlaceApiModels\structured_formatting.cs" />
     <Compile Include="GooglePlaceApiModels\term.cs" />
-    <Compile Include="Migrations\201903121919105_UserGenderAndRelationsip.cs" />
-    <Compile Include="Migrations\201903121919105_UserGenderAndRelationsip.Designer.cs">
-      <DependentUpon>201903121919105_UserGenderAndRelationsip.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903221327145_ModificationEventObject.cs" />
-    <Compile Include="Migrations\201903221327145_ModificationEventObject.Designer.cs">
-      <DependentUpon>201903221327145_ModificationEventObject.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903221339597_ModificationEventObject1.cs" />
-    <Compile Include="Migrations\201903221339597_ModificationEventObject1.Designer.cs">
-      <DependentUpon>201903221339597_ModificationEventObject1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903221522525_EventUserDistances.cs" />
-    <Compile Include="Migrations\201903221522525_EventUserDistances.Designer.cs">
-      <DependentUpon>201903221522525_EventUserDistances.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903221551071_EventUserDistances1.cs" />
-    <Compile Include="Migrations\201903221551071_EventUserDistances1.Designer.cs">
-      <DependentUpon>201903221551071_EventUserDistances1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903221607382_EventUserDistances2.cs" />
-    <Compile Include="Migrations\201903221607382_EventUserDistances2.Designer.cs">
-      <DependentUpon>201903221607382_EventUserDistances2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903221611199_EventUserDistances3.cs" />
-    <Compile Include="Migrations\201903221611199_EventUserDistances3.Designer.cs">
-      <DependentUpon>201903221611199_EventUserDistances3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903221643176_EventUserDistancesModified.cs" />
-    <Compile Include="Migrations\201903221643176_EventUserDistancesModified.Designer.cs">
-      <DependentUpon>201903221643176_EventUserDistancesModified.cs</DependentUpon>
+    <Compile Include="Migrations\201903221702308_Initial.cs" />
+    <Compile Include="Migrations\201903221702308_Initial.Designer.cs">
+      <DependentUpon>201903221702308_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\CreateEventViewModel.cs" />
     <Compile Include="Models\RelationShipsViewModel.cs" />
@@ -283,22 +255,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903081505579_InitialCreate.cs" />
-    <Compile Include="Migrations\201903081505579_InitialCreate.Designer.cs">
-      <DependentUpon>201903081505579_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903111439345_AddUserInfo01.cs" />
-    <Compile Include="Migrations\201903111439345_AddUserInfo01.Designer.cs">
-      <DependentUpon>201903111439345_AddUserInfo01.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903121351305_EventAdd.cs" />
-    <Compile Include="Migrations\201903121351305_EventAdd.Designer.cs">
-      <DependentUpon>201903121351305_EventAdd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903121455372_Relationships.cs" />
-    <Compile Include="Migrations\201903121455372_Relationships.Designer.cs">
-      <DependentUpon>201903121455372_Relationships.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -441,29 +397,8 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201903121919105_UserGenderAndRelationsip.resx">
-      <DependentUpon>201903121919105_UserGenderAndRelationsip.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903221327145_ModificationEventObject.resx">
-      <DependentUpon>201903221327145_ModificationEventObject.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903221339597_ModificationEventObject1.resx">
-      <DependentUpon>201903221339597_ModificationEventObject1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903221522525_EventUserDistances.resx">
-      <DependentUpon>201903221522525_EventUserDistances.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903221551071_EventUserDistances1.resx">
-      <DependentUpon>201903221551071_EventUserDistances1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903221607382_EventUserDistances2.resx">
-      <DependentUpon>201903221607382_EventUserDistances2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903221611199_EventUserDistances3.resx">
-      <DependentUpon>201903221611199_EventUserDistances3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903221643176_EventUserDistancesModified.resx">
-      <DependentUpon>201903221643176_EventUserDistancesModified.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201903221702308_Initial.resx">
+      <DependentUpon>201903221702308_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.fr.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -474,18 +409,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903081505579_InitialCreate.resx">
-      <DependentUpon>201903081505579_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903111439345_AddUserInfo01.resx">
-      <DependentUpon>201903111439345_AddUserInfo01.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903121351305_EventAdd.resx">
-      <DependentUpon>201903121351305_EventAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903121455372_Relationships.resx">
-      <DependentUpon>201903121455372_Relationships.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
