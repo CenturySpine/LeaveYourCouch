@@ -15,6 +15,8 @@ namespace LeaveYourCouch.Mvc.Business.Services
 
         static SecretConfiguration()
         {
+            SimpleLogger.Log("SecretConfiguration.ctor", $"Looking for secrets in {path}");
+
             using (var secrets = new StreamReader(path))
 
             {
