@@ -7,7 +7,7 @@ namespace LeaveYourCouch.Mvc.Business.Services
 {
     public class SecretConfiguration
     {
-        static private string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        static private string path = Path.Combine($@"C:\users\public\",
             "Microsoft\\UserSecrets\\leaveyourcouch\\secrets.json");
 
         private static Dictionary<string, string> _secdic;
