@@ -44,29 +44,30 @@ namespace LeaveYourCouch.Mvc.Business
 
         public string GenerateMapLink(string usrPostalCode, string targeteventAddress, DirectionModes mode)
         {
-            string encodedmode;
-            switch (mode)
-            {
-                case DirectionModes.driving:
-                    encodedmode = "d";
-                    break;
-                case DirectionModes.walking:
-                    encodedmode = "w";
-                    break;
-                case DirectionModes.bicycling:
-                    encodedmode = "b";
-                    break;
-                case DirectionModes.transit:
-                    encodedmode = "r";
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
-            }
-            var start = $"saddr={truncateaddress(usrPostalCode)}";
-            var end = $"daddr={truncateaddress(targeteventAddress)}";
-            var mod = $"dirflg={encodedmode}";
-            //https://www.google.com/maps/preview?saddr=69006&daddr=la+triche+lyon&dirflg=w
-            var result = $@"https://www.google.com/maps/preview?" + start + "&" + end + "&" + mod;
+            //string encodedmode;
+            //switch (mode)
+            //{
+            //    case DirectionModes.driving:
+            //        encodedmode = "d";
+            //        break;
+            //    case DirectionModes.walking:
+            //        encodedmode = "w";
+            //        break;
+            //    case DirectionModes.bicycling:
+            //        encodedmode = "b";
+            //        break;
+            //    case DirectionModes.transit:
+            //        encodedmode = "r";
+            //        break;
+            //    default:
+            //        throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+            //}
+            var start = $"origin={truncateaddress(usrPostalCode)}";
+            var end = $"destination={truncateaddress(targeteventAddress)}";
+            var mod = $"travelmode={mode}";
+            //https://www.google.com/maps/dir/?api=1&origin=Space+Needle+Seattle+WA&destination=Pike+Place+Market+Seattle+WA&travelmode=bicycling
+            
+            var result = $@"https://www.google.com/maps/dir/?api=1&" + start + "&" + end + "&" + mod;
             return result;
         }
 
