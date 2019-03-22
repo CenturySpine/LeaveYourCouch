@@ -1,4 +1,5 @@
-﻿using LeaveYourCouch.Mvc.Controllers;
+﻿using System.Collections.Generic;
+using LeaveYourCouch.Mvc.Controllers;
 using LeaveYourCouch.Mvc.Models;
 using System.Data.Entity;
 using System.Linq;
@@ -27,9 +28,10 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
             EventDataDetailsViewModel vm = new EventDataDetailsViewModel();
             var usrmail = UserHelpers.UserName();
             var usr = await _db.Users.FirstOrDefaultAsync(u => u.Email == usrmail);
-            var dataDuration = _db.UserToEventsData.Include(t => t.Event).Include(f => f.User)
-                   .FirstOrDefault(evf => evf.User.Id == usr.Id && evf.Event.Id == targetevent.Id);
-            if (dataDuration == null)
+            var dataDuration = _db.UserToEventsData.Include(t => t.Event).Include(f => f.User).Where(evf => evf.User.Id == usr.Id && evf.Event.Id == targetevent.Id).ToList();
+
+
+            if (dataDuration.Count <= 0)
             {
                 if (usr != null)
                 {
@@ -40,26 +42,27 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
             return new EventDataDetailsViewModel { Event = targetevent, UserData = dataDuration };
         }
 
-        private async Task<EventRelativeToUserInformation> BuildDurations(Event targetevent, ApplicationUser usr)
+        private async Task<List<EventRelativeToUserInformation>> BuildDurations(Event targetevent, ApplicationUser usr)
         {
-            EventRelativeToUserInformation dataDuration;
+            List<EventRelativeToUserInformation> dataDuration = new List<EventRelativeToUserInformation>();
             var direction = await _apiHelper.GetDirections(usr.PostalCode, targetevent.Address, "metric");
-            dataDuration = new EventRelativeToUserInformation
+
+            foreach (var dobj in direction)
             {
-                User = usr,
-                Event = targetevent,
-                Distance =
-                    (direction.FirstOrDefault().Value.routes.FirstOrDefault().legs.FirstOrDefault().distance.value / 1000.0),
-                DurationCycling =
-                    (direction[DirectionModes.bicycling].routes.FirstOrDefault().legs.FirstOrDefault().duration.value / 60),
-                DurationDriving =
-                    (direction[DirectionModes.driving].routes.FirstOrDefault().legs.FirstOrDefault().duration.value / 60),
-                DurationTransit =
-                    (direction[DirectionModes.transit].routes.FirstOrDefault().legs.FirstOrDefault().duration.value / 60),
-                DurationWalking =
-                    (direction[DirectionModes.walking].routes.FirstOrDefault().legs.FirstOrDefault().duration.value / 60),
-            };
-            _db.UserToEventsData.Add(dataDuration);
+                var data = new EventRelativeToUserInformation
+                {
+                    User = usr,
+                    Event = targetevent,
+                    DirectionMode = dobj.Key,
+                    Unit = "km",
+                    Distance = (dobj.Value.routes.FirstOrDefault().legs.FirstOrDefault().distance.value) / 1000.0,
+                    Duration = (dobj.Value.routes.FirstOrDefault().legs.FirstOrDefault().duration.value) / 60,
+                };
+                dataDuration.Add(data);
+                _db.UserToEventsData.Add(data);
+
+            }
+
             await _db.SaveChangesAsync();
             return dataDuration;
         }

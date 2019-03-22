@@ -45,6 +45,6 @@ namespace LeaveYourCouch.Mvc.Models
     public class EventDataDetailsViewModel
     {
         public Event Event { get; set; }
-        public EventRelativeToUserInformation UserData { get; set; }
+        public List<EventRelativeToUserInformation> UserData { get; set; }
     }
 }

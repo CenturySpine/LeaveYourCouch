@@ -1,109 +1,127 @@
-﻿@model LeaveYourCouch.Mvc.Models.EventDataDetailsViewModel
+﻿@using LeaveYourCouch.Mvc.Business
+@model LeaveYourCouch.Mvc.Models.EventDataDetailsViewModel
 
-    @{
-        ViewBag.Title = "Details";
-        Layout = "~/Views/Shared/_Layout.cshtml";
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Event</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.MaxSeats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.MaxSeats)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.MeetingDetails)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.MeetingDetails)
+        </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.Event.IsPrivate)
+        </dt>*@
+
+        @*<dd>
+            @Html.DisplayFor(model => model.Event.IsPrivate)
+        </dd>*@
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.Time)
+        </dd>
+
+    </dl>
+</div>
+<hr />
+<div class="row text-center">
+    @foreach (var distances in Model.UserData)
+    {
+        string icon;
+        switch (distances.DirectionMode)
+        {
+            case DirectionModes.driving:
+                icon = "fas fa-car";
+                break;
+            case DirectionModes.walking:
+                icon = "fas fa-shoe-prints";
+                break;
+            case DirectionModes.bicycling:
+                icon = "fas fa-bicycle";
+                break;
+            case DirectionModes.transit:
+                icon = "fas fa-bus";
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        <div class="col">
+            <span class="event-user-ditance">
+                <i class='@icon'></i>
+            </span>
+        </div>
     }
 
-    <h2>Details</h2>
+</div>
+<div class="row text-center">
+    @foreach (var distances in Model.UserData)
+    {
+        <div class="col">
+            <span class="event-user-ditance">
+                @distances.Distance.ToString("##.0") @distances.Unit -
+                @distances.Duration min
+            </span>
+        </div>
+    }
 
-    <div>
-        <h4>Event</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Event.Title)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Event.Title)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Event.Description)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Event.Description)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Event.MaxSeats)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Event.MaxSeats)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Event.Address)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Event.Address)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Event.MeetingDetails)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Event.MeetingDetails)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Event.IsPrivate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Event.IsPrivate)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Event.Date)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Event.Date)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Event.Time)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Event.Time)
-            </dd>
-
-        </dl>
-    </div>
-    <hr />
-    <div class="text-center">
-        <span class="event-user-ditance">
-            @Model.UserData.Distance km
-        </span>
-        |
-        <span class="event-user-ditance">
-            <i class="fas fa-shoe-prints"></i>
-            @Model.UserData.DurationWalking mins
-        </span>
-        |
-        <span class="event-user-ditance">
-            <i class="fas fa-car"></i>
-            @Model.UserData.DurationDriving mins
-        </span>
-        |
-        <span class="event-user-ditance">
-            <i class="fas fa-bicycle"></i>
-            @Model.UserData.DurationCycling mins
-        </span>
-        |
-        <span class="event-user-ditance">
-            <i class="fas fa-bus"></i>
-            @Model.UserData.DurationTransit mins
-        </span>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Event.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+</div>
+<hr />
+<div class="text-center">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Event.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</div>

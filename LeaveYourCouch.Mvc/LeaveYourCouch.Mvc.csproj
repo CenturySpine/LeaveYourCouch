@@ -268,6 +268,10 @@
     <Compile Include="Migrations\201903221611199_EventUserDistances3.Designer.cs">
       <DependentUpon>201903221611199_EventUserDistances3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903221643176_EventUserDistancesModified.cs" />
+    <Compile Include="Migrations\201903221643176_EventUserDistancesModified.Designer.cs">
+      <DependentUpon>201903221643176_EventUserDistancesModified.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\CreateEventViewModel.cs" />
     <Compile Include="Models\RelationShipsViewModel.cs" />
     <Compile Include="Resources.fr.Designer.cs">
@@ -457,6 +461,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903221611199_EventUserDistances3.resx">
       <DependentUpon>201903221611199_EventUserDistances3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221643176_EventUserDistancesModified.resx">
+      <DependentUpon>201903221643176_EventUserDistancesModified.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.fr.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

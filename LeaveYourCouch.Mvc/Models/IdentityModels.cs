@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Security.AccessControl;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using LeaveYourCouch.Mvc.Business;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -65,10 +66,10 @@ namespace LeaveYourCouch.Mvc.Models
         public Event Event { get; set; }
         public string  Unit { get; set; }
         public double Distance  { get; set; }
-        public double DurationDriving { get; set; }
-        public double DurationWalking { get; set; }
-        public double DurationCycling { get; set; }
-        public double DurationTransit { get; set; }
+        public double Duration { get; set; }
+        public DirectionModes DirectionMode { get; set; }
+
+
 
     }
 
