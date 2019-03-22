@@ -13,20 +13,22 @@ namespace LeaveYourCouch.Mvc.Controllers
     [Authorize]
     public class ManageController : Controller
     {
-        private ApplicationSignInManager _signInManager;
+        private readonly ApplicationDbContext _dbcontext;
+        private SignInManager<ApplicationUser, string> _signInManager;
         private ApplicationUserManager _userManager;
 
-        public ManageController()
-        {
-        }
+        //public ManageController()
+        //{
+        //}
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(ApplicationUserManager userManager, SignInManager<ApplicationUser, string> signInManager, ApplicationDbContext dbcontext)
         {
+            _dbcontext = dbcontext;
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
-        public ApplicationSignInManager SignInManager
+        public SignInManager<ApplicationUser, string> SignInManager
         {
             get
             {
@@ -53,11 +55,11 @@ namespace LeaveYourCouch.Mvc.Controllers
         public async Task<ActionResult> ConfirmEmailAsync()
         {
             string user;
-            using (var db = new ApplicationDbContext())
-            {
-                user = db.Users.FirstOrDefault(u => u.Email == User.Identity.Name)?.Id;
+            //using (var db = new ApplicationDbContext())
+            //{
+                user = _dbcontext.Users.FirstOrDefault(u => u.Email == User.Identity.Name)?.Id;
                 
-            }
+            //}
              
                 //Task.Delay(2000)
               await  ConfirmPasswordHelper.confirm(UserManager, user, Request, Url)
@@ -112,17 +114,17 @@ namespace LeaveYourCouch.Mvc.Controllers
         public async Task<ActionResult> SavePersonalData(ManageIndexViewModel viewmodel)
         {
 
-            using (var db = ApplicationDbContext.Create())
-            {
-                var user = db.Users.FirstOrDefault(u => u.Id == viewmodel.UserId);
+            //using (var db = ApplicationDbContext.Create())
+            //{
+                var user = _dbcontext.Users.FirstOrDefault(u => u.Id == viewmodel.UserId);
                 if (user != null)
                 {
                     user.Pseudo = viewmodel.Pseudo;
                     user.FirstName = viewmodel.FirstName;
                     user.PostalCode = viewmodel.PostalCode;
-                    await db.SaveChangesAsync();
+                    await _dbcontext.SaveChangesAsync();
                 }
-            }
+            //}
 
             return RedirectToAction("Index", new { Message = ManageMessageId.PersonnalInfos });
         }

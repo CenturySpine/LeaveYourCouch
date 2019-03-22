@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Security.AccessControl;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -35,6 +36,8 @@ namespace LeaveYourCouch.Mvc.Models
         public string Address { get; set; }
         public string MeetingDetails { get; set; }
         public bool IsPrivate { get; set; }
+        public DateTime Date { get; set; }
+        public TimeSpan Time { get; set; }
     }
 
     public class UserRelationship

@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Web;
 using System.Web.Http;
@@ -13,6 +14,7 @@ using System.Web.Routing;
 using LeaveYourCouch.Mvc.Controllers;
 using LeaveYourCouch.Mvc.Migrations;
 using LeaveYourCouch.Mvc.Models;
+using SimpleInjector;
 
 namespace LeaveYourCouch.Mvc
 {
@@ -27,6 +29,7 @@ namespace LeaveYourCouch.Mvc
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
 
             DbcontextTools.Create();
 

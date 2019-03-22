@@ -84,6 +84,15 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleInjector, Version=4.5.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.5.1\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web, Version=4.5.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.4.5.1\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web.Mvc, Version=4.5.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.Mvc.4.5.1\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -192,7 +201,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountValidationControler.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
-    <Compile Include="Controllers\EventsController.cs" />
+    <Compile Include="Controllers\Events1Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RelationsController.cs" />
@@ -204,6 +213,15 @@
     <Compile Include="Migrations\201903121919105_UserGenderAndRelationsip.Designer.cs">
       <DependentUpon>201903121919105_UserGenderAndRelationsip.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903221327145_ModificationEventObject.cs" />
+    <Compile Include="Migrations\201903221327145_ModificationEventObject.Designer.cs">
+      <DependentUpon>201903221327145_ModificationEventObject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903221339597_ModificationEventObject1.cs" />
+    <Compile Include="Migrations\201903221339597_ModificationEventObject1.Designer.cs">
+      <DependentUpon>201903221339597_ModificationEventObject1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CreateEventViewModel.cs" />
     <Compile Include="Models\RelationShipsViewModel.cs" />
     <Compile Include="Resources.fr.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -349,11 +367,16 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Relations\Index.cshtml" />
+    <Content Include="Views\Events1\Create.cshtml" />
+    <Content Include="Views\Events1\Delete.cshtml" />
+    <Content Include="Views\Events1\Details.cshtml" />
+    <Content Include="Views\Events1\Edit.cshtml" />
+    <Content Include="Views\Events1\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Business\" />
     <Folder Include="Views\Cities\" />
   </ItemGroup>
   <ItemGroup>
@@ -380,6 +403,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903121919105_UserGenderAndRelationsip.resx">
       <DependentUpon>201903121919105_UserGenderAndRelationsip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221327145_ModificationEventObject.resx">
+      <DependentUpon>201903221327145_ModificationEventObject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221339597_ModificationEventObject1.resx">
+      <DependentUpon>201903221339597_ModificationEventObject1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.fr.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

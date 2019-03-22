@@ -6,6 +6,12 @@ namespace LeaveYourCouch.Mvc.Controllers
 {
     public class AccountValidationController : Controller
     {
+        private readonly ApplicationDbContext _dbContext;
+
+        public AccountValidationController(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
         /// <summary>
         /// Unobtrusive javascript call to Check if userner (pseudonym) already in use
         /// </summary>
@@ -14,12 +20,12 @@ namespace LeaveYourCouch.Mvc.Controllers
         [System.Web.Http.HttpPost]
         public JsonResult DoesUserNameExist(string Pseudo)
         {
-            using (var db = new ApplicationDbContext())
-            {
-                var user = db.Users.FirstOrDefault(u=>u.Pseudo== Pseudo);
+            //using (var db = new ApplicationDbContext())
+            //{
+                var user = _dbContext.Users.FirstOrDefault(u=>u.Pseudo== Pseudo);
 
                 return Json(user == null);
-            }
+            //}
 
         }
 
@@ -32,12 +38,12 @@ namespace LeaveYourCouch.Mvc.Controllers
         
         public JsonResult DoesUserEmailExist(string Email)
         {
-            using (var db = new ApplicationDbContext())
-            {
-                var user = db.Users.FirstOrDefault(u => u.Email == Email);
+            //using (var db = new ApplicationDbContext())
+            //{
+                var user = _dbContext.Users.FirstOrDefault(u => u.Email == Email);
 
                 return Json(user == null);
-            }
+            //}
 
         }
     }
