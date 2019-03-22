@@ -100,7 +100,7 @@ namespace LeaveYourCouch.Mvc.Controllers
             };
             if (currentuserModel != null)
             {
-                model.PostalCode = currentuserModel.PostalCode;
+                model.Address = currentuserModel.Address;
                 model.Pseudo = currentuserModel.Pseudo;
                 model.FirstName = currentuserModel.FirstName;
                 model.EmailIsconfirmed = currentuserModel.EmailConfirmed;
@@ -121,7 +121,7 @@ namespace LeaveYourCouch.Mvc.Controllers
                 {
                     user.Pseudo = viewmodel.Pseudo;
                     user.FirstName = viewmodel.FirstName;
-                    user.PostalCode = viewmodel.PostalCode;
+                    user.Address = viewmodel.Address;
                     await _dbcontext.SaveChangesAsync();
                 }
             //}

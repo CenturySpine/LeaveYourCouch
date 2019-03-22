@@ -53,27 +53,30 @@
         </dd>
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.Event.IsPrivate)
-        </dt>*@
+                @Html.DisplayNameFor(model => model.Event.IsPrivate)
+            </dt>*@
 
         @*<dd>
-            @Html.DisplayFor(model => model.Event.IsPrivate)
-        </dd>*@
+                @Html.DisplayFor(model => model.Event.IsPrivate)
+            </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Event.Date)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Event.Date)
+            @*@Html.DisplayFor(model => model.Event.Date)*@
+            @Model.Event.Date.ToShortDateString()
         </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Event.Time)
+            
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Event.Time)
+            @*@Html.DisplayFor(model => model.Event.Time)*@
+            @Model.Event.Time.ToString("g")
         </dd>
 
     </dl>
@@ -113,8 +116,10 @@
     {
         <div class="col">
             <span class="event-user-ditance">
-                @distances.Distance.ToString("##.0") @distances.Unit -
-                @distances.Duration min
+                <a href=@distances.MapLink target="_blank">
+                    @distances.Distance.ToString("##.0") @distances.Unit -
+                    @distances.Duration min
+                </a>
             </span>
         </div>
     }
@@ -122,6 +127,11 @@
 </div>
 <hr />
 <div class="text-center">
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Event.Id }) |
+    @if (Model.CanModify)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Event.Id }) <text> | </text>
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Event.Id }) <text> | </text>
+    }
+
     @Html.ActionLink("Back to List", "Index")
 </div>

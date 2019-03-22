@@ -204,7 +204,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountValidationControler.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
-    <Compile Include="Controllers\Events1Controller.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RelationsController.cs" />
@@ -243,6 +243,14 @@
     <Compile Include="Migrations\201903221702308_Initial.cs" />
     <Compile Include="Migrations\201903221702308_Initial.Designer.cs">
       <DependentUpon>201903221702308_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903221804061_AddMapLinktoEventUserDirections.cs" />
+    <Compile Include="Migrations\201903221804061_AddMapLinktoEventUserDirections.Designer.cs">
+      <DependentUpon>201903221804061_AddMapLinktoEventUserDirections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903221847012_ChangePostalCodeToAddress.cs" />
+    <Compile Include="Migrations\201903221847012_ChangePostalCodeToAddress.Designer.cs">
+      <DependentUpon>201903221847012_ChangePostalCodeToAddress.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\CreateEventViewModel.cs" />
     <Compile Include="Models\RelationShipsViewModel.cs" />
@@ -375,11 +383,11 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Relations\Index.cshtml" />
-    <Content Include="Views\Events1\Create.cshtml" />
-    <Content Include="Views\Events1\Delete.cshtml" />
-    <Content Include="Views\Events1\Details.cshtml" />
-    <Content Include="Views\Events1\Edit.cshtml" />
-    <Content Include="Views\Events1\Index.cshtml" />
+    <Content Include="Views\Events\Create.cshtml" />
+    <Content Include="Views\Events\Delete.cshtml" />
+    <Content Include="Views\Events\Details.cshtml" />
+    <Content Include="Views\Events\Edit.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -399,6 +407,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903221702308_Initial.resx">
       <DependentUpon>201903221702308_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221804061_AddMapLinktoEventUserDirections.resx">
+      <DependentUpon>201903221804061_AddMapLinktoEventUserDirections.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221847012_ChangePostalCodeToAddress.resx">
+      <DependentUpon>201903221847012_ChangePostalCodeToAddress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.fr.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

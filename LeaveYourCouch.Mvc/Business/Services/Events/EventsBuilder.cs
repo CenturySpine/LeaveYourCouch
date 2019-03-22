@@ -10,6 +10,7 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
     public interface IEventsBuilder
     {
         Task<EventDataDetailsViewModel> GetUserEventInfos(Event targetevent);
+        Task CreateNewEvent(CreateEventViewModel @event);
     }
 
     public class EventsBuilder : IEventsBuilder
@@ -39,13 +40,34 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
                 }
             }
 
-            return new EventDataDetailsViewModel { Event = targetevent, UserData = dataDuration };
+            var iscurrentuserTheOwner = usr != null && (targetevent.Owner != null && targetevent.Owner.Id == usr.Id);
+            return new EventDataDetailsViewModel { Event = targetevent, UserData = dataDuration,CanModify= iscurrentuserTheOwner };
+        }
+
+        public async Task CreateNewEvent(CreateEventViewModel @event)
+        {
+            var usrmail = UserHelpers.UserName();
+            var usr = await _db.Users.FirstOrDefaultAsync(u => u.Email == usrmail);
+            var evt = new Event
+            {
+                Address = @event.Address,
+                Date = @event.Date,
+                Title = @event.Title,
+                Description = @event.Description,
+                IsPrivate = @event.IsPrivate,
+                MaxSeats = @event.MaxParticipants,
+                MeetingDetails = @event.MeetingPoint,
+                Time = @event.Time
+            };
+            if (usr != null) evt.Owner = usr;
+            _db.Events.Add(evt);
+            await _db.SaveChangesAsync();
         }
 
         private async Task<List<EventRelativeToUserInformation>> BuildDurations(Event targetevent, ApplicationUser usr)
         {
             List<EventRelativeToUserInformation> dataDuration = new List<EventRelativeToUserInformation>();
-            var direction = await _apiHelper.GetDirections(usr.PostalCode, targetevent.Address, "metric");
+            var direction = await _apiHelper.GetDirections(usr.Address, targetevent.Address, "metric");
 
             foreach (var dobj in direction)
             {
@@ -55,8 +77,9 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
                     Event = targetevent,
                     DirectionMode = dobj.Key,
                     Unit = "km",
-                    Distance = (dobj.Value.routes.FirstOrDefault().legs.FirstOrDefault().distance.value) / 1000.0,
-                    Duration = (dobj.Value.routes.FirstOrDefault().legs.FirstOrDefault().duration.value) / 60,
+                    Distance = (dobj.Value.routes.Any() ? dobj.Value.routes.FirstOrDefault().legs.FirstOrDefault().distance.value / 1000.0 : 0.0),
+                    Duration = (dobj.Value.routes.Any() ? dobj.Value.routes.FirstOrDefault().legs.FirstOrDefault().duration.value / 60:0),
+                    MapLink= _apiHelper.GenerateMapLink(usr.Address, targetevent.Address,dobj.Key)
                 };
                 dataDuration.Add(data);
                 _db.UserToEventsData.Add(data);

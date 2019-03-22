@@ -13,26 +13,27 @@ using LeaveYourCouch.Mvc.Models;
 
 namespace LeaveYourCouch.Mvc.Controllers
 {
-    public class Events1Controller : Controller
+    [Authorize]
+    public class EventsController : Controller
     {
         private readonly ApplicationDbContext _db;
         private readonly IApiHelper _apiHelper;
         private readonly IEventsBuilder _eventBuilder;
 
-        public Events1Controller(ApplicationDbContext db, IApiHelper apiHelper, IEventsBuilder eventBuilder)
+        public EventsController(ApplicationDbContext db, IApiHelper apiHelper, IEventsBuilder eventBuilder)
         {
             _db = db;
             _apiHelper = apiHelper;
             _eventBuilder = eventBuilder;
         }
 
-        // GET: Events1
+        // GET: Events
         public async Task<ActionResult> Index()
         {
             return View(await _db.Events.ToListAsync());
         }
 
-        // GET: Events1/Details/5
+        // GET: Events/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,57 +52,75 @@ namespace LeaveYourCouch.Mvc.Controllers
 
 
 
+
+
             return View(dataDuration);
         }
 
-        // GET: Events1/Create
+        // GET: Events/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new CreateEventViewModel());
         }
 
-        // POST: Events1/Create
+        // POST: Events/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Description,MaxSeats,Address,MeetingDetails,IsPrivate,Date,Time")] Event @event)
+        public async Task<ActionResult> Create(CreateEventViewModel @event)
         {
             if (ModelState.IsValid)
             {
-                _db.Events.Add(@event);
-                await _db.SaveChangesAsync();
+
+                await _eventBuilder.CreateNewEvent(@event);
+
                 return RedirectToAction("Index");
             }
 
             return View(@event);
         }
 
-        // GET: Events1/Edit/5
+        // GET: Events/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = await _db.Events.FindAsync(id);
+            Event @event = await _db.Events.Include(e => e.Owner).FirstOrDefaultAsync(e => e.Id == id);
             if (@event == null)
             {
                 return HttpNotFound();
             }
-            return View(@event);
+            return View(new CreateEventViewModel() { Id = @event.Id, Owner = @event.Owner, Date = @event.Date, Title = @event.Title, MeetingPoint = @event.MeetingDetails, MaxParticipants = @event.MaxSeats, Time = @event.Time, Address = @event.Address, IsPrivate = @event.IsPrivate, Description = @event.Description });
         }
 
-        // POST: Events1/Edit/5
+        // POST: Events/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Description,MaxSeats,Address,MeetingDetails,IsPrivate,Date,Time")] Event @event)
+        public async Task<ActionResult> Edit(CreateEventViewModel @event)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(@event).State = EntityState.Modified;
+                var exists = await _db.Events.FirstOrDefaultAsync(r => r.Id == @event.Id);
+
+                if (exists != null)
+                {
+                    exists.Address = @event.Address;
+                    exists.Date = @event.Date;
+                    exists.Title = @event.Title;
+                    exists.Description = @event.Description;
+                    exists.IsPrivate = @event.IsPrivate;
+                    exists.MaxSeats = @event.MaxParticipants;
+                    exists.MeetingDetails = @event.MeetingPoint;
+                    exists.Time = @event.Time;
+                }
+
+                
+                _db.Entry(exists).State = EntityState.Modified;
                 await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

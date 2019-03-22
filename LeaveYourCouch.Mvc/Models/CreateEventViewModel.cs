@@ -18,6 +18,7 @@ namespace LeaveYourCouch.Mvc.Models
 
         [Required]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
 
         [Required]
@@ -46,5 +47,6 @@ namespace LeaveYourCouch.Mvc.Models
     {
         public Event Event { get; set; }
         public List<EventRelativeToUserInformation> UserData { get; set; }
+        public bool CanModify { get; set; }
     }
 }

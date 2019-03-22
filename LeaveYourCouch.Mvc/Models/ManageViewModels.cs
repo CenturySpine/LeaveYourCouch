@@ -19,10 +19,10 @@ namespace LeaveYourCouch.Mvc.Models
         [Remote("DoesUserNameExist", "AccountValidation", HttpMethod = "POST", ErrorMessage = "User name already exists. Please enter a different user name.")]
         public string Pseudo { get; set; }
 
-        [Required(), StringLength(5, MinimumLength = 5, ErrorMessage = "The {0} must be at least {2} characters long and maximum {1} characters long.")]
-        [Display(Name = "Postal code")]
-        [DataType(DataType.PostalCode)]
-        public string PostalCode { get; set; }
+        [Required(), StringLength(100, MinimumLength = 5, ErrorMessage = "The {0} must be at least {2} characters long and maximum {1} characters long.")]
+        [Display(Name = "Address")]
+        
+        public string Address { get; set; }
 
         public bool EmailIsconfirmed { get; set; }
     }

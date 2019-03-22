@@ -27,22 +27,58 @@ namespace LeaveYourCouch.Mvc.Business
             foreach (var dmodes in Enum.GetNames(typeof(DirectionModes)))
             {
                 HttpClient httpcli = new HttpClient();
+                var start = truncateaddress(userAdress);
+                var end = truncateaddress(eventAddress);
                 var request =
-                    $@"https://maps.googleapis.com/maps/api/directions/json?origin={userAdress.Replace(" ", "+")}&destination={eventAddress.Replace(" ", "+")}&mode={dmodes}&units={unit}&key={apkey}";
+                    $@"https://maps.googleapis.com/maps/api/directions/json?origin=" + start + "&destination=" + end + $"&mode={dmodes}&units={unit}&key={apkey}";
 
                 var result = await httpcli.GetStringAsync(request);
                 var objResult = JsonConvert.DeserializeObject<DirectionObject>(result);
-                DirectionModes md = (DirectionModes) Enum.Parse(typeof(DirectionModes), dmodes);
+                DirectionModes md = (DirectionModes)Enum.Parse(typeof(DirectionModes), dmodes);
                 directions.Add(md, objResult);
             }
 
 
             return directions;
         }
+
+        public string GenerateMapLink(string usrPostalCode, string targeteventAddress, DirectionModes mode)
+        {
+            string encodedmode;
+            switch (mode)
+            {
+                case DirectionModes.driving:
+                    encodedmode = "d";
+                    break;
+                case DirectionModes.walking:
+                    encodedmode = "w";
+                    break;
+                case DirectionModes.bicycling:
+                    encodedmode = "b";
+                    break;
+                case DirectionModes.transit:
+                    encodedmode = "r";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+            }
+            var start = $"saddr={truncateaddress(usrPostalCode)}";
+            var end = $"daddr={truncateaddress(targeteventAddress)}";
+            var mod = $"dirflg={encodedmode}";
+            //https://www.google.com/maps/preview?saddr=69006&daddr=la+triche+lyon&dirflg=w
+            var result = $@"https://www.google.com/maps/preview?" + start + "&" + end + "&" + mod;
+            return result;
+        }
+
+        private string truncateaddress(string inputaddress)
+        {
+            return inputaddress.Replace(",", "")?.Replace(";", "").Replace("?", "").Replace(" ", "+");
+        }
     }
 
     public interface IApiHelper
     {
         Task<Dictionary<DirectionModes, DirectionObject>> GetDirections(string userAdress, string eventAddress, string unit);
+        string GenerateMapLink(string usrPostalCode, string targeteventAddress, DirectionModes mode);
     }
 }

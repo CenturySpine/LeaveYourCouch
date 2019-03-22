@@ -6,7 +6,7 @@
 
 @if (!string.IsNullOrEmpty(ViewBag.StatusMessage))
 {
-    <div class="alert alert-success alert-dismissible fade show" role="alert" >
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
         @ViewBag.StatusMessage
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -35,13 +35,17 @@
         </div>
         <div class="form-group row">
             @Html.LabelFor(p => p.Pseudo, new { @class = "col-sm-2 col-form-label" })
-            @Html.TextBoxFor(p => p.Pseudo, null, new { @class = "form-control", placeholder = "Pseudonym", type = "text" ,disabled="" })
-            
+            @Html.TextBoxFor(p => p.Pseudo, null, new { @class = "form-control", placeholder = "Pseudonym", type = "text", disabled = "" })
+
         </div>
         <div class="form-group row">
-            @Html.LabelFor(p => p.PostalCode, new { @class = "col-sm-2 col-form-label" })
-            @Html.TextBoxFor(p => p.PostalCode, null, new { @class = "form-control", placeholder = "PostalCode", type = "text" })
-            @Html.ValidationMessageFor(m => m.PostalCode)
+            @Html.LabelFor(p => p.Address, new { @class = "col-sm-2 col-form-label" })
+            @Html.TextBoxFor(p => p.Address, null, new { @class = "form-control", placeholder = "Address", type = "text" })
+            <span class="event-user-ditance" style="font-size: 1em; margin:auto 5px ;" title=" ! Votre addresse ne sera JAMAIS visible sur le site par les autres utilisateurs !">
+                <i class='fas fa-question-circle align-middle'></i>
+            </span>
+            
+            @Html.ValidationMessageFor(m => m.Address)
         </div>
         <div class="form-group row">
             <div class="col-sm-10">
@@ -49,20 +53,20 @@
             </div>
         </div>
     }
-    
+
     @if (!Model.EmailIsconfirmed)
     {
         using (Html.BeginForm("ConfirmEmailAsync", "Manage", FormMethod.Post, new { @class = "form-group" }))
-         {
-             <div class="form-group row">
-                 <div class="col-sm-10">
-                     <button type="submit" class="btn btn-primary">Confirm email</button>
-                 </div>
-             </div>
-         }
+        {
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Confirm email</button>
+                </div>
+            </div>
+        }
     }
 
-    
+
 
     <hr />
 

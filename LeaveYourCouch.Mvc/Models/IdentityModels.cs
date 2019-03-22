@@ -28,7 +28,7 @@ namespace LeaveYourCouch.Mvc.Models
         }
 
         public string FirstName { get; set; }
-        public string PostalCode { get; set; }
+        public string Address { get; set; }
         public string Pseudo { get; set; }
         public Gender Gender { get; set; }
     }
@@ -68,9 +68,7 @@ namespace LeaveYourCouch.Mvc.Models
         public double Distance  { get; set; }
         public double Duration { get; set; }
         public DirectionModes DirectionMode { get; set; }
-
-
-
+        public string MapLink { get; set; }
     }
 
     public class UserRelationship
