@@ -30,7 +30,7 @@ namespace LeaveYourCouch.UnitTests
         [TestMethod]
         public void TestDurationRoutesApi()
         {
-            //api key =DIRECTION => AIzaSyDmuMl8nM82CswxhQdVM31zpcM0dCSfVHQ
+            
 
             //string startAdress = "14 rue godefroy 69006 Lyon";
             string startAdress = "69006 Lyon";
