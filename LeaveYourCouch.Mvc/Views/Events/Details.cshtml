@@ -1,4 +1,5 @@
 ﻿@using LeaveYourCouch.Mvc.Business
+@using LeaveYourCouch.Mvc.Controllers
 @model LeaveYourCouch.Mvc.Models.EventDataDetailsViewModel
 
 @{
@@ -6,19 +7,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Event</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
+@if (!string.IsNullOrEmpty(ViewBag.StatusMessage))
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @ViewBag.StatusMessage
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<div class="container first-content">
+    <div class="row">
+        <div class="col">
             @Html.DisplayNameFor(model => model.Event.Title)
-        </dt>
+        </div>
+        <div class="col">
+            @Model.Event.Date.ToShortDateString()
 
-        <dd>
-            @Html.DisplayFor(model => model.Event.Title)
-        </dd>
+        </div>
+        <div class="col">
+            @Model.Event.Time.ToString("g")
+
+        </div>
+    </div>
+    <dl class="dl-horizontal">
 
         <dt>
             @Html.DisplayNameFor(model => model.Event.Description)
@@ -33,6 +45,7 @@
         </dt>
 
         <dd>
+            @Html.DisplayFor(model => model.Participants.Count)<text>/</text>
             @Html.DisplayFor(model => model.Event.MaxSeats)
         </dd>
 
@@ -52,86 +65,85 @@
             @Html.DisplayFor(model => model.Event.MeetingDetails)
         </dd>
 
-        @*<dt>
-                @Html.DisplayNameFor(model => model.Event.IsPrivate)
-            </dt>*@
-
-        @*<dd>
-                @Html.DisplayFor(model => model.Event.IsPrivate)
-            </dd>*@
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.Date)
-        </dt>
-
-        <dd>
-            @*@Html.DisplayFor(model => model.Event.Date)*@
-            @Model.Event.Date.ToShortDateString()
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.Time)
-            
-        </dt>
-
-        <dd>
-            @*@Html.DisplayFor(model => model.Event.Time)*@
-            @Model.Event.Time.ToString("g")
-        </dd>
-
     </dl>
-</div>
-<hr />
-<div class="row text-center">
-    @foreach (var distances in Model.UserData)
-    {
-        string icon;
-        switch (distances.DirectionMode)
+
+    <hr />
+    <div class="row text-center">
+        @foreach (var distances in Model.UserData)
         {
-            case DirectionModes.driving:
-                icon = "fas fa-car";
-                break;
-            case DirectionModes.walking:
-                icon = "fas fa-shoe-prints";
-                break;
-            case DirectionModes.bicycling:
-                icon = "fas fa-bicycle";
-                break;
-            case DirectionModes.transit:
-                icon = "fas fa-bus";
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
+            string icon;
+            switch (distances.DirectionMode)
+            {
+                case DirectionModes.driving:
+                    icon = "fas fa-car";
+                    break;
+                case DirectionModes.walking:
+                    icon = "fas fa-shoe-prints";
+                    break;
+                case DirectionModes.bicycling:
+                    icon = "fas fa-bicycle";
+                    break;
+                case DirectionModes.transit:
+                    icon = "fas fa-bus";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            <div class="col">
+                <span class="event-user-ditance">
+                    <i class='@icon'></i>
+                </span>
+            </div>
+        }
+
+    </div>
+    <div class="row text-center">
+        @foreach (var distances in Model.UserData)
+        {
+            <div class="col">
+                <span class="event-user-ditance">
+                    <a href=@distances.MapLink target="_blank">
+                        @distances.Distance.ToString("##.0") @distances.Unit -
+                        @distances.Duration min
+                    </a>
+                </span>
+            </div>
+        }
+
+    </div>
+    <hr />
+    <div class="row">
+        @{
+            var currentUser = UserHelpers.UserName();
+            bool isUnsub = Model.Participants.Any(p => p.Email == currentUser);
+            if (isUnsub)
+            {
+                <div class="col">
+                    @Html.ActionLink("Unsubscribe", "UnSubscribe", new { id = Model.Event.Id }, new { @Class = "btn btn-block btn-primary", Style = "margin:2px 0;" })
+                </div>
+            }
+            else
+            {
+                <div class="col">
+                    @Html.ActionLink("Subscribe", "Subscribe", new { id = Model.Event.Id }, new { @Class = "btn btn-block btn-primary", Style = "margin:2px 0;" })
+                </div>
+            }
+        }
+
+
+
+
+        @if (Model.CanModify)
+        {
+            <div class="col">
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Event.Id }, new { @Class = "btn btn-block  btn-primary", Style = "margin:2px 0;" })
+            </div>
+            <div class="col">
+                @Html.ActionLink("Delete", "Delete", new { id = Model.Event.Id }, new { @Class = "btn btn-block btn-primary", Style = "margin:2px 0;" })
+            </div>
         }
         <div class="col">
-            <span class="event-user-ditance">
-                <i class='@icon'></i>
-            </span>
+            @Html.ActionLink("Back to List", "Index", null, new { @Class = "btn btn-block btn-primary", Style = "margin:2px 0;" })
         </div>
-    }
-
-</div>
-<div class="row text-center">
-    @foreach (var distances in Model.UserData)
-    {
-        <div class="col">
-            <span class="event-user-ditance">
-                <a href=@distances.MapLink target="_blank">
-                    @distances.Distance.ToString("##.0") @distances.Unit -
-                    @distances.Duration min
-                </a>
-            </span>
-        </div>
-    }
-
-</div>
-<hr />
-<div class="text-center">
-    @if (Model.CanModify)
-    {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Event.Id }) <text> | </text>
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Event.Id }) <text> | </text>
-    }
-
-    @Html.ActionLink("Back to List", "Index")
+    </div>
 </div>

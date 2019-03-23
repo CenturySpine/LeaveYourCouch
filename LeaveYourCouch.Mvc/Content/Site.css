@@ -24,11 +24,13 @@ textarea {
 }
 
 .event-user-ditance {
-    font-size: 0.5em;
+    
     color: black;
     margin: 2px;
 }
 
-
+.first-content {
+    margin: 10px;
+}
 
  

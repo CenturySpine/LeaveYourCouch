@@ -19,54 +19,31 @@ namespace LeaveYourCouch.Mvc.Business
     {
 
 
-        public async Task<Dictionary<DirectionModes, DirectionObject>> GetDirections(string userAdress, string eventAddress,
-            string unit)
+        public async Task<DirectionObject> GetDirections(string userAdress, string eventAddress, string unit, DirectionModes md1)
         {
-            Dictionary<DirectionModes, DirectionObject> directions = new Dictionary<DirectionModes, DirectionObject>();
             string apkey = SecretConfiguration.Get("google.direction.api");
-            foreach (var dmodes in Enum.GetNames(typeof(DirectionModes)))
-            {
-                HttpClient httpcli = new HttpClient();
-                var start = truncateaddress(userAdress);
-                var end = truncateaddress(eventAddress);
-                var request =
-                    $@"https://maps.googleapis.com/maps/api/directions/json?origin=" + start + "&destination=" + end + $"&mode={dmodes}&units={unit}&key={apkey}";
 
-                var result = await httpcli.GetStringAsync(request);
-                var objResult = JsonConvert.DeserializeObject<DirectionObject>(result);
-                DirectionModes md = (DirectionModes)Enum.Parse(typeof(DirectionModes), dmodes);
-                directions.Add(md, objResult);
-            }
+            HttpClient httpcli = new HttpClient();
+            var start = truncateaddress(userAdress);
+            var end = truncateaddress(eventAddress);
+            var request =
+                $@"https://maps.googleapis.com/maps/api/directions/json?origin=" + start + "&destination=" + end + $"&mode={md1}&units={unit}&key={apkey}";
+
+            var result = await httpcli.GetStringAsync(request);
+            var objResult = JsonConvert.DeserializeObject<DirectionObject>(result);
 
 
-            return directions;
+
+            return objResult;
         }
 
         public string GenerateMapLink(string usrPostalCode, string targeteventAddress, DirectionModes mode)
         {
-            //string encodedmode;
-            //switch (mode)
-            //{
-            //    case DirectionModes.driving:
-            //        encodedmode = "d";
-            //        break;
-            //    case DirectionModes.walking:
-            //        encodedmode = "w";
-            //        break;
-            //    case DirectionModes.bicycling:
-            //        encodedmode = "b";
-            //        break;
-            //    case DirectionModes.transit:
-            //        encodedmode = "r";
-            //        break;
-            //    default:
-            //        throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
-            //}
             var start = $"origin={truncateaddress(usrPostalCode)}";
             var end = $"destination={truncateaddress(targeteventAddress)}";
             var mod = $"travelmode={mode}";
             //https://www.google.com/maps/dir/?api=1&origin=Space+Needle+Seattle+WA&destination=Pike+Place+Market+Seattle+WA&travelmode=bicycling
-            
+
             var result = $@"https://www.google.com/maps/dir/?api=1&" + start + "&" + end + "&" + mod;
             return result;
         }
@@ -79,7 +56,8 @@ namespace LeaveYourCouch.Mvc.Business
 
     public interface IApiHelper
     {
-        Task<Dictionary<DirectionModes, DirectionObject>> GetDirections(string userAdress, string eventAddress, string unit);
+        Task<DirectionObject> GetDirections(string userAdress, string eventAddress,
+            string unit, DirectionModes md);
         string GenerateMapLink(string usrPostalCode, string targeteventAddress, DirectionModes mode);
     }
 }

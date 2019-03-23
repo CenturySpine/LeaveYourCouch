@@ -10,9 +10,9 @@ using Microsoft.AspNet.Identity;
 
 namespace LeaveYourCouch.Mvc.Controllers
 {
-    static class UserHelpers
+    public static class UserHelpers
     {
-        internal static string UserName()
+        public static string UserName()
         {
             var usr = HttpContext.Current.User.Identity.GetUserName();
             return usr;
