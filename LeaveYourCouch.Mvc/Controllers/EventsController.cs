@@ -132,7 +132,8 @@ namespace LeaveYourCouch.Mvc.Controllers
         // GET: Events
         public async Task<ActionResult> Index()
         {
-            return View(await _db.Events.ToListAsync());
+           var events=await _eventBuilder.ListEvents();
+            return View(events);
         }
 
         // GET: Events/Subscribe/5

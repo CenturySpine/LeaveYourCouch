@@ -1,78 +1,73 @@
-﻿@model IEnumerable<LeaveYourCouch.Mvc.Models.Event>
+﻿@model IEnumerable<LeaveYourCouch.Mvc.Models.EventListItem>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+
+
+<div class="container-fluid first-content">
+
+
+    <div class="row">
+        <div class="col-1 ">
+
+        </div>
+        <div class="col ">
+            <strong>
+                @Html.DisplayNameFor(model => model.Title)
+            </strong>
+        </div>
+        <div class="col text-center">
+            <strong>
+                @Html.DisplayNameFor(model => model.Participants)
+            </strong>
+        </div>
+        <div class="col text-center">
+            <strong>
+                @Html.DisplayNameFor(model => model.Date)
+            </strong>
+        </div>
+        <div class="col text-center d-none d-md-block d-xl-none">
+            <strong>
+                @Html.DisplayNameFor(model => model.Time)
+            </strong>
+        </div>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-1 align-items-center">
+                @if (item.IsPrivate)
+                {
+                    <span  >
+                        <i class='fas fa-lock align-middle'></i>
+                    </span>
+                }
+            </div>
+            <div class="col">
+                @Html.ActionLink(item.Title, "Details", new {id = item.EventId})
+            </div>
+            <div class="col text-center">
+
+                @Html.DisplayFor(modelItem => item.Participants) /
+                @Html.DisplayFor(modelItem => item.MaxParticipants)
+            </div>
+            <div class="col text-center">
+                @item.Date.ToShortDateString()
+            </div>
+            <div class="col text-center d-none d-md-block d-xl-none">
+                @Html.DisplayFor(modelItem => item.Time)
+            </div>
+        </div>
+        <hr/>
+    }
+
+</div>
+
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @Class = "btn btn-primary" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MaxSeats)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MeetingDetails)
-        </th>*@
-        @*<th>
-            @Html.DisplayNameFor(model => model.IsPrivate)
-        </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Time)
-        </th>
-        @*<th></th>*@
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.Title, "Details", new { id = item.Id })
-            @*@Html.DisplayFor(modelItem => item.Title)*@
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaxSeats)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MeetingDetails)
-        </td>*@
-        @*<td>
-            @Html.DisplayFor(modelItem => item.IsPrivate)
-        </td>*@
-        <td>
-            @item.Date.ToShortDateString()
-            @*@Html.DisplayFor(modelItem => item.Date)*@
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-        <td>@*  *@
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |*@
-            @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
-            @*@Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
-        @*</td>*@
-    </tr>
-}
-
-</table>

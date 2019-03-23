@@ -119,13 +119,23 @@
             if (isUnsub)
             {
                 <div class="col">
-                    @Html.ActionLink("Unsubscribe", "UnSubscribe", new { id = Model.Event.Id }, new { @Class = "btn btn-block btn-primary", Style = "margin:2px 0;" })
+                    <a Class = "btn btn-block  btn-primary" Style = "margin:2px 0;" href="/Events/UnSubscribe/@Model.Event.Id">
+                        <span >
+                            <i class="fas fa-sign-out-alt"></i>
+                        </span>
+                    </a>
+                    @*@Html.ActionLink("Unsubscribe", "UnSubscribe", new {id = Model.Event.Id}, new {@Class = "btn btn-block btn-primary", Style = "margin:2px 0;"})*@
                 </div>
             }
             else
             {
                 <div class="col">
-                    @Html.ActionLink("Subscribe", "Subscribe", new { id = Model.Event.Id }, new { @Class = "btn btn-block btn-primary", Style = "margin:2px 0;" })
+                    <a Class = "btn btn-block  btn-primary" Style = "margin:2px 0;" href="/Events/Subscribe/@Model.Event.Id">
+                        <span >
+                            <i class="fas fa-sign-in-alt"></i>
+                        </span>
+                    </a>
+                    @*@Html.ActionLink("Subscribe", "Subscribe", new {id = Model.Event.Id}, new {@Class = "btn btn-block btn-primary", Style = "margin:2px 0;"})*@
                 </div>
             }
         }
@@ -136,14 +146,30 @@
         @if (Model.CanModify)
         {
             <div class="col">
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Event.Id }, new { @Class = "btn btn-block  btn-primary", Style = "margin:2px 0;" })
+
+                <a Class = "btn btn-block  btn-primary" Style = "margin:2px 0;" href="/Events/Edit/@Model.Event.Id">
+                    <span >
+                        <i class="fas fa-edit"></i>
+                    </span>
+                </a>
+                @*@Html.ActionLink("Edit", "Edit", new {id = Model.Event.Id}, new {@Class = "btn btn-block  btn-primary", Style = "margin:2px 0;"})*@
             </div>
             <div class="col">
-                @Html.ActionLink("Delete", "Delete", new { id = Model.Event.Id }, new { @Class = "btn btn-block btn-primary", Style = "margin:2px 0;" })
+                <a Class = "btn btn-block  btn-primary" Style = "margin:2px 0;" href="/Events/Delete/@Model.Event.Id">
+                    <span >
+                        <i class="fas fa-trash"></i>
+                    </span>
+                </a>
+                @*@Html.ActionLink("Delete", "Delete", new {id = Model.Event.Id}, new {@Class = "btn btn-block btn-primary", Style = "margin:2px 0;"})*@
             </div>
         }
-        <div class="col">
-            @Html.ActionLink("Back to List", "Index", null, new { @Class = "btn btn-block btn-primary", Style = "margin:2px 0;" })
+        <div class="col-lg">
+            <a Class = "btn btn-block  btn-primary" Style = "margin:2px 0;" href="/Events/Index">
+                <span >
+                    <i class="fas fa-list-ul"></i>
+                </span>
+            </a>
+            @*@Html.ActionLink("Back to List", "Index", null, new {@Class = "btn btn-block btn-primary", Style = "margin:2px 0;"})*@
         </div>
     </div>
 </div>

@@ -2,6 +2,7 @@
 using LeaveYourCouch.Mvc.GooglePlaceApiModels.DirectionApi;
 using LeaveYourCouch.Mvc.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
 
         Task<EventDataDetailsViewModel> GetEventInfos(Event targetEvent);
         Task RemoveParticipation(Event @event);
+        Task<List<EventListItem>> ListEvents();
     }
 
     public class EventsBuilder : IEventsBuilder
@@ -57,6 +59,31 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
                 await _db.SaveChangesAsync();
             }
 
+        }
+
+        public async Task<List<EventListItem>> ListEvents()
+        {
+            List<EventListItem> list = new List<EventListItem>();
+            var allevents = await _db.Events.ToListAsync();
+            foreach (var evt in allevents)
+            {
+                var parts = await _db.Participations.Include(p => p.Event).Where(f => f.Event.Id == evt.Id).CountAsync();
+                var display = new EventListItem
+                {
+                    Date = evt.Date,
+                    EventId = evt.Id,
+                    MaxParticipants = evt.MaxSeats,
+                    IsPrivate = evt.IsPrivate,
+                    Time = evt.Time,
+                    Participants = parts,
+                    Title = evt.Title
+                };
+                
+                
+                list.Add(display);
+            }
+
+            return list.OrderByDescending(g=>g.Date).ThenByDescending(g=>g.Time).ToList();
         }
 
         public async Task CreateNewEvent(CreateEventViewModel @event)
@@ -102,7 +129,7 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
 
         public async Task<EventDataDetailsViewModel> GetEventInfos(Event targetEvent)
         {
-            
+
             var usr = await GetCurrentUser();
             var dataDuration = _db.UserToEventsData.Include(t => t.Event).Include(f => f.User).Where(evf => evf.User.Id == usr.Id && evf.Event.Id == targetEvent.Id).ToList();
 

@@ -17,6 +17,7 @@ namespace LeaveYourCouch.Mvc.Models
 
         }
 
+
         public ApplicationDbContext(string cnString) : base(cnString, throwIfV1Schema: false)
         {
             _instance = this;

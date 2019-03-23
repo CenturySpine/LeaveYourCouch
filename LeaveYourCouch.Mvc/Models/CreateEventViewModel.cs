@@ -50,4 +50,15 @@ namespace LeaveYourCouch.Mvc.Models
         public bool CanModify { get; set; }
         public List<ApplicationUser> Participants { get; set; }
     }
+
+    public class EventListItem
+    {
+        public int EventId { get; set; }
+        public string Title { get; set; }
+        public bool IsPrivate { get; set; }
+        public int MaxParticipants { get; set; }
+        public DateTime Date { get; set; }
+        public TimeSpan Time { get; set; }
+        public int Participants { get; set; }
+    }
 }
