@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using LeaveYourCouch.Mvc.Business.Services.Users;
 using LeaveYourCouch.Mvc.Models;
 using Microsoft.AspNet.Identity;
 
@@ -19,63 +20,31 @@ namespace LeaveYourCouch.Mvc.Controllers
         }
     }
 
-    static class RelationshipHelper
-    {
-        //internal static List<RelationViewModel> GetRelations(RelationshipStatus status)
-        //{
-        //    List<RelationViewModel> targetList= new List<RelationViewModel>();
-        //    var usr = UserHelpers.UserName();
 
-        //    using (var db = new ApplicationDbContext())
-        //    {
-
-        //        var usrRelations = db.Relations.Where(r => (r.Issuer.Email == usr || r.Recipient.Email == usr) && r.Status == status)
-        //            .Include(r => r.Issuer)
-        //            .Include(r => r.Recipient)
-        //            .Select(r => r)
-        //            .ToList();
-        //        List<string> distinctids = new List<string>();
-        //        foreach (var usrr in usrRelations)
-        //        {
-        //            if (!distinctids.Contains(usrr.Issuer.Id))
-        //                distinctids.Add(usrr.Issuer.Id);
-        //            if (!distinctids.Contains(usrr.Recipient.Id))
-        //                distinctids.Add(usrr.Recipient.Id);
-        //        }
-
-        //        var friends2 = (from u in db.Users
-        //            where u.Email != usr
-        //            where distinctids.Contains(u.Id)
-        //            select u).ToList();
-
-
-
-        //        targetList.AddRange(friends2.Select(f=>new RelationViewModel{ Id=f.Id,FirstName=f.FirstName,UserName=f.Pseudo}));
-
-        //    }
-
-        //    return targetList;
-        //}
-
-    }
 
     [Authorize]
     public class RelationsController : Controller
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IRelationsManager _relman;
 
-        public RelationsController(ApplicationDbContext dbContext)
+        public RelationsController(IRelationsManager relman)
         {
-            _dbContext = dbContext;
+            _relman = relman;
         }
         // GET: Relations
         public ActionResult Index()
         {
             RelationShipsViewModel vm = new RelationShipsViewModel();
-            vm.BlackList = _dbContext.GetRelations(RelationshipStatus.Blacklisted);
-            vm.Friends = _dbContext.GetRelations(RelationshipStatus.Accepted);
-            vm.Pendings = _dbContext.GetRelations(RelationshipStatus.Pending);
+            vm.BlackList = _relman.GetRelations(RelationshipStatus.Blacklisted);
+            vm.Friends = _relman.GetRelations(RelationshipStatus.Accepted);
+            vm.Pendings = _relman.GetRelations(RelationshipStatus.Pending);
             return View(vm);
         }
+    }
+
+    [Authorize]
+    public class UsersControler : Controller
+    {
+
     }
 }

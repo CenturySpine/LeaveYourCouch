@@ -41,14 +41,4 @@ namespace LeaveYourCouch.Mvc.Business.Services
         }
 
     }
-
-    class Secretscontainer
-    {
-        public List<Secret> Secrets { get; set; }
-    }
-    internal class Secret
-    {
-        public string Key { get; set; }
-        public string Value { get; set; }
-    }
 }

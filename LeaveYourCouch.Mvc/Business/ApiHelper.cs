@@ -8,13 +8,6 @@ using Newtonsoft.Json;
 
 namespace LeaveYourCouch.Mvc.Business
 {
-    public enum DirectionModes
-    {
-        driving,
-        walking,
-        bicycling,
-        transit
-    }
     public class ApiHelper : IApiHelper
     {
 
@@ -52,12 +45,5 @@ namespace LeaveYourCouch.Mvc.Business
         {
             return inputaddress.Replace(",", "")?.Replace(";", "").Replace("?", "").Replace(" ", "+");
         }
-    }
-
-    public interface IApiHelper
-    {
-        Task<DirectionObject> GetDirections(string userAdress, string eventAddress,
-            string unit, DirectionModes md);
-        string GenerateMapLink(string usrPostalCode, string targeteventAddress, DirectionModes mode);
     }
 }

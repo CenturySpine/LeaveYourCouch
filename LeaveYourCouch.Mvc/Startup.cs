@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Services.Description;
 using LeaveYourCouch.Mvc.Business;
 using LeaveYourCouch.Mvc.Business.Services.Events;
+using LeaveYourCouch.Mvc.Business.Services.Users;
 using LeaveYourCouch.Mvc.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -37,6 +38,7 @@ namespace LeaveYourCouch.Mvc
             //container.Register<ApplicationSignInManager>(Lifestyle.Scoped);
 
             container.Register<IApiHelper, ApiHelper>();
+            container.Register<IRelationsManager, RelationsManager>();
             container.Register<IEventsBuilder, EventsBuilder>();
             container.Register<IDbContextFactory<ApplicationDbContext>>(() => new MigrationsContextFactory(container));
 

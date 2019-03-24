@@ -8,6 +8,8 @@ using SimpleInjector;
 
 namespace LeaveYourCouch.Mvc.Models
 {
+
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         internal static ApplicationDbContext _instance;
@@ -48,41 +50,7 @@ namespace LeaveYourCouch.Mvc.Models
             return username;
         }
 
-        internal List<RelationViewModel> GetRelations(RelationshipStatus status)
-        {
-            List<RelationViewModel> targetList = new List<RelationViewModel>();
-            var usr = UserHelpers.UserName();
 
-            //using (var db = new ApplicationDbContext())
-            //{
-
-            var usrRelations = Relations.Where(r => (r.Issuer.Email == usr || r.Recipient.Email == usr) && r.Status == status)
-                .Include(r => r.Issuer)
-                .Include(r => r.Recipient)
-                .Select(r => r)
-                .ToList();
-            List<string> distinctids = new List<string>();
-            foreach (var usrr in usrRelations)
-            {
-                if (!distinctids.Contains(usrr.Issuer.Id))
-                    distinctids.Add(usrr.Issuer.Id);
-                if (!distinctids.Contains(usrr.Recipient.Id))
-                    distinctids.Add(usrr.Recipient.Id);
-            }
-
-            var friends2 = (from u in Users
-                            where u.Email != usr
-                            where distinctids.Contains(u.Id)
-                            select u).ToList();
-
-
-
-            targetList.AddRange(friends2.Select(f => new RelationViewModel { Id = f.Id, FirstName = f.FirstName, UserName = f.Pseudo }));
-
-            //}
-
-            return targetList;
-        }
     }
 
     public class MigrationsContextFactory : IDbContextFactory<ApplicationDbContext>
