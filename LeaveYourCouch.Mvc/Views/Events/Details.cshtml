@@ -15,57 +15,56 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+
+
+
 }
-<div class="container first-content">
+
+<div class="container-fluid first-content">
+
     <div class="row">
         <div class="col">
-            @Html.DisplayNameFor(model => model.Event.Title)
-        </div>
-        <div class="col">
-            @Model.Event.Date.ToShortDateString()
+            <div class="card" style="margin: 2px 0">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(model => model.Event.Title)</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"> @Model.Event.Date.ToLongDateString()</h6>
+                    <h6 class="card-subtitle mb-2 text-muted"> @Model.Event.Time.ToString("g")</h6>
+                    <p class="card-text">
+                        <h6 class="card-subtitle mb-2">
+                            @Html.DisplayNameFor(model => model.Event.MaxSeats)
+                        </h6>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            @Html.DisplayFor(model => model.Participants.Count)<text>/</text>
+                            @Html.DisplayFor(model => model.Event.MaxSeats)
+                        </h6>
+                        <h6 class="card-subtitle mb-2">
+                            @Html.DisplayNameFor(model => model.Event.Address)
+                        </h6>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            @Html.DisplayFor(model => model.Event.Address)
+                        </h6>
+                        <h6 class="card-subtitle mb-2">
+                            @Html.DisplayNameFor(model => model.Event.MeetingDetails)
+                        </h6>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            @Html.DisplayFor(model => model.Event.MeetingDetails)
+                        </h6>
 
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="col">
-            @Model.Event.Time.ToString("g")
 
+        <div class="col-md">
+            <div class="card" style="margin: 2px 0">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(model => model.Event.Description)</h5>
+
+                    @Html.DisplayFor(model => model.Event.Description)
+                </div>
+            </div>
         </div>
     </div>
-    <dl class="dl-horizontal">
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Event.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.MaxSeats)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Participants.Count)<text>/</text>
-            @Html.DisplayFor(model => model.Event.MaxSeats)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Event.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.MeetingDetails)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Event.MeetingDetails)
-        </dd>
-
-    </dl>
 
     <hr />
     <div class="row text-center">
@@ -119,23 +118,24 @@
             if (isUnsub)
             {
                 <div class="col">
-                    <a Class = "btn btn-block  btn-primary" Style = "margin:2px 0;" href="/Events/UnSubscribe/@Model.Event.Id">
-                        <span >
+                    <a Class="btn btn-block  btn-warning" Style="margin: 2px 0;" href="/Events/UnSubscribe/@Model.Event.Id">
+                        <span>
                             <i class="fas fa-sign-out-alt"></i>
                         </span>
+                        <span class="d-none d-md-inline">Unsubscribe</span>
+
                     </a>
-                    @*@Html.ActionLink("Unsubscribe", "UnSubscribe", new {id = Model.Event.Id}, new {@Class = "btn btn-block btn-primary", Style = "margin:2px 0;"})*@
                 </div>
             }
             else
             {
                 <div class="col">
-                    <a Class = "btn btn-block  btn-primary" Style = "margin:2px 0;" href="/Events/Subscribe/@Model.Event.Id">
-                        <span >
+                    <a Class="btn btn-block  btn-success" Style="margin: 2px 0;" href="/Events/Subscribe/@Model.Event.Id">
+                        <span>
                             <i class="fas fa-sign-in-alt"></i>
                         </span>
+                        <span class="d-none d-md-inline">Subscribe</span>
                     </a>
-                    @*@Html.ActionLink("Subscribe", "Subscribe", new {id = Model.Event.Id}, new {@Class = "btn btn-block btn-primary", Style = "margin:2px 0;"})*@
                 </div>
             }
         }
@@ -147,29 +147,30 @@
         {
             <div class="col">
 
-                <a Class = "btn btn-block  btn-primary" Style = "margin:2px 0;" href="/Events/Edit/@Model.Event.Id">
-                    <span >
+                <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="/Events/Edit/@Model.Event.Id">
+                    <span>
                         <i class="fas fa-edit"></i>
                     </span>
+                    <span class="d-none d-md-inline">Edit</span>
                 </a>
-                @*@Html.ActionLink("Edit", "Edit", new {id = Model.Event.Id}, new {@Class = "btn btn-block  btn-primary", Style = "margin:2px 0;"})*@
             </div>
             <div class="col">
-                <a Class = "btn btn-block  btn-primary" Style = "margin:2px 0;" href="/Events/Delete/@Model.Event.Id">
-                    <span >
+                <a Class="btn btn-block  btn-danger" Style="margin: 2px 0;" href="/Events/Delete/@Model.Event.Id">
+                    <span>
                         <i class="fas fa-trash"></i>
                     </span>
+                    <span class="d-none d-md-inline">Delete</span>
                 </a>
-                @*@Html.ActionLink("Delete", "Delete", new {id = Model.Event.Id}, new {@Class = "btn btn-block btn-primary", Style = "margin:2px 0;"})*@
             </div>
         }
         <div class="col-lg">
-            <a Class = "btn btn-block  btn-primary" Style = "margin:2px 0;" href="/Events/Index">
-                <span >
+            <a Class="btn btn-block  btn-outline-secondary" Style="margin: 2px 0;" href="/Events/Index">
+                <span>
                     <i class="fas fa-list-ul"></i>
                 </span>
+                <span class="d-none d-md-inline">Back to list</span>
             </a>
-            @*@Html.ActionLink("Back to List", "Index", null, new {@Class = "btn btn-block btn-primary", Style = "margin:2px 0;"})*@
         </div>
     </div>
 </div>
+
