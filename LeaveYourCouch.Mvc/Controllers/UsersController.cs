@@ -46,6 +46,7 @@ namespace LeaveYourCouch.Mvc.Controllers
                 message == UserInteractions.FriendRequestSent ? "Friend request sent"
                 : message == UserInteractions.FriendRequestAccepted ? "Friend request accepted"
                 : message == UserInteractions.UserAddedToBlacklist ? "User blacklisted"
+                    :message==UserInteractions.RequestCanceled? "Friend request canceled"
                 : string.Empty;
             return View(model);
         }
@@ -110,8 +111,21 @@ namespace LeaveYourCouch.Mvc.Controllers
 
         public async Task<ActionResult> GetPendingRequests()
         {
-            var pendinfRequests = await _relMan.GetNonSelfIssuingPendingREquest();
+            var pendinfRequests = await _relMan.GetNonSelfIssuingPendingRequest();
             return PartialView("_PendingRequestsDisplay", pendinfRequests);
+        }
+
+        public async Task<ActionResult> Cancel(string id)
+        {
+
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            await _relMan.CancelRequest(id);
+            return RedirectToAction("Profile", new { id, Message = UserInteractions.RequestCanceled });
+
         }
     }
 }

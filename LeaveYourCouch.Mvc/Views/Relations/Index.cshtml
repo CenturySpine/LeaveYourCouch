@@ -20,8 +20,17 @@
         {
             <li>
                 <a href="@Url.Action("Profile","Users",new {id=@relat.UserId})">@relat.FirstName,@relat.UserName</a>
-                <a href="@Url.Action("Accept","Users",new {id=relat.UserId})">Accept</a> <text> | </text>
-                <a href="@Url.Action("Reject","Users",new {id=relat.UserId})">Reject</a>
+                
+                @if (relat.CanAcceptOrReject)
+                {
+                    <a href="@Url.Action("Accept","Users",new {id=relat.UserId})">Accept</a> <text> | </text>
+                    <a href="@Url.Action("Reject","Users",new {id=relat.UserId})">Reject</a>
+                }
+                @if (relat.CanCancel)
+                {
+                    <a href="@Url.Action("Cancel","Users",new {id=relat.UserId})">Cancel</a>
+                    
+                }
             </li>
 
 

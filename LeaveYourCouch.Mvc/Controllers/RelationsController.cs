@@ -52,6 +52,7 @@ namespace LeaveYourCouch.Mvc.Controllers
         FriendRequestAccepted,
         FriendRemoved,
         UserAddedToBlacklist,
+        RequestCanceled
     }
 
     public class UserProfileModel

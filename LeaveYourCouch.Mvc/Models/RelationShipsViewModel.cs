@@ -27,6 +27,7 @@ namespace LeaveYourCouch.Mvc.Models
         public string FirstName { get; set; }
         public string UserName { get; set; }
         public bool CanAcceptOrReject { get; set; }
+        public bool CanCancel { get; set; }
     }
 
   

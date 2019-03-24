@@ -13,7 +13,8 @@ namespace LeaveYourCouch.Mvc.Business.Services.Users
         Task AddFriendRequest(string id);
         Task RemoveFriend(string id);
         Task AcceptFriendRequest(string id);
-        Task<int> GetNonSelfIssuingPendingREquest();
+        Task<int> GetNonSelfIssuingPendingRequest();
         Task<bool> IsFriend(RelationshipStatus status, string applicationUserId);
+        Task CancelRequest(string id);
     }
 }
