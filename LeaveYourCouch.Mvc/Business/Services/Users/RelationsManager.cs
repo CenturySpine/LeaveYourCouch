@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using LeaveYourCouch.Mvc.Controllers;
 using LeaveYourCouch.Mvc.Models;
@@ -22,8 +23,7 @@ namespace LeaveYourCouch.Mvc.Business.Services.Users
             List<RelationViewModel> targetList = new List<RelationViewModel>();
             var usr = UserHelpers.UserName();
 
-            //using (var db = new ApplicationDbContext())
-            //{
+
 
             var usrRelations = _db.Relations.Where(r => (r.Issuer.Email == usr || r.Recipient.Email == usr) && r.Status == status)
                 .Include(r => r.Issuer)
@@ -48,9 +48,18 @@ namespace LeaveYourCouch.Mvc.Business.Services.Users
 
             targetList.AddRange(friends2.Select(f => new RelationViewModel { Id = f.Id, FirstName = f.FirstName, UserName = f.Pseudo }));
 
-            //}
+   
 
             return targetList;
+        }
+
+        public async Task<ApplicationUser> GetProfile(string userid)
+        {
+            
+
+            var targetuser = await _db.Users.FirstOrDefaultAsync(u => u.Id == userid);
+
+            return targetuser;
         }
     }
 }

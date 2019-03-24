@@ -1,0 +1,54 @@
+﻿@model LeaveYourCouch.Mvc.Controllers.UserProfileModel
+
+
+
+<h2>User</h2>
+
+<div class="row">
+
+    @if (Model.IsCurrentUser)
+    {
+
+
+        <div class="col">
+
+            <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("Index", "Manage")">
+                <span>
+                    <i class="fas fa-user-edit"></i>
+                </span>
+                <span class="d-none d-md-inline">Edit my profile</span>
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="col">
+
+            <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("AddFriend", "Users", new {id=@Model.UserId})">
+                <span>
+                    <i class="fas fa-user-plus"></i>
+                </span>
+                <span class="d-none d-md-inline">Add Friend</span>
+            </a>
+        </div>
+
+        <div class="col">
+
+            <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("RemoveFriend", "Users", new {id=@Model.UserId})">
+                <span>
+                    <i class="fas fa-user-minus"></i>
+                </span>
+                <span class="d-none d-md-inline">Remove Friend</span>
+            </a>
+        </div>
+        <div class="col">
+
+            <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("AddToBlackList", "Users", new {id=@Model.UserId})">
+                <span>
+                    <i class="fas fa-ban"></i>
+                </span>
+                <span class="d-none d-md-inline">Blacklist</span>
+            </a>
+        </div>
+    }
+</div>

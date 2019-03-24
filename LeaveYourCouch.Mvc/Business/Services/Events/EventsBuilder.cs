@@ -51,7 +51,7 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
         public async Task<List<EventListItem>> ListEvents()
         {
             List<EventListItem> list = new List<EventListItem>();
-            var allevents = await _db.Events.ToListAsync();
+            var allevents = await _db.Events.Include(p=>p.Owner).ToListAsync();
             foreach (var evt in allevents)
             {
                 var parts = await _db.Participations.Include(p => p.Event).Where(f => f.Event.Id == evt.Id).CountAsync();
@@ -63,7 +63,9 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
                     IsPrivate = evt.IsPrivate,
                     Time = evt.Time,
                     Participants = parts,
-                    Title = evt.Title
+                    Title = evt.Title,
+                    Owner=evt.Owner.Pseudo,
+                    OwnerId=evt.Owner.Id
                 };
                 
                 

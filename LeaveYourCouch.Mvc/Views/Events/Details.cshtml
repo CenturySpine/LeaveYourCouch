@@ -118,7 +118,8 @@
             if (isUnsub)
             {
                 <div class="col">
-                    <a Class="btn btn-block  btn-warning" Style="margin: 2px 0;" href="/Events/UnSubscribe/@Model.Event.Id">
+                    <a Class="btn btn-block  btn-warning" Style="margin: 2px 0;"
+                       href="@Url.Action("UnSubscribe", "Events", new {id=@Model.Event.Id})">
                         <span>
                             <i class="fas fa-sign-out-alt"></i>
                         </span>
@@ -130,7 +131,7 @@
             else
             {
                 <div class="col">
-                    <a Class="btn btn-block  btn-success" Style="margin: 2px 0;" href="/Events/Subscribe/@Model.Event.Id">
+                    <a Class="btn btn-block  btn-success" Style="margin: 2px 0;" href="@Url.Action("Subscribe", "Events", new {id=@Model.Event.Id})">
                         <span>
                             <i class="fas fa-sign-in-alt"></i>
                         </span>
@@ -147,7 +148,7 @@
         {
             <div class="col">
 
-                <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="/Events/Edit/@Model.Event.Id">
+                <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("Edit", "Events", new {id=@Model.Event.Id})">
                     <span>
                         <i class="fas fa-edit"></i>
                     </span>
@@ -155,7 +156,7 @@
                 </a>
             </div>
             <div class="col">
-                <a Class="btn btn-block  btn-danger" Style="margin: 2px 0;" href="/Events/Delete/@Model.Event.Id">
+                <a Class="btn btn-block  btn-danger" Style="margin: 2px 0;" href="@Url.Action("Delete", "Events", new {id=@Model.Event.Id})">
                     <span>
                         <i class="fas fa-trash"></i>
                     </span>
@@ -164,7 +165,7 @@
             </div>
         }
         <div class="col-lg">
-            <a Class="btn btn-block  btn-outline-secondary" Style="margin: 2px 0;" href="/Events/Index">
+            <a Class="btn btn-block  btn-outline-secondary" Style="margin: 2px 0;" href="@Url.Action("Index", "Events")">
                 <span>
                     <i class="fas fa-list-ul"></i>
                 </span>

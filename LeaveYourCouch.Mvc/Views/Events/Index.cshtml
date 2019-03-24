@@ -19,6 +19,11 @@
                 @Html.DisplayNameFor(model => model.Title)
             </strong>
         </div>
+        <div class="col ">
+            <strong>
+                @Html.DisplayNameFor(model => model.Owner)
+            </strong>
+        </div>
         <div class="col text-center">
             <strong>
                 @Html.DisplayNameFor(model => model.Participants)
@@ -42,13 +47,17 @@
             <div class="col-1 align-items-center">
                 @if (item.IsPrivate)
                 {
-                    <span  >
+                    <span>
                         <i class='fas fa-lock align-middle'></i>
                     </span>
                 }
             </div>
             <div class="col">
-                @Html.ActionLink(item.Title, "Details", new {id = item.EventId})
+                @Html.ActionLink(item.Title, "Details", new { id = item.EventId })
+            </div>
+            <div class="col">
+                
+                @Html.ActionLink(item.Owner, "Profile", "Users", new {id = item.OwnerId}, null)
             </div>
             <div class="col text-center">
 
@@ -62,7 +71,7 @@
                 @Html.DisplayFor(modelItem => item.Time)
             </div>
         </div>
-        <hr/>
+        <hr />
     }
 
 </div>

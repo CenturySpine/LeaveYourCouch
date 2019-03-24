@@ -60,5 +60,7 @@ namespace LeaveYourCouch.Mvc.Models
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
         public int Participants { get; set; }
+        public string Owner { get; set; }
+        public string OwnerId { get; set; }
     }
 }
