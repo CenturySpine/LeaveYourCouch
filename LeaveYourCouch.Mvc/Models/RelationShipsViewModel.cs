@@ -23,9 +23,10 @@ namespace LeaveYourCouch.Mvc.Models
 
     public class RelationViewModel
     {
-        public string Id { get; set; }
+        public string UserId { get; set; }
         public string FirstName { get; set; }
         public string UserName { get; set; }
+        public bool CanAcceptOrReject { get; set; }
     }
 
   

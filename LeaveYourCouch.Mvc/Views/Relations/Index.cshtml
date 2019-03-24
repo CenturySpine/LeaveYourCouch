@@ -11,14 +11,20 @@
     <ul>
         @foreach (var relat in Model.Friends)
         {
-            <li>@relat.FirstName,@relat.UserName</li>
+        <a href="@Url.Action("Profile","Users",new {id=@relat.UserId})">@relat.FirstName,@relat.UserName</a>
         }
     </ul>
     <h3>Pending</h3>
     <ul>
         @foreach (var relat in Model.Pendings)
         {
-            <li>@relat.FirstName,@relat.UserName</li>
+            <li>
+                <a href="@Url.Action("Profile","Users",new {id=@relat.UserId})">@relat.FirstName,@relat.UserName</a>
+                <a href="@Url.Action("Accept","Users",new {id=relat.UserId})">Accept</a> <text> | </text>
+                <a href="@Url.Action("Reject","Users",new {id=relat.UserId})">Reject</a>
+            </li>
+
+
         }
     </ul>
     <h3>Blacklist</h3>

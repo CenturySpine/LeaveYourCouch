@@ -216,6 +216,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RelationsController.cs" />
     <Compile Include="Controllers\RemoteToolsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -289,6 +290,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\paypalQRCode.png" />
     <Content Include="Content\SocialButtons.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -396,6 +398,7 @@
     <Content Include="Views\Events\Edit.cshtml" />
     <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Users\Profile.cshtml" />
+    <Content Include="Views\Shared\_PendingRequestsDisplay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

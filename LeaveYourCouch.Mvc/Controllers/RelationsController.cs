@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -34,12 +32,12 @@ namespace LeaveYourCouch.Mvc.Controllers
             _relman = relman;
         }
         // GET: Relations
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             RelationShipsViewModel vm = new RelationShipsViewModel();
-            vm.BlackList = _relman.GetRelations(RelationshipStatus.Blacklisted);
-            vm.Friends = _relman.GetRelations(RelationshipStatus.Accepted);
-            vm.Pendings = _relman.GetRelations(RelationshipStatus.Pending);
+            vm.BlackList = await _relman.GetRelations(RelationshipStatus.Blacklisted);
+            vm.Friends = await _relman.GetRelations(RelationshipStatus.Accepted);
+            vm.Pendings = await _relman.GetRelations(RelationshipStatus.Pending);
             return View(vm);
         }
 
@@ -47,61 +45,23 @@ namespace LeaveYourCouch.Mvc.Controllers
 
     }
 
-    [Authorize]
-    public class UsersController : Controller
+
+    public enum UserInteractions
     {
-        private readonly IRelationsManager _relMan;
-
-        public UsersController(IRelationsManager relMan)
-        {
-            _relMan = relMan;
-        }
-        public async Task<ActionResult> Profile(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ApplicationUser applicationUser = await _relMan.GetProfile(id);
-            if (applicationUser == null)
-            {
-                return HttpNotFound();
-            }
-
-            var current = UserHelpers.UserName();
-            UserProfileModel model = new UserProfileModel
-            {
-                UserId = applicationUser.Id,
-                IsCurrentUser=applicationUser.Email== current,
-            };
-
-            return View(model);
-        }
-
-        public ActionResult AddFriend(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            return RedirectToAction("Profile", new { id });
-        }
-
-        public ActionResult RemoveFriend(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ActionResult AddToBlackList(string id)
-        {
-            throw new NotImplementedException();
-        }
+        FriendRequestSent,
+        FriendRequestAccepted,
+        FriendRemoved,
+        UserAddedToBlacklist,
     }
 
     public class UserProfileModel
     {
         public string UserId { get; set; }
         public bool IsCurrentUser { get; set; }
+        public bool IsFriend { get; set; }
+        public bool IsFriendRequestPending { get; set; }
+        public bool IsBalckListed { get; set; }
+        public string FirstName { get; set; }
+        public string UserName { get; set; }
     }
 }

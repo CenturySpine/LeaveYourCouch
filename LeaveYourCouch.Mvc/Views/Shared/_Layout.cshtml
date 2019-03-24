@@ -1,4 +1,6 @@
-﻿
+﻿@using LeaveYourCouch.Mvc.Business.Services.Users
+@using LeaveYourCouch.Mvc.Models
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,14 +13,14 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body >
+<body>
 
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" id="mainnavbar">
         <span style="font-size: 1em; color: white; margin: 5px;">
             <i class="fas fa-couch"></i>
         </span>
-        
+
 
         @Html.ActionLink(Resources.Resources.appname, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,25 +29,32 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="\Home\Index">@Resources.Resources.nav_link_home</a>
+                    <a class="nav-link" href="@Url.Action("Index","Home")">@Resources.Resources.nav_link_home</a>
                 </li>
                 @if (Request.IsAuthenticated)
                 {
                     <li class="nav-item active">
-                        <a class="nav-link" href="\Events\Index">@Resources.Resources.nav_link_events</a>
+                        <a class="nav-link" href="@Url.Action("Index","Events")">@Resources.Resources.nav_link_events</a>
 
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="\Relations\Index">Relations</a>
+                    <li class="nav-item active" id="pendingbadge">
+    
+                        <a class="nav-link" href="@Url.Action("Index", "Relations")">Relations</a>
+
+
+
+
 
                     </li>
+ 
+
                 }
                 <li class="nav-item">
-                    <a class="nav-link" href="\Home\About">@Resources.Resources.nav_link_about</a>
+                    <a class="nav-link" href="@Url.Action("About","Home")">@Resources.Resources.nav_link_about</a>
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="\Home\Contact">@Resources.Resources.nav_link_contact</a>
+                    <a class="nav-link" href="@Url.Action("Contact","Home")">@Resources.Resources.nav_link_contact</a>
 
                 </li>
                 <li class="nav-item">
@@ -63,19 +72,36 @@
     </nav>
 
 
-<div class="container-fluid">
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <div class="container-fluid">
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 
-    @RenderBody()
-    <div id="mainfooter">
-        <hr />
-        <footer >
-            <p>&copy; @DateTime.Now.Year - @Resources.Resources.appname</p>
-        </footer>
+        @RenderBody()
+        <script type="text/javascript">
+            $('#pendingbadge').ready(function () {
+                $.get('/Users/GetPendingRequests',AddToNav);
+             
+            });
+
+            function AddToNav(data) {
+                $("#pendingbadge").prepend(data);
+            }
+        </script>
+        <div id="mainfooter">
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - @Resources.Resources.appname</p>
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_donations" />
+                    <input type="hidden" name="business" value="NYPJPEP4XFJPC" />
+                    <input type="hidden" name="currency_code" value="EUR" />
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+                    <img alt="" border="0" src="https://www.paypal.com/en_FR/i/scr/pixel.gif" width="1" height="1" />
+                </form>
+            </footer>
+        </div>
     </div>
-</div>
 
 </body>
 </html>
