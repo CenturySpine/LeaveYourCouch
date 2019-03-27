@@ -1,4 +1,5 @@
-﻿@model LeaveYourCouch.Mvc.Models.ManageIndexViewModel
+﻿@using LeaveYourCouch.Mvc.Migrations
+@model LeaveYourCouch.Mvc.Models.ManageIndexViewModel
 @{
     ViewBag.Title = "Manage";
 }
@@ -17,7 +18,7 @@
 
 <div class="container first-content">
 
-    
+
     <h4>Personal informations</h4>
 
     @using (Html.BeginForm("SavePersonalData", "Manage", FormMethod.Post, new { @class = "form-group row", encType = "multipart/form-data" }))
@@ -27,19 +28,16 @@
 
 
         <div class="col-auto">
-            @{
+            @if (Model.ProfilePicture != null)
+            {
                 var base64 = Convert.ToBase64String(Model.ProfilePicture);
                 var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+
+                <div style="padding: 2px; border-width: 1px; border-color: black; border-style: solid; margin: auto; width: 206px; height: 206px">
+                    <img src="@imgSrc" style="margin: auto;" />
+                </div>
             }
-
-            <div style="padding: 2px; border-width: 1px; border-color: black; border-style: solid;margin: auto; width: 206px;height: 206px">
-                <img src="@imgSrc" style="margin: auto;" />
-            </div>
-            @*<div class="form-group">
-
-                    <input type="file" name="ProfilePictureUpload" class=" form-control-file" style="margin: auto;"/>
-                </div>*@
-
         </div>
         <div class="col">
 
