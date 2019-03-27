@@ -208,11 +208,13 @@
     <Compile Include="Business\Services\Secretscontainer.cs" />
     <Compile Include="Business\Services\Users\RelationsManager.cs" />
     <Compile Include="Business\Services\Users\IRelationsManager.cs" />
+    <Compile Include="Business\Services\ViewBagMessageFactory.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountValidationControler.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Business\Services\ImageHelper.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RelationsController.cs" />
     <Compile Include="Controllers\RemoteToolsController.cs" />
@@ -259,6 +261,10 @@
     <Compile Include="Migrations\201903221847012_ChangePostalCodeToAddress.cs" />
     <Compile Include="Migrations\201903221847012_ChangePostalCodeToAddress.Designer.cs">
       <DependentUpon>201903221847012_ChangePostalCodeToAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903241801238_ProfilePicture.cs" />
+    <Compile Include="Migrations\201903241801238_ProfilePicture.Designer.cs">
+      <DependentUpon>201903241801238_ProfilePicture.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\CreateEventViewModel.cs" />
     <Compile Include="Models\RelationShipsViewModel.cs" />
@@ -424,6 +430,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903221847012_ChangePostalCodeToAddress.resx">
       <DependentUpon>201903221847012_ChangePostalCodeToAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903241801238_ProfilePicture.resx">
+      <DependentUpon>201903241801238_ProfilePicture.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.fr.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

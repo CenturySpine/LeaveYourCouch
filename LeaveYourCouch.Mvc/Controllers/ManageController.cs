@@ -1,29 +1,44 @@
-﻿using System;
+﻿using LeaveYourCouch.Mvc.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using LeaveYourCouch.Mvc.Models;
+using LeaveYourCouch.Mvc.Business.Services;
 
 namespace LeaveYourCouch.Mvc.Controllers
 {
+    public enum ManageMessageId
+    {
+        AddPhoneSuccess,
+        ChangePasswordSuccess,
+        SetTwoFactorSuccess,
+        SetPasswordSuccess,
+        RemoveLoginSuccess,
+        RemovePhoneSuccess,
+        Error,
+        PersonnalInfos,
+        EmailconfirmationSent
+    }
     [Authorize]
     public class ManageController : Controller
     {
         private readonly ApplicationDbContext _dbcontext;
+        private readonly IImageHelper _imgHelper;
+        private readonly IViewBagMessageFactory _vbMessagefactory;
         private SignInManager<ApplicationUser, string> _signInManager;
         private ApplicationUserManager _userManager;
 
-        //public ManageController()
-        //{
-        //}
-
-        public ManageController(ApplicationUserManager userManager, SignInManager<ApplicationUser, string> signInManager, ApplicationDbContext dbcontext)
+        public ManageController(ApplicationUserManager userManager, SignInManager<ApplicationUser, string> signInManager, 
+            ApplicationDbContext dbcontext, IImageHelper imgHelper, IViewBagMessageFactory vbMessagefactory)
         {
             _dbcontext = dbcontext;
+            _imgHelper = imgHelper;
+            _vbMessagefactory = vbMessagefactory;
             UserManager = userManager;
             SignInManager = signInManager;
         }
@@ -50,107 +65,6 @@ namespace LeaveYourCouch.Mvc.Controllers
             {
                 _userManager = value;
             }
-        }
-        [HttpPost]
-        public async Task<ActionResult> ConfirmEmailAsync()
-        {
-            string user;
-            //using (var db = new ApplicationDbContext())
-            //{
-                user = _dbcontext.Users.FirstOrDefault(u => u.Email == User.Identity.Name)?.Id;
-                
-            //}
-             
-                //Task.Delay(2000)
-              await  ConfirmPasswordHelper.confirm(UserManager, user, Request, Url)
-                ;
-            return RedirectToAction("Index", "Manage", new { Message = ManageMessageId.EmailconfirmationSent });
-
-            //return RedirectToAction("Index", new { Message = ManageMessageId.EmailconfirmationSent });
-        }
-
-        //
-        // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
-        {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                    :message==ManageMessageId.PersonnalInfos?"Your personal infos have been updated."
-                    :message==ManageMessageId.EmailconfirmationSent?"Confirmation e-mail has been successfuly sent."
-                : "";
-
-            var userId = User.Identity.GetUserId();
-            var mail = await UserManager.GetEmailAsync(userId);
-            var currentuserModel = UserManager.Users.FirstOrDefault(u => u.Email == mail);
-
-            var model = new ManageIndexViewModel
-            {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                UserId = userId,
-
-            };
-            if (currentuserModel != null)
-            {
-                model.Address = currentuserModel.Address;
-                model.Pseudo = currentuserModel.Pseudo;
-                model.FirstName = currentuserModel.FirstName;
-                model.EmailIsconfirmed = currentuserModel.EmailConfirmed;
-
-            }
-            return View(model);
-
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> SavePersonalData(ManageIndexViewModel viewmodel)
-        {
-
-            //using (var db = ApplicationDbContext.Create())
-            //{
-                var user = _dbcontext.Users.FirstOrDefault(u => u.Id == viewmodel.UserId);
-                if (user != null)
-                {
-                    user.Pseudo = viewmodel.Pseudo;
-                    user.FirstName = viewmodel.FirstName;
-                    user.Address = viewmodel.Address;
-                    await _dbcontext.SaveChangesAsync();
-                }
-            //}
-
-            return RedirectToAction("Index", new { Message = ManageMessageId.PersonnalInfos });
-        }
-
-        //
-        // POST: /Manage/RemoveLogin
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
-        {
-            ManageMessageId? message;
-            var result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
-            if (result.Succeeded)
-            {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                }
-                message = ManageMessageId.RemoveLoginSuccess;
-            }
-            else
-            {
-                message = ManageMessageId.Error;
-            }
-            return RedirectToAction("ManageLogins", new { Message = message });
         }
 
         //
@@ -185,18 +99,46 @@ namespace LeaveYourCouch.Mvc.Controllers
         }
 
         //
-        // POST: /Manage/EnableTwoFactorAuthentication
+        // GET: /Manage/ChangePassword
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EnableTwoFactorAuthentication()
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
-            await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), true);
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-            if (user != null)
+            if (!ModelState.IsValid)
             {
-                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                return View(model);
             }
-            return RedirectToAction("Index", "Manage");
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+            }
+            AddErrors(result);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ConfirmEmailAsync()
+        {
+            string user;
+            user = _dbcontext.Users.FirstOrDefault(u => u.Email == User.Identity.Name)?.Id;
+
+            await ConfirmPasswordHelper.confirm(UserManager, user, Request, Url)
+              ;
+            return RedirectToAction("Index", "Manage", new { Message = ManageMessageId.EmailconfirmationSent });
+
         }
 
         //
@@ -212,6 +154,203 @@ namespace LeaveYourCouch.Mvc.Controllers
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
             return RedirectToAction("Index", "Manage");
+        }
+
+        //
+        // POST: /Manage/EnableTwoFactorAuthentication
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EnableTwoFactorAuthentication()
+        {
+            await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), true);
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user != null)
+            {
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+        //
+        // GET: /Manage/Index
+        public async Task<ActionResult> Index(ManageMessageId? message)
+        {
+            ViewBag.StatusMessage = _vbMessagefactory.ManageMessage(message);
+
+            var userId = User.Identity.GetUserId();
+            var mail = await UserManager.GetEmailAsync(userId);
+            var currentUser = UserManager.Users.FirstOrDefault(u => u.Email == mail);
+            if (currentUser == null)
+            {
+                return HttpNotFound("Profile not found");
+            }
+            var model = new ManageIndexViewModel
+            {
+                HasPassword = HasPassword(),
+                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
+                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
+                Logins = await UserManager.GetLoginsAsync(userId),
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                UserId = userId,
+            };
+            if (!string.IsNullOrEmpty(currentUser.ProfilePictureName))
+            {
+                model.ProfilePicture = _imgHelper.ToRatioImageDisplay(currentUser.ProfilePictureName);
+            }
+
+            model.Address = currentUser.Address;
+            model.Pseudo = currentUser.Pseudo;
+            model.FirstName = currentUser.FirstName;
+            model.EmailIsconfirmed = currentUser.EmailConfirmed;
+
+            return View(model);
+        }
+
+        //
+        // POST: /Manage/LinkLogin
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LinkLogin(string provider)
+        {
+            // Request a redirect to the external login provider to link a login for the current user
+            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
+        }
+
+        //
+        // GET: /Manage/LinkLoginCallback
+        public async Task<ActionResult> LinkLoginCallback()
+        {
+            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
+            if (loginInfo == null)
+            {
+                return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+            }
+            var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
+            return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+        }
+
+        //
+        // GET: /Manage/ManageLogins
+        public async Task<ActionResult> ManageLogins(ManageMessageId? message)
+        {
+            ViewBag.StatusMessage =
+                message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
+                : message == ManageMessageId.Error ? "An error has occurred."
+                : "";
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user == null)
+            {
+                return View("Error");
+            }
+            var userLogins = await UserManager.GetLoginsAsync(User.Identity.GetUserId());
+            var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
+            ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
+            return View(new ManageLoginsViewModel
+            {
+                CurrentLogins = userLogins,
+                OtherLogins = otherLogins
+            });
+        }
+
+        //
+        // POST: /Manage/RemoveLogin
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
+        {
+            ManageMessageId? message;
+            var result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                message = ManageMessageId.RemoveLoginSuccess;
+            }
+            else
+            {
+                message = ManageMessageId.Error;
+            }
+            return RedirectToAction("ManageLogins", new { Message = message });
+        }
+
+        //
+        // POST: /Manage/RemovePhoneNumber
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RemovePhoneNumber()
+        {
+            var result = await UserManager.SetPhoneNumberAsync(User.Identity.GetUserId(), null);
+            if (!result.Succeeded)
+            {
+                return RedirectToAction("Index", new { Message = ManageMessageId.Error });
+            }
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user != null)
+            {
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            }
+            return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SavePersonalData(ManageIndexViewModel viewmodel)
+        {
+            var user = _dbcontext.Users.FirstOrDefault(u => u.Id == viewmodel.UserId);
+            if (user != null)
+            {
+                var imagePath = user.ProfilePictureName;
+                if (string.IsNullOrEmpty(imagePath))
+                {
+                    imagePath = Path.Combine(@"C:\users\public\leaveyourcouch\profilepictures\",
+                        (Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(viewmodel.ProfilePictureUpload.FileName)));
+                    user.ProfilePictureName = imagePath;
+                }
+
+                user.Pseudo = viewmodel.Pseudo;
+                user.FirstName = viewmodel.FirstName;
+                user.Address = viewmodel.Address;
+
+                await _dbcontext.SaveChangesAsync();
+
+                _imgHelper.SaveUploadedImage(viewmodel.ProfilePictureUpload, imagePath);
+            }
+
+            return RedirectToAction("Index", new { Message = ManageMessageId.PersonnalInfos });
+        }
+
+        //
+        // GET: /Manage/SetPassword
+        public ActionResult SetPassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/SetPassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+                if (result.Succeeded)
+                {
+                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                    if (user != null)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    }
+                    return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
 
         //
@@ -248,134 +387,6 @@ namespace LeaveYourCouch.Mvc.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Manage/RemovePhoneNumber
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RemovePhoneNumber()
-        {
-            var result = await UserManager.SetPhoneNumberAsync(User.Identity.GetUserId(), null);
-            if (!result.Succeeded)
-            {
-                return RedirectToAction("Index", new { Message = ManageMessageId.Error });
-            }
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-            if (user != null)
-            {
-                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-            }
-            return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
-        }
-
-        //
-        // GET: /Manage/ChangePassword
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Manage/ChangePassword
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
-            {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
-            }
-            AddErrors(result);
-            return View(model);
-        }
-
-        //
-        // GET: /Manage/SetPassword
-        public ActionResult SetPassword()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Manage/SetPassword
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-                if (result.Succeeded)
-                {
-                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                    if (user != null)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    }
-                    return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
-                }
-                AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
-        // GET: /Manage/ManageLogins
-        public async Task<ActionResult> ManageLogins(ManageMessageId? message)
-        {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : "";
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-            if (user == null)
-            {
-                return View("Error");
-            }
-            var userLogins = await UserManager.GetLoginsAsync(User.Identity.GetUserId());
-            var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
-            ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
-            return View(new ManageLoginsViewModel
-            {
-                CurrentLogins = userLogins,
-                OtherLogins = otherLogins
-            });
-        }
-
-        //
-        // POST: /Manage/LinkLogin
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LinkLogin(string provider)
-        {
-            // Request a redirect to the external login provider to link a login for the current user
-            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
-        }
-
-        //
-        // GET: /Manage/LinkLoginCallback
-        public async Task<ActionResult> LinkLoginCallback()
-        {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
-            if (loginInfo == null)
-            {
-                return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-            }
-            var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
-            return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
@@ -388,8 +399,11 @@ namespace LeaveYourCouch.Mvc.Controllers
         }
 
         #region Helpers
+
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
+
+
 
         private IAuthenticationManager AuthenticationManager
         {
@@ -427,21 +441,6 @@ namespace LeaveYourCouch.Mvc.Controllers
             return false;
         }
 
-        public enum ManageMessageId
-        {
-            AddPhoneSuccess,
-            ChangePasswordSuccess,
-            SetTwoFactorSuccess,
-            SetPasswordSuccess,
-            RemoveLoginSuccess,
-            RemovePhoneSuccess,
-            Error,
-            PersonnalInfos,
-            EmailconfirmationSent
-        }
-
-        #endregion
-
-
+        #endregion Helpers
     }
 }

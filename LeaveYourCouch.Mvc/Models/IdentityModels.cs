@@ -31,6 +31,7 @@ namespace LeaveYourCouch.Mvc.Models
         public string Address { get; set; }
         public string Pseudo { get; set; }
         public Gender Gender { get; set; }
+        public string ProfilePictureName { get; set; }
     }
 
 

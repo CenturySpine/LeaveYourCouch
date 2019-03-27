@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
@@ -35,6 +36,10 @@ namespace LeaveYourCouch.Mvc.Models
         public bool BrowserRemembered { get; set; }
 
         public string UserId { get; set; }
+
+       public HttpPostedFileBase ProfilePictureUpload { get; set; }
+
+       public byte[] ProfilePicture { get; set; }
 
 
     }

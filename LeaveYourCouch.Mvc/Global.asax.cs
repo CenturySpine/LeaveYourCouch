@@ -33,6 +33,11 @@ namespace LeaveYourCouch.Mvc
 
             DbcontextTools.Create();
 
+            if (!Directory.Exists(@"C:\users\public\leaveyourcouch\profilepictures\"))
+            {
+                Directory.CreateDirectory(@"C:\users\public\leaveyourcouch\profilepictures\");
+            }
+
         }
 
         protected void Application_AcquireRequestState(object sender, EventArgs e)

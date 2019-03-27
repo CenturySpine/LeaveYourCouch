@@ -16,44 +16,73 @@
 
 
 <div class="container first-content">
-    <h3>Change your account settings</h3>
-    <hr />
 
-    @using (Html.BeginForm("SavePersonalData", "Manage", FormMethod.Post, new { @class = "form-group" }))
+    
+    <h4>Personal informations</h4>
+
+    @using (Html.BeginForm("SavePersonalData", "Manage", FormMethod.Post, new { @class = "form-group row", encType = "multipart/form-data" }))
     {
         @Html.ValidationSummary(true)
         @Html.HiddenFor(r => r.UserId)
-        <h4>Personal informations</h4>
 
 
-        <div class="form-group row">
+        <div class="col-auto">
+            @{
+                var base64 = Convert.ToBase64String(Model.ProfilePicture);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            }
 
-            @Html.LabelFor(p => p.FirstName, new { @class = "col-sm-2 col-form-label" })
+            <div style="padding: 2px; border-width: 1px; border-color: black; border-style: solid;margin: auto; width: 206px;height: 206px">
+                <img src="@imgSrc" style="margin: auto;" />
+            </div>
+            @*<div class="form-group">
 
-            @Html.TextBoxFor(p => p.FirstName, null, new { @class = "form-control", placeholder = "FirstName", type = "text" })
-            @Html.ValidationMessageFor(m => m.FirstName)
+                    <input type="file" name="ProfilePictureUpload" class=" form-control-file" style="margin: auto;"/>
+                </div>*@
+
         </div>
-        <div class="form-group row">
-            @Html.LabelFor(p => p.Pseudo, new { @class = "col-sm-2 col-form-label" })
-            @Html.TextBoxFor(p => p.Pseudo, null, new { @class = "form-control", placeholder = "Pseudonym", type = "text" })
+        <div class="col">
 
-        </div>
-        <div class="form-group row">
-            @Html.LabelFor(p => p.Address, new { @class = "col-sm-2 col-form-label" })
-            @Html.TextBoxFor(p => p.Address, null, new { @class = "form-control", placeholder = "Address", type = "text" })
-            <span class="event-user-ditance" style="font-size: 1em; margin:auto 5px ;" title=" ! Votre addresse ne sera JAMAIS visible sur le site par les autres utilisateurs !">
-                <i class='fas fa-question-circle align-middle'></i>
-            </span>
+            <div class="form-group">
 
-            @Html.ValidationMessageFor(m => m.Address)
+                @Html.LabelFor(p => p.FirstName, new { @class = "col-sm-2 col-form-label" })
+
+                @Html.TextBoxFor(p => p.FirstName, null, new { @class = "form-control", placeholder = "FirstName", type = "text" })
+                @Html.ValidationMessageFor(m => m.FirstName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Pseudo, new { @class = "col-sm-2 col-form-label" })
+                @Html.TextBoxFor(p => p.Pseudo, null, new { @class = "form-control", placeholder = "Pseudonym", type = "text" })
+
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Address, new { @class = "col-sm-2 col-form-label" })
+                @Html.TextBoxFor(p => p.Address, null, new { @class = "form-control", placeholder = "Address", type = "text" })
+                <span class="event-user-ditance" style="font-size: 1em; margin: auto 5px;" title=" ! Votre addresse ne sera JAMAIS visible sur le site par les autres utilisateurs !">
+                    <i class='fas fa-question-circle align-middle'></i>
+                </span>
+
+                @Html.ValidationMessageFor(m => m.Address)
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon01">Profile picture</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="ProfilePictureUpload">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary w-100">Save</button>
+
+            </div>
         </div>
-        <div class="form-group row">
-            
-                <button type="submit" class="btn btn-primary">Save</button>
-            
-        </div>
+
     }
-
     @if (!Model.EmailIsconfirmed)
     {
         using (Html.BeginForm("ConfirmEmailAsync", "Manage", FormMethod.Post, new { @class = "form-group" }))
@@ -88,7 +117,7 @@
 
         <div class="col">   External Logins (@Model.Logins.Count)</div>
         <div class="col">
-             @Html.ActionLink("Manage", "ManageLogins")
+            @Html.ActionLink("Manage", "ManageLogins")
         </div>
     </div>
     @*

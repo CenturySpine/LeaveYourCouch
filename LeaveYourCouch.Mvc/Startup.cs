@@ -6,8 +6,10 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
 using LeaveYourCouch.Mvc.Business;
+using LeaveYourCouch.Mvc.Business.Services;
 using LeaveYourCouch.Mvc.Business.Services.Events;
 using LeaveYourCouch.Mvc.Business.Services.Users;
+using LeaveYourCouch.Mvc.Controllers;
 using LeaveYourCouch.Mvc.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -40,6 +42,8 @@ namespace LeaveYourCouch.Mvc
             container.Register<IApiHelper, ApiHelper>();
             container.Register<IRelationsManager, RelationsManager>();
             container.Register<IEventsBuilder, EventsBuilder>();
+            container.Register<IImageHelper, ImageHelper>();
+            container.Register<IViewBagMessageFactory, ViewBagMessageFactory>();
             container.Register<IDbContextFactory<ApplicationDbContext>>(() => new MigrationsContextFactory(container));
 
             container.Register<ApplicationDbContext>(() => new ApplicationDbContext("DefaultConnection"));
