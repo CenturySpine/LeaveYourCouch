@@ -143,7 +143,7 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
             }
             await _db.SaveChangesAsync();
 
-            var parts = await _db.Participations.Include(p => p.Event).Include(p => p.User).Where(p => p.Event.Id == targetEvent.Id).Select(p => p.User).ToListAsync();
+            var parts = await _db.Participations.Include(p => p.Event).Include(p => p.User).Where(p => p.Event.Id == targetEvent.Id).ToListAsync();
 
 
             var isCurrentUserTheOwner = usr != null && (targetEvent.Owner != null && targetEvent.Owner.Id == usr.Id);
