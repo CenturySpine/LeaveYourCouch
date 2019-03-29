@@ -42,24 +42,32 @@
         <div class="col-sm">
 
             <div class="form-group">
+                
+                @Html.LabelFor(p => p.Email, new { @class = "col-sm col-form-label" })
 
-                @Html.LabelFor(p => p.FirstName, new { @class = "col-sm-2 col-form-label" })
+                @Html.TextBoxFor(p => p.Email, null, new { @class = "form-control",  type = "text", disabled = "true" })
+
+
+            </div>
+            <div class="form-group">
+
+                @Html.LabelFor(p => p.FirstName, new { @class = "col-sm col-form-label" })
 
                 @Html.TextBoxFor(p => p.FirstName, null, new { @class = "form-control", placeholder = "FirstName", type = "text" })
                 @Html.ValidationMessageFor(m => m.FirstName)
             </div>
             <div class="form-group">
-                @Html.LabelFor(p => p.Gender, new { @class = "col-sm-2 col-form-label" })
+                @Html.LabelFor(p => p.Gender, new { @class = "col-sm col-form-label" })
 
-                @Html.EnumDropDownListFor(m => m.Gender,"-Choose-",new {@class = "form-control"})
+                @Html.EnumDropDownListFor(m => m.Gender, "-Choose-", new { @class = "form-control" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(p => p.Pseudo, new { @class = "col-lg-2 col-form-label" })
+                @Html.LabelFor(p => p.Pseudo, new { @class = "col-lg col-form-label" })
                 @Html.TextBoxFor(p => p.Pseudo, null, new { @class = "form-control", placeholder = "Pseudonym", type = "text" })
 
             </div>
             <div class="form-group">
-                @Html.LabelFor(p => p.Address, new { @class = "col-sm-2 col-form-label" })
+                @Html.LabelFor(p => p.Address, new { @class = "col-sm col-form-label" })
                 @Html.TextBoxFor(p => p.Address, null, new { @class = "form-control", placeholder = "Address", type = "text" })
                 <span class="event-user-ditance" style="font-size: 1em; margin: auto 5px;" title=" ! Votre addresse ne sera JAMAIS visible sur le site par les autres utilisateurs !">
                     <i class='fas fa-question-circle align-middle'></i>

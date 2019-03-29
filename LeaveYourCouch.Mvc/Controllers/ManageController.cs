@@ -192,7 +192,8 @@ namespace LeaveYourCouch.Mvc.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
                 UserId = userId,
-                Gender = currentUser.Gender
+                Gender = currentUser.Gender,
+                Email=currentUser.Email,
             };
             if (!string.IsNullOrEmpty(currentUser.ProfilePictureName))
             {
