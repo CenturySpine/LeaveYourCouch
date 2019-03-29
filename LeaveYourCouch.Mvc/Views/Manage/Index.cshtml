@@ -27,7 +27,7 @@
         @Html.HiddenFor(r => r.UserId)
 
 
-        <div class="col-auto">
+        <div class="col-auto col-sm">
             @if (Model.ProfilePicture != null)
             {
                 var base64 = Convert.ToBase64String(Model.ProfilePicture);
@@ -39,7 +39,7 @@
                 </div>
             }
         </div>
-        <div class="col">
+        <div class="col-sm">
 
             <div class="form-group">
 
@@ -49,7 +49,12 @@
                 @Html.ValidationMessageFor(m => m.FirstName)
             </div>
             <div class="form-group">
-                @Html.LabelFor(p => p.Pseudo, new { @class = "col-sm-2 col-form-label" })
+                @Html.LabelFor(p => p.Gender, new { @class = "col-sm-2 col-form-label" })
+
+                @Html.EnumDropDownListFor(m => m.Gender,"-Choose-",new {@class = "form-control"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Pseudo, new { @class = "col-lg-2 col-form-label" })
                 @Html.TextBoxFor(p => p.Pseudo, null, new { @class = "form-control", placeholder = "Pseudonym", type = "text" })
 
             </div>

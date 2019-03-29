@@ -192,6 +192,7 @@ namespace LeaveYourCouch.Mvc.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
                 UserId = userId,
+                Gender = currentUser.Gender
             };
             if (!string.IsNullOrEmpty(currentUser.ProfilePictureName))
             {
@@ -312,10 +313,12 @@ namespace LeaveYourCouch.Mvc.Controllers
                 user.Pseudo = viewmodel.Pseudo;
                 user.FirstName = viewmodel.FirstName;
                 user.Address = viewmodel.Address;
+                user.Gender = viewmodel.Gender;
 
                 await _dbcontext.SaveChangesAsync();
 
-                _imgHelper.SaveUploadedImage(viewmodel.ProfilePictureUpload, imagePath);
+                if (viewmodel.ProfilePictureUpload != null)
+                    _imgHelper.SaveUploadedImage(viewmodel.ProfilePictureUpload, imagePath);
             }
 
             return RedirectToAction("Index", new { Message = ManageMessageId.PersonnalInfos });
