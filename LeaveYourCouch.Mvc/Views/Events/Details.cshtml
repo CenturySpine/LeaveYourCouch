@@ -1,5 +1,6 @@
 ﻿@using LeaveYourCouch.Mvc.Business
 @using LeaveYourCouch.Mvc.Controllers
+@using LeaveYourCouch.Mvc.Models
 @model LeaveYourCouch.Mvc.Models.EventDataDetailsViewModel
 
 @{
@@ -114,7 +115,7 @@
     <div class="row">
         @{
             var currentUser = UserHelpers.UserName();
-            bool isUnsub = Model.Participants.Any(p => p.Email == currentUser);
+            bool isUnsub = Model.Participants.Any(p => p.User.Email == currentUser);
             if (isUnsub)
             {
                 <div class="col">
@@ -171,6 +172,37 @@
                 </span>
                 <span class="d-none d-md-inline">Back to list</span>
             </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <span style="font-size: 1.3em; color: black; ">
+                <i class="fas fa-user-check"></i>
+            </span>
+            <h5 class="text-center d-none d-md-block d-xl-none">Confirmed</h5>
+            @foreach (var part in Model.Participants.Where((p => p.Status == ParticipationStatus.Confirmed)).OrderBy(p => p.SubscriptionTime).Reverse())
+            {
+                string color = part.User.Gender == Gender.Female ? "pink" : "blue";
+                <div class="text-center" style="border-width: 0px; border-color: black; border-style: solid; margin: 2px;background: @color">
+                    @Html.ActionLink(part.User.Pseudo, "Profile", "Users",
+                        new {id = part.User.Id}, new {style = "color:black;"})
+                </div>
+            }
+        </div>
+        <div class="col text-center">
+            <span style="font-size: 1.3em; color: black; ">
+                <i class="fas fa-user-clock"></i>
+            </span>
+            <h5 class="text-center d-none d-md-block d-xl-none">Waiting list</h5>
+            @foreach (var part in Model.Participants.Where((p => p.Status == ParticipationStatus.WaitingList)).OrderBy(p => p.SubscriptionTime).Reverse())
+            {
+                string color = part.User.Gender == Gender.Female ? "pink" : "blue";
+                <div class="text-center" style="border-width: 0px; border-color: black; border-style: solid;margin: 2px;background: @color">
+
+                    @Html.ActionLink(part.User.Pseudo, "Profile", "Users",
+                        new {id = part.User.Id}, new { style = "color:black;" })
+                </div>
+            }
         </div>
     </div>
 </div>

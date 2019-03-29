@@ -48,7 +48,7 @@ namespace LeaveYourCouch.Mvc.Models
         public Event Event { get; set; }
         public List<EventRelativeToUserInformation> UserData { get; set; }
         public bool CanModify { get; set; }
-        public List<ApplicationUser> Participants { get; set; }
+        public List<EventParticipation> Participants { get; set; }
     }
 
     public class EventListItem
