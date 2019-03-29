@@ -9,70 +9,55 @@
 
 <div class="container-fluid first-content">
 
+    <table class="table table-striped ">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">  @Html.DisplayNameFor(model => model.Title)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.Owner)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.Participants)</th>
+                <th scope="col"> @Html.DisplayNameFor(model => model.Date) </th>
+                <th scope="col" class="d-none d-md-block d-xl-none"> @Html.DisplayNameFor(model => model.Time)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row" class=" align-items-center">
+                        @if (item.IsPrivate)
+                        {
+                            <span>
+                                <i class='fas fa-lock align-middle'></i>
+                            </span>
+                        }
+                    </th>
+                    <td>
+                        @Html.ActionLink(item.Title, "Details", new { id = item.EventId })
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.Owner, "Profile", "Users", new { id = item.OwnerId }, null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Participants) /
+                        @Html.DisplayFor(modelItem => item.MaxParticipants)
+                    </td>
+                    <td>
+                        @item.Date.ToShortDateString()
 
-    <div class="row">
-        <div class="col-1 ">
+                    </td>
+                    <td class="d-none d-md-block d-xl-none">
+                        @Html.DisplayFor(modelItem => item.Time)
 
-        </div>
-        <div class="col ">
-            <strong>
-                @Html.DisplayNameFor(model => model.Title)
-            </strong>
-        </div>
-        <div class="col ">
-            <strong>
-                @Html.DisplayNameFor(model => model.Owner)
-            </strong>
-        </div>
-        <div class="col text-center">
-            <strong>
-                @Html.DisplayNameFor(model => model.Participants)
-            </strong>
-        </div>
-        <div class="col text-center">
-            <strong>
-                @Html.DisplayNameFor(model => model.Date)
-            </strong>
-        </div>
-        <div class="col text-center d-none d-md-block d-xl-none">
-            <strong>
-                @Html.DisplayNameFor(model => model.Time)
-            </strong>
-        </div>
-    </div>
+                    </td>
+                </tr>
+  
+            }
+        </tbody>
+    </table>
+    <hr />
 
-    @foreach (var item in Model)
-    {
-        <div class="row">
-            <div class="col-1 align-items-center">
-                @if (item.IsPrivate)
-                {
-                    <span>
-                        <i class='fas fa-lock align-middle'></i>
-                    </span>
-                }
-            </div>
-            <div class="col">
-                @Html.ActionLink(item.Title, "Details", new { id = item.EventId })
-            </div>
-            <div class="col">
-                
-                @Html.ActionLink(item.Owner, "Profile", "Users", new {id = item.OwnerId}, null)
-            </div>
-            <div class="col text-center">
 
-                @Html.DisplayFor(modelItem => item.Participants) /
-                @Html.DisplayFor(modelItem => item.MaxParticipants)
-            </div>
-            <div class="col text-center">
-                @item.Date.ToShortDateString()
-            </div>
-            <div class="col text-center d-none d-md-block d-xl-none">
-                @Html.DisplayFor(modelItem => item.Time)
-            </div>
-        </div>
-        <hr />
-    }
 
 </div>
 
