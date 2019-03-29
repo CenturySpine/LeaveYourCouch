@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
@@ -29,6 +31,7 @@ namespace LeaveYourCouch.Mvc.Models
     }
     public class ManageIndexViewModel : SharedPersonalInfos
     {
+
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }
@@ -41,6 +44,10 @@ namespace LeaveYourCouch.Mvc.Models
 
        public byte[] ProfilePicture { get; set; }
 
+
+       
+
+       public Gender Gender { get; set; }
 
     }
 
