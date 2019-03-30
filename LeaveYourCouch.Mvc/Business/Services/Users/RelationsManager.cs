@@ -9,6 +9,14 @@ using LeaveYourCouch.Mvc.Models;
 
 namespace LeaveYourCouch.Mvc.Business.Services.Users
 {
+
+    public enum RelationDirection
+    {
+        All,
+        IamIssuer,
+        IamRecipient,
+
+    }
     public class RelationsManager : IRelationsManager
     {
         private readonly ApplicationDbContext _db;
@@ -20,18 +28,37 @@ namespace LeaveYourCouch.Mvc.Business.Services.Users
 
         }
 
-        public async Task<List<RelationViewModel>> GetRelations(RelationshipStatus status)
+        public async Task<List<RelationViewModel>> GetRelations(RelationshipStatus status, RelationDirection direction = RelationDirection.All)
         {
             List<RelationViewModel> targetList = new List<RelationViewModel>();
             var usr = UserHelpers.UserName();
 
+            Func<UserRelationship, bool> selectorPredicate;
 
+            switch (direction)
+            {
+                case RelationDirection.All:
+                    selectorPredicate = r => (r.Issuer.Email == usr || r.Recipient.Email == usr);
+                    break;
+                case RelationDirection.IamIssuer:
+                    selectorPredicate = r => (r.Issuer.Email == usr );
 
-            var usrRelations = await _db.Relations.Where(r => (r.Issuer.Email == usr || r.Recipient.Email == usr) && r.Status == status)
+                    break;
+                case RelationDirection.IamRecipient:
+                    selectorPredicate = r => ( r.Recipient.Email == usr);
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+            }
+
+            var usrRelationsTmp = await _db.Relations
                 .Include(r => r.Issuer)
                 .Include(r => r.Recipient)
                 .Select(r => r)
                 .ToListAsync();
+
+            var usrRelations = usrRelationsTmp.Where(r => selectorPredicate(r) && r.Status == status);
             List<ApplicationUser> distinctids = new List<ApplicationUser>();
 
             foreach (var usrr in usrRelations)
@@ -89,11 +116,30 @@ namespace LeaveYourCouch.Mvc.Business.Services.Users
 
         public async Task<bool> IsFriend(RelationshipStatus status, string applicationUserId)
         {
-            var rels = await GetRelations(status);
+            var rels = await GetRelations(status,RelationDirection.IamIssuer);
             return rels.Any(r => r.UserId == applicationUserId);
         }
 
         public async Task CancelRequest(string id)
+        {
+            await RemoveFriend(id);
+        }
+
+        public async Task Blacklist(string id)
+        {
+            var usrMe = UserHelpers.UserName();
+            var targetFriend = await _db.Users.FirstOrDefaultAsync(r => r.Id == id);
+            var me = await _db.Users.FirstOrDefaultAsync(r => r.Email == usrMe);
+            _db.Relations.Add(new UserRelationship
+            {
+                Issuer = me,
+                Recipient = targetFriend,
+                Status = RelationshipStatus.Blacklisted
+            });
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task UnBlacklist(string id)
         {
             await RemoveFriend(id);
         }
@@ -123,14 +169,9 @@ namespace LeaveYourCouch.Mvc.Business.Services.Users
 
         public async Task RemoveFriend(string id)
         {
-            var usrMe = UserHelpers.UserName();
-            var targetFriend = await _db.Users.FirstOrDefaultAsync(r => r.Id == id);
-            var me = await _db.Users.FirstOrDefaultAsync(r => r.Email == usrMe);
+         
 
-            var targetRelation = await _db.Relations.Include(r => r.Issuer).Include(r => r.Recipient).FirstOrDefaultAsync(r =>
-                (r.Issuer.Id == me.Id && r.Recipient.Id == targetFriend.Id) ||
-                (r.Issuer.Id == targetFriend.Id && r.Recipient.Id == me.Id));
-
+            var targetRelation = await GetTargetFriendRequest(id);
             if (targetRelation != null)
             {
                 _db.Relations.Remove(targetRelation);
@@ -140,12 +181,7 @@ namespace LeaveYourCouch.Mvc.Business.Services.Users
 
         public async Task AcceptFriendRequest(string id)
         {
-            var usrMe = UserHelpers.UserName();
-            var targetFriend = await _db.Users.FirstOrDefaultAsync(r => r.Id == id);
-            var me = await _db.Users.FirstOrDefaultAsync(r => r.Email == usrMe);
-            var targetRelation = await _db.Relations.Include(r => r.Issuer).Include(r => r.Recipient).FirstOrDefaultAsync(r =>
-                (r.Issuer.Id == me.Id && r.Recipient.Id == targetFriend.Id) ||
-                (r.Issuer.Id == targetFriend.Id && r.Recipient.Id == me.Id));
+            var targetRelation = await GetTargetFriendRequest(id);
             if (targetRelation != null)
             {
                 targetRelation.Status = RelationshipStatus.Accepted;
@@ -154,6 +190,28 @@ namespace LeaveYourCouch.Mvc.Business.Services.Users
             }
         }
 
+        private async Task<UserRelationship> GetTargetFriendRequest(string id)
+        {
+            var usrMe = UserHelpers.UserName();
+            var targetFriend = await _db.Users.FirstOrDefaultAsync(r => r.Id == id);
+            var me = await _db.Users.FirstOrDefaultAsync(r => r.Email == usrMe);
+            var targetRelation = await _db.Relations.Include(r => r.Issuer).Include(r => r.Recipient).FirstOrDefaultAsync(r =>
+                (r.Issuer.Id == me.Id && r.Recipient.Id == targetFriend.Id) ||
+                (r.Issuer.Id == targetFriend.Id && r.Recipient.Id == me.Id));
+            return targetRelation;
+        }
 
+        public async Task RejectFriendRequest(string id)
+        {
+            var targetRelation = await GetTargetFriendRequest(id);
+            if (targetRelation != null)
+            {
+                targetRelation.Status = RelationshipStatus.Rejected;
+                _db.Entry(targetRelation).State = EntityState.Modified;
+                await _db.SaveChangesAsync();
+            }
+        }
+
+      
     }
 }

@@ -6,18 +6,21 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using LeaveYourCouch.Mvc.Business.Services.Users;
 
 namespace LeaveYourCouch.Mvc.Business.Services.Events
 {
     public class EventsBuilder : IEventsBuilder
     {
         private readonly IApiHelper _apiHelper;
+        private readonly IRelationsManager _relations;
         private readonly ApplicationDbContext _db;
 
-        public EventsBuilder(ApplicationDbContext db, IApiHelper apiHelper)
+        public EventsBuilder(ApplicationDbContext db, IApiHelper apiHelper, IRelationsManager relations)
         {
             _db = db;
             _apiHelper = apiHelper;
+            _relations = relations;
         }
 
         public async Task AddParticipation(Event @event)
@@ -50,9 +53,28 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
 
         public async Task<List<EventListItem>> ListEvents()
         {
+            var relBlacklist = await _relations.GetRelations(RelationshipStatus.Blacklisted, RelationDirection.IamRecipient);
+            var relFriends = await _relations.GetRelations(RelationshipStatus.Accepted);
+            var blacklistedowners = relBlacklist.Select(r => r.UserId);
+            var friendsOwners = relFriends.Select(r => r.UserId);
+            var usr = await GetCurrentUser();
+
             List<EventListItem> list = new List<EventListItem>();
-            var allevents = await _db.Events.Include(p=>p.Owner).ToListAsync();
-            foreach (var evt in allevents)
+            var allevents = await _db.Events.Include(p => p.Owner).ToListAsync();
+
+
+
+
+
+            //on filtre les events:
+            // - ceux organisés par des organisateur qui ne m'on pas blacklist
+            // - les sorties privées dont l'organisateur est un ami
+            // - mes propres sorties
+            var filteredevents = allevents.Where(e => blacklistedowners.All(t => t != e.Owner.Id)
+                                                      && (!e.IsPrivate || friendsOwners.Any(f => f == e.Owner.Id) 
+                                                                       || e.Owner.Id == usr.Id));
+
+            foreach (var evt in filteredevents)
             {
                 var parts = await _db.Participations.Include(p => p.Event).Where(f => f.Event.Id == evt.Id).CountAsync();
                 var display = new EventListItem
@@ -64,15 +86,15 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
                     Time = evt.Time,
                     Participants = parts,
                     Title = evt.Title,
-                    Owner=evt.Owner.Pseudo,
-                    OwnerId=evt.Owner.Id
+                    Owner = evt.Owner.Pseudo,
+                    OwnerId = evt.Owner.Id
                 };
-                
-                
+
+
                 list.Add(display);
             }
 
-            return list.OrderByDescending(g=>g.Date).ThenByDescending(g=>g.Time).ToList();
+            return list.OrderByDescending(g => g.Date).ThenByDescending(g => g.Time).ToList();
         }
 
         public async Task CreateNewEvent(CreateEventViewModel @event)

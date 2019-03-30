@@ -13,7 +13,7 @@
 
 
 }
-    <h2>@Model.UserName (@Model.FirstName)</h2>
+<h2>@Model.UserName (@Model.FirstName)</h2>
 
 <div class="row">
 
@@ -50,9 +50,9 @@
         {
             if (Model.IsFriendRequestPending)
             {
-                <div class="col" >
+                <div class="col">
 
-                    <button Class="btn btn-block  btn-primary" Style="margin: 2px 0;"  disabled>
+                    <button Class="btn btn-block  btn-primary" Style="margin: 2px 0;" disabled>
                         <span>
                             <i class="fas fa-users-cog"></i>
                         </span>
@@ -77,15 +77,31 @@
 
         if (!Model.IsFriend && !Model.IsFriendRequestPending)
         {
-            <div class="col">
+            if (Model.IsBalckListed)
+            {
+                <div class="col">
 
-                <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("AddToBlackList", "Users", new {id=@Model.UserId})">
-                    <span>
-                        <i class="fas fa-ban"></i>
-                    </span>
-                    <span class="d-none d-md-inline">Blacklist</span>
-                </a>
-            </div>
+                    <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("RemoveFromBlackList", "Users", new {id=@Model.UserId})">
+                        <span>
+                            <i class="fas fa-ban"></i>
+                        </span>
+                        <span class="d-none d-md-inline">Remove from Blacklist</span>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="col">
+
+                    <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("AddToBlackList", "Users", new {id=@Model.UserId})">
+                        <span>
+                            <i class="fas fa-ban"></i>
+                        </span>
+                        <span class="d-none d-md-inline">Blacklist</span>
+                    </a>
+                </div>
+            }
+
         }
 
     }

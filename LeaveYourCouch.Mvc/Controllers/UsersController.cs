@@ -77,12 +77,29 @@ namespace LeaveYourCouch.Mvc.Controllers
 
         }
 
-        public ActionResult AddToBlackList(string id)
+        public async Task<ActionResult> AddToBlackList(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            await _relMan.Blacklist(id);
+
+
+
+            return RedirectToAction("Profile", new { id });
+
+        }
+
+        public async Task<ActionResult> RemoveFromBlackList(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            }
+            await _relMan.UnBlacklist(id);
+
             return RedirectToAction("Profile", new { id });
 
         }
@@ -99,12 +116,14 @@ namespace LeaveYourCouch.Mvc.Controllers
 
         }
 
-        public ActionResult Reject(string id)
+        public async Task<ActionResult> Reject(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            await _relMan.RejectFriendRequest(id);
+
             return RedirectToAction("Profile", new { id });
 
         }
@@ -127,5 +146,7 @@ namespace LeaveYourCouch.Mvc.Controllers
             return RedirectToAction("Profile", new { id, Message = UserInteractions.RequestCanceled });
 
         }
+
+
     }
 }

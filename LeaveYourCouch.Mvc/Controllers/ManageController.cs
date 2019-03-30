@@ -304,7 +304,7 @@ namespace LeaveYourCouch.Mvc.Controllers
             if (user != null)
             {
                 var imagePath = user.ProfilePictureName;
-                if (string.IsNullOrEmpty(imagePath))
+                if (!string.IsNullOrEmpty(imagePath))
                 {
                     imagePath = Path.Combine(@"C:\users\public\leaveyourcouch\profilepictures\",
                         (Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(viewmodel.ProfilePictureUpload.FileName)));

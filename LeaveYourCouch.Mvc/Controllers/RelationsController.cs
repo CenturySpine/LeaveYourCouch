@@ -35,7 +35,7 @@ namespace LeaveYourCouch.Mvc.Controllers
         public async Task<ActionResult> Index()
         {
             RelationShipsViewModel vm = new RelationShipsViewModel();
-            vm.BlackList = await _relman.GetRelations(RelationshipStatus.Blacklisted);
+            vm.BlackList = await _relman.GetRelations(RelationshipStatus.Blacklisted,RelationDirection.IamIssuer);
             vm.Friends = await _relman.GetRelations(RelationshipStatus.Accepted);
             vm.Pendings = await _relman.GetRelations(RelationshipStatus.Pending);
             return View(vm);
