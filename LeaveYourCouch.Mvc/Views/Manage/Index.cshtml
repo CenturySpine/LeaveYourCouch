@@ -19,8 +19,8 @@
 <div class="container first-content">
 
 
-    <h4>Personal informations</h4>
-
+    <h4 class="text-center">Personal informations</h4>
+    <hr />
     @using (Html.BeginForm("SavePersonalData", "Manage", FormMethod.Post, new { @class = "form-group row", encType = "multipart/form-data" }))
     {
         @Html.ValidationSummary(true)
@@ -28,24 +28,37 @@
 
 
         <div class="col-auto col-sm">
-            @if (Model.ProfilePicture != null)
-            {
-                var base64 = Convert.ToBase64String(Model.ProfilePicture);
-                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
 
-                <div style="padding: 2px; border-width: 1px; border-color: black; border-style: solid; margin: auto; width: 206px; height: 206px">
+            <div style="padding: 2px; border-width: 1px; border-color: black; background: black; border-style: solid; margin: auto; width: 206px; height: 206px;
+                                      position: relative;">
+                @if (Model.ProfilePicture != null)
+                {
+                    var base64 = Convert.ToBase64String(Model.ProfilePicture);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
                     <img src="@imgSrc" style="margin: auto;" />
-                </div>
-            }
+                }
+
+
+
+                <input type="file" name="ProfilePictureUpload" style="display: none;" id="profileFileInput" />
+
+                <span style="background: black;position: absolute; right: 0; bottom: 0; color: white; font-size: 1.5em;" onclick="popChooseFile()">
+                    <i class='fas fa-camera-retro col-12'></i>
+                </span>
+              
+
+
+            </div>
         </div>
         <div class="col-sm">
 
             <div class="form-group">
-                
+
                 @Html.LabelFor(p => p.Email, new { @class = "col-sm col-form-label" })
 
-                @Html.TextBoxFor(p => p.Email, null, new { @class = "form-control",  type = "text", disabled = "true" })
+                @Html.TextBoxFor(p => p.Email, null, new { @class = "form-control", type = "text", disabled = "true" })
 
 
             </div>
@@ -74,17 +87,6 @@
                 </span>
 
                 @Html.ValidationMessageFor(m => m.Address)
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroupFileAddon01">Profile picture</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="ProfilePictureUpload">
-                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                    </div>
-                </div>
             </div>
 
             <div class="form-group">
@@ -188,3 +190,13 @@
     @*</div>*@
 
 </div>
+
+<script type="text/javascript">
+
+    //hack to enable the "camera" image to pop file selection window as input control would do
+    function popChooseFile() {
+        var inputelem = $("#profileFileInput");
+        inputelem.get(0).click();
+    };
+
+</script>
