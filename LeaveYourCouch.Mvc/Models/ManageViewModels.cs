@@ -28,6 +28,10 @@ namespace LeaveYourCouch.Mvc.Models
         public string Address { get; set; }
 
         public bool EmailIsconfirmed { get; set; }
+
+        [Display(Name = "A propos de vous")]
+
+        public string Descrption { get; set; }
     }
     public class ManageIndexViewModel : SharedPersonalInfos
     {

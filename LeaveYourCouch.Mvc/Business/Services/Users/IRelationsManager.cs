@@ -21,5 +21,6 @@ namespace LeaveYourCouch.Mvc.Business.Services.Users
         Task Blacklist(string id);
         Task RejectFriendRequest(string id);
         Task UnBlacklist(string id);
+        Task<ApplicationUser> UserPseudoAsync(string username);
     }
 }

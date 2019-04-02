@@ -212,6 +212,10 @@ namespace LeaveYourCouch.Mvc.Business.Services.Users
             }
         }
 
-      
+        public async Task<ApplicationUser> UserPseudoAsync(string username)
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == username);
+            return user;
+        }
     }
 }

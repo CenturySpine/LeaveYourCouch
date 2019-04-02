@@ -33,4 +33,16 @@ textarea {
     margin: 10px 0;
 }
 
+.profilePicture
+{
+    padding: 2px; 
+    border-width: 1px; 
+    border-color: black; 
+    background: black; 
+    border-style: solid;
+    margin: auto; 
+    width: 206px; 
+    height: 206px;
+    position: relative;
+}
  

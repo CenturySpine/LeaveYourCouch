@@ -9,8 +9,7 @@
         @Html.AntiForgeryToken()
 
         <ul class="navbar-nav mr-auto">
-            <li>
-                @Html.ActionLink(ApplicationDbContext.UserPseudo(User.Identity.GetUserName()), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
+            <li id="loginusernameplace">
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">@Resources.Resources.nav_logoff</a></li>
         </ul>
@@ -23,3 +22,8 @@ else
         <li>@Html.ActionLink(Resources.Resources.nav_login, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
     </ul>
 }
+
+
+<script type="text/javascript">
+
+</script>

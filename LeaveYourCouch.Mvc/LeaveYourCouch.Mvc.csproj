@@ -266,6 +266,10 @@
     <Compile Include="Migrations\201903241801238_ProfilePicture.Designer.cs">
       <DependentUpon>201903241801238_ProfilePicture.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904021803598_AddProfileDescription.cs" />
+    <Compile Include="Migrations\201904021803598_AddProfileDescription.Designer.cs">
+      <DependentUpon>201904021803598_AddProfileDescription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\CreateEventViewModel.cs" />
     <Compile Include="Models\RelationShipsViewModel.cs" />
     <Compile Include="Resources.fr.Designer.cs">
@@ -405,6 +409,7 @@
     <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Users\Profile.cshtml" />
     <Content Include="Views\Shared\_PendingRequestsDisplay.cshtml" />
+    <Content Include="Views\Shared\_UserLoginPart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -433,6 +438,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903241801238_ProfilePicture.resx">
       <DependentUpon>201903241801238_ProfilePicture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904021803598_AddProfileDescription.resx">
+      <DependentUpon>201904021803598_AddProfileDescription.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.fr.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

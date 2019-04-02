@@ -33,22 +33,7 @@ namespace LeaveYourCouch.Mvc.Models
 
         public DbSet<EventParticipation> Participations { get; set; }
 
-        public static string UserPseudo(string username)
-        {
-            //using (var db = ApplicationDbContext.Create())
-            //{
-            if (_instance.Users.Any())
-            {
-                var user = _instance.Users.FirstOrDefault(u => u.Email == username);
-                if (user != null && !string.IsNullOrEmpty(user.Pseudo))
-                {
-                    return user.Pseudo;
-                }
-            }
-            //}
-
-            return username;
-        }
+ 
 
 
     }

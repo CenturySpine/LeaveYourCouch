@@ -13,96 +13,115 @@
 
 
 }
-<h2>@Model.UserName (@Model.FirstName)</h2>
+<div class="container first-content">
+    <h4>@Model.UserName (@Model.FirstName)</h4>
 
-<div class="row">
-
-    @if (Model.IsCurrentUser)
-    {
+    <div class="row">
+        <div class="col-auto col-sm">
 
 
-        <div class="col">
+            <div class="profilePicture">
+                @if (Model.ProfilePicture != null)
+                {
+                    var base64 = Convert.ToBase64String(Model.ProfilePicture);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
-            <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("Index", "Manage")">
-                <span>
-                    <i class="fas fa-user-edit"></i>
-                </span>
-                <span class="d-none d-md-inline">Edit my profile</span>
-            </a>
+                    <img src="@imgSrc" style="margin: auto;" />
+                }
+
+            </div>
         </div>
-    }
-    else
-    {
-        if (Model.IsFriend)
+        <div class="col-sm">
+
+        </div>
+        <hr />
+        @if (Model.IsCurrentUser)
         {
+
+
             <div class="col">
 
-                <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("RemoveFriend", "Users", new {id = @Model.UserId})">
+                <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("Index", "Manage")">
                     <span>
-                        <i class="fas fa-user-minus"></i>
+                        <i class="fas fa-user-edit"></i>
                     </span>
-                    <span class="d-none d-md-inline">Remove Friend</span>
+                    <span class="d-none d-md-inline">Edit my profile</span>
                 </a>
             </div>
-
         }
         else
         {
-            if (Model.IsFriendRequestPending)
+            if (Model.IsFriend)
             {
                 <div class="col">
 
-                    <button Class="btn btn-block  btn-primary" Style="margin: 2px 0;" disabled>
+                    <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("RemoveFriend", "Users", new {id = @Model.UserId})">
                         <span>
-                            <i class="fas fa-users-cog"></i>
+                            <i class="fas fa-user-minus"></i>
                         </span>
-                        <span class="d-none d-md-inline">Friend Request pending</span>
-                    </button>
+                        <span class="d-none d-md-inline">Remove Friend</span>
+                    </a>
                 </div>
+
             }
             else
             {
-                <div class="col">
+                if (Model.IsFriendRequestPending)
+                {
+                    <div class="col">
 
-                    <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("AddFriend", "Users", new {id=@Model.UserId})">
-                        <span>
-                            <i class="fas fa-user-plus"></i>
-                        </span>
-                        <span class="d-none d-md-inline">Add Friend</span>
-                    </a>
-                </div>
+                        <button Class="btn btn-block  btn-primary" Style="margin: 2px 0;" disabled>
+                            <span>
+                                <i class="fas fa-users-cog"></i>
+                            </span>
+                            <span class="d-none d-md-inline">Friend Request pending</span>
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="col">
+
+                        <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("AddFriend", "Users", new {id=@Model.UserId})">
+                            <span>
+                                <i class="fas fa-user-plus"></i>
+                            </span>
+                            <span class="d-none d-md-inline">Add Friend</span>
+                        </a>
+                    </div>
+                }
+
+            }
+
+            if (!Model.IsFriend && !Model.IsFriendRequestPending)
+            {
+                if (Model.IsBalckListed)
+                {
+                    <div class="col">
+
+                        <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("RemoveFromBlackList", "Users", new {id=@Model.UserId})">
+                            <span>
+                                <i class="fas fa-ban"></i>
+                            </span>
+                            <span class="d-none d-md-inline">Remove from Blacklist</span>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col">
+
+                        <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("AddToBlackList", "Users", new {id=@Model.UserId})">
+                            <span>
+                                <i class="fas fa-ban"></i>
+                            </span>
+                            <span class="d-none d-md-inline">Blacklist</span>
+                        </a>
+                    </div>
+                }
+
             }
 
         }
-
-        if (!Model.IsFriend && !Model.IsFriendRequestPending)
-        {
-            if (Model.IsBalckListed)
-            {
-                <div class="col">
-
-                    <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("RemoveFromBlackList", "Users", new {id=@Model.UserId})">
-                        <span>
-                            <i class="fas fa-ban"></i>
-                        </span>
-                        <span class="d-none d-md-inline">Remove from Blacklist</span>
-                    </a>
-                </div>
-            }
-            else
-            {
-                <div class="col">
-
-                    <a Class="btn btn-block  btn-primary" Style="margin: 2px 0;" href="@Url.Action("AddToBlackList", "Users", new {id=@Model.UserId})">
-                        <span>
-                            <i class="fas fa-ban"></i>
-                        </span>
-                        <span class="d-none d-md-inline">Blacklist</span>
-                    </a>
-                </div>
-            }
-
-        }
-
-    }
+    </div>
 </div>

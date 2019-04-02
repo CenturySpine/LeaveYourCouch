@@ -38,7 +38,7 @@
 
                     </li>
                     <li class="nav-item active" id="pendingbadge">
-    
+
                         <a class="nav-link" href="@Url.Action("Index", "Relations")">Relations</a>
 
 
@@ -46,7 +46,7 @@
 
 
                     </li>
- 
+
 
                 }
                 <li class="nav-item">
@@ -79,13 +79,25 @@
 
         @RenderBody()
         <script type="text/javascript">
-            $('#pendingbadge').ready(function () {
-                $.get('/Users/GetPendingRequests',AddToNav);
-             
+            $('#pendingbadge').ready(function() {
+                $.get('/Users/GetPendingRequests', AddToNav);
+
             });
 
             function AddToNav(data) {
                 $("#pendingbadge").prepend(data);
+            }
+
+            $('#loginusernameplace').ready(function() {
+
+                //DO NOT FORGET TRAILNG "/" in order for the "@@" to be accepted as parameter
+                $.get('@Url.Action("UserPseudoAsync", "Users",new {id= @User.Identity.Name})/', AddToNav);
+                
+
+            });
+
+            function AddToNav(data) {
+                $("#loginusernameplace").append(data);
             }
         </script>
         <div id="mainfooter">
