@@ -70,8 +70,9 @@ namespace LeaveYourCouch.Mvc.Controllers
             {
                 return HttpNotFound();
             }
-            _db.Events.Remove(@event);
-            await _db.SaveChangesAsync();
+
+            await _eventBuilder.ConfirmEventDeletionAsync(@event);
+
             return RedirectToAction("Index");
         }
 
@@ -132,7 +133,7 @@ namespace LeaveYourCouch.Mvc.Controllers
         // GET: Events
         public async Task<ActionResult> Index()
         {
-           var events=await _eventBuilder.ListEvents();
+            var events = await _eventBuilder.ListEvents();
             return View(events);
         }
 

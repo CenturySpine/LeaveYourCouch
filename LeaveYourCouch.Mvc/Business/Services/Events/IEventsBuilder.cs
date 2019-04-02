@@ -15,5 +15,6 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
         Task<EventDataDetailsViewModel> GetEventInfos(Event targetEvent);
         Task RemoveParticipation(Event @event);
         Task<List<EventListItem>> ListEvents();
+        Task ConfirmEventDeletionAsync(Event id);
     }
 }

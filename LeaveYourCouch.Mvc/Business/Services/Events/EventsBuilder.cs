@@ -197,5 +197,18 @@ namespace LeaveYourCouch.Mvc.Business.Services.Events
             var usr = await _db.Users.FirstOrDefaultAsync(u => u.Email == userName);
             return usr;
         }
+
+        public async Task ConfirmEventDeletionAsync(Event id)
+        {
+            var evtid = id.Id;
+            var participation = _db.Participations.Include(p => p.Event).Where(p => p.Event.Id == evtid);
+            var eveToUserInfo = _db.UserToEventsData.Include(r=>r.Event).Where(p => p.Event.Id == evtid);
+
+            _db.UserToEventsData.RemoveRange(eveToUserInfo);
+            _db.Participations.RemoveRange(participation);
+            _db.Events.Remove(id);
+
+            await _db.SaveChangesAsync();
+        }
     }
 }
