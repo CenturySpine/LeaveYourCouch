@@ -14,7 +14,9 @@ namespace LeaveYourCouch.Mvc.Business.Services.Users
         Task RemoveFriend(string id);
         Task AcceptFriendRequest(string id);
         Task<int> GetNonSelfIssuingPendingRequest();
-        Task<bool> IsFriend(RelationshipStatus status, string applicationUserId);
+
+        Task<bool> GetRelationStatus(RelationshipStatus status, string applicationUserId,
+            RelationDirection direction = RelationDirection.All);
         Task CancelRequest(string id);
         Task Blacklist(string id);
         Task RejectFriendRequest(string id);

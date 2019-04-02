@@ -36,9 +36,9 @@ namespace LeaveYourCouch.Mvc.Controllers
             {
                 UserId = applicationUser.Id,
                 IsCurrentUser = applicationUser.Email == current,
-                IsFriend = await _relMan.IsFriend(RelationshipStatus.Accepted, applicationUser.Id),
-                IsFriendRequestPending = await _relMan.IsFriend(RelationshipStatus.Pending, applicationUser.Id),
-                IsBalckListed = await _relMan.IsFriend(RelationshipStatus.Blacklisted, applicationUser.Id),
+                IsFriend = await _relMan.GetRelationStatus(RelationshipStatus.Accepted, applicationUser.Id),
+                IsFriendRequestPending = await _relMan.GetRelationStatus(RelationshipStatus.Pending, applicationUser.Id),
+                IsBalckListed = await _relMan.GetRelationStatus(RelationshipStatus.Blacklisted, applicationUser.Id,RelationDirection.IamRecipient),
                 UserName = applicationUser.Pseudo,
                 FirstName = applicationUser.FirstName
             };

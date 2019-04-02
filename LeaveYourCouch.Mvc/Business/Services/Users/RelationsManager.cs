@@ -114,9 +114,9 @@ namespace LeaveYourCouch.Mvc.Business.Services.Users
             return pending;
         }
 
-        public async Task<bool> IsFriend(RelationshipStatus status, string applicationUserId)
+        public async Task<bool> GetRelationStatus(RelationshipStatus status, string applicationUserId, RelationDirection direction = RelationDirection.All)
         {
-            var rels = await GetRelations(status,RelationDirection.IamIssuer);
+            var rels = await GetRelations(status, direction);
             return rels.Any(r => r.UserId == applicationUserId);
         }
 
