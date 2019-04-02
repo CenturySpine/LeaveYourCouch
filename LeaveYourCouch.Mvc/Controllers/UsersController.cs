@@ -41,17 +41,17 @@ namespace LeaveYourCouch.Mvc.Controllers
                 IsCurrentUser = applicationUser.Email == current,
                 IsFriend = await _relMan.GetRelationStatus(RelationshipStatus.Accepted, applicationUser.Id),
                 IsFriendRequestPending = await _relMan.GetRelationStatus(RelationshipStatus.Pending, applicationUser.Id),
-                IsBalckListed = await _relMan.GetRelationStatus(RelationshipStatus.Blacklisted, applicationUser.Id,RelationDirection.IamRecipient),
+                IsBalckListed = await _relMan.GetRelationStatus(RelationshipStatus.Blacklisted, applicationUser.Id, RelationDirection.IamRecipient),
                 UserName = applicationUser.Pseudo,
                 FirstName = applicationUser.FirstName,
-                ProfilePicture = _imgHelper.ToRatioImageDisplay(applicationUser.ProfilePictureName),
+                ProfilePicture = !string.IsNullOrEmpty(applicationUser.ProfilePictureName) ? _imgHelper.ToRatioImageDisplay(applicationUser.ProfilePictureName) : null,
                 Description = applicationUser.Descrption,
-        };
+            };
             ViewBag.StatusMessage =
                 message == UserInteractions.FriendRequestSent ? "Friend request sent"
                 : message == UserInteractions.FriendRequestAccepted ? "Friend request accepted"
                 : message == UserInteractions.UserAddedToBlacklist ? "User blacklisted"
-                    :message==UserInteractions.RequestCanceled? "Friend request canceled"
+                    : message == UserInteractions.RequestCanceled ? "Friend request canceled"
                 : string.Empty;
             return View(model);
         }
@@ -141,18 +141,18 @@ namespace LeaveYourCouch.Mvc.Controllers
 
         public async Task<ActionResult> UserPseudoAsync(string id)
         {
-            
-                var user = await _relMan.UserPseudoAsync(id);
-                string pseudo = string.Empty;
-                if (user != null && !string.IsNullOrEmpty(user.Pseudo))
-                {
-                    pseudo = user.Pseudo;
-                             
+
+            var user = await _relMan.UserPseudoAsync(id);
+            string pseudo = string.Empty;
+            if (user != null && !string.IsNullOrEmpty(user.Pseudo))
+            {
+                pseudo = user.Pseudo;
+
 
             }
 
 
-            return  PartialView("_UserLoginPart", pseudo);
+            return PartialView("_UserLoginPart", pseudo);
         }
 
         public async Task<ActionResult> Cancel(string id)

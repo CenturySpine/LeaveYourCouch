@@ -194,6 +194,7 @@ namespace LeaveYourCouch.Mvc.Controllers
                 UserId = userId,
                 Gender = currentUser.Gender,
                 Email=currentUser.Email,
+                Descrption = currentUser.Descrption
             };
             if (!string.IsNullOrEmpty(currentUser.ProfilePictureName))
             {
@@ -315,6 +316,7 @@ namespace LeaveYourCouch.Mvc.Controllers
                 user.FirstName = viewmodel.FirstName;
                 user.Address = viewmodel.Address;
                 user.Gender = viewmodel.Gender;
+                user.Descrption = viewmodel.Descrption;
 
                 await _dbcontext.SaveChangesAsync();
 
