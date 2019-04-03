@@ -121,7 +121,7 @@
     <value>Leave Your Couch</value>
   </data>
   <data name="jumbohome" xml:space="preserve">
-    <value>Organise des sorties. Recontre des gens. Fais toi de nouveaux amis.</value>
+    <value>Organise des sorties. Rencontre des gens. Fais-toi de nouveaux amis.</value>
   </data>
   <data name="jumbohome_sub" xml:space="preserve">
     <value>Gratuit.</value>
@@ -148,7 +148,7 @@
     <value>S'identifier</value>
   </data>
   <data name="nav_logoff" xml:space="preserve">
-    <value>Deconnexion</value>
+    <value>Déconnexion</value>
   </data>
   <data name="nav_register" xml:space="preserve">
     <value>S'enregistrer</value>
