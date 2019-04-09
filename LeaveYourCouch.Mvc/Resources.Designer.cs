@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LeaveYourCouch is developped and maintained by only one person. The website and the data are hosted in a Google Cloud Platform Virtual Machine. The monthly fees for this hosting (not including domain name registration) and the use of the various Google api is about 80€ without traffic..
+        /// </summary>
+        public static string about_content_01 {
+            get {
+                return ResourceManager.GetString("about_content_01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Leave Your Couch.
         /// </summary>
         public static string appname {
