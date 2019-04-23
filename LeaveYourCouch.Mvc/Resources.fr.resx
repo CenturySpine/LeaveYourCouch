@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="about_content_01" xml:space="preserve">
-    <value>LeaveYourCouch est developpé et maintenu par une seule personne. Le site et les données sont hébergées sur une machine virtuelle au sein de la platforme Google Cloud. Le coût mensuel de l'hébergement (qui n'inclue pas l'enregistrement du nom de domaine) et de l'utilsiation des différentes API Google s'elève à environ 80€ sans aucun trafique sur le site.</value>
+    <value>LeaveYourCouch est développé et maintenu par une seule personne. Le site et les données sont hébergées sur une machine virtuelle au sein de la plateforme Google Cloud. Le coût mensuel de l'hébergement (qui n'inclue pas l'enregistrement du nom de domaine) et de l'utilisation des différentes API Google s'élève à environ 80€ sans aucun trafique sur le site.</value>
   </data>
   <data name="appname" xml:space="preserve">
     <value>Leave Your Couch</value>
