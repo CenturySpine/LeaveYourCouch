@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LeaveYourCouch.Mvc.Models;
+using LeaveYourCouch.Mvc.Models.Account;
 
 namespace LeaveYourCouch.Mvc.Controllers
 {

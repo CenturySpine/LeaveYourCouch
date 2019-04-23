@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using LeaveYourCouch.Mvc.Business.Services.Users;
 using LeaveYourCouch.Mvc.Models;
+using LeaveYourCouch.Mvc.Models.Relations;
 using Microsoft.AspNet.Identity;
 
 namespace LeaveYourCouch.Mvc.Controllers

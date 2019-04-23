@@ -123,6 +123,45 @@
   <data name="appname" xml:space="preserve">
     <value>Leave Your Couch</value>
   </data>
+  <data name="event_create_address" xml:space="preserve">
+    <value>Adress</value>
+  </data>
+  <data name="event_create_date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="event_create_description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="event_create_meeting_point" xml:space="preserve">
+    <value>Meeting details</value>
+  </data>
+  <data name="event_create_participants" xml:space="preserve">
+    <value>Participants</value>
+  </data>
+  <data name="event_create_time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="event_create_title" xml:space="preserve">
+    <value>Ttile</value>
+  </data>
+  <data name="event_index_createnew" xml:space="preserve">
+    <value>Create new event</value>
+  </data>
+  <data name="event_index_tabular_date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="event_index_tabular_owner" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="event_index_tabular_participants" xml:space="preserve">
+    <value>Participants</value>
+  </data>
+  <data name="event_index_tabular_time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="event_index_tabular_title" xml:space="preserve">
+    <value>Title</value>
+  </data>
   <data name="jumbohome" xml:space="preserve">
     <value>Organize events. Meet people. Make new friends.</value>
   </data>

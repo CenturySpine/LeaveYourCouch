@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using LeaveYourCouch.Mvc.Controllers;
 using LeaveYourCouch.Mvc.Models;
+using LeaveYourCouch.Mvc.Models.Relations;
 
 namespace LeaveYourCouch.Mvc.Business.Services.Users
 {

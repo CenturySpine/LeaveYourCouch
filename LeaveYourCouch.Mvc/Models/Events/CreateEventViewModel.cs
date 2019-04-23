@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace LeaveYourCouch.Mvc.Models
+namespace LeaveYourCouch.Mvc.Models.Events
 {
     public class CreateEventViewModel
     {

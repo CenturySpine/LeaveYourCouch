@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
-namespace LeaveYourCouch.Mvc.Models
+namespace LeaveYourCouch.Mvc.Models.Relations
 {
     public class RelationShipsViewModel
     {
@@ -20,15 +17,4 @@ namespace LeaveYourCouch.Mvc.Models
 
         public List<RelationViewModel> BlackList { get; set; }
     }
-
-    public class RelationViewModel
-    {
-        public string UserId { get; set; }
-        public string FirstName { get; set; }
-        public string UserName { get; set; }
-        public bool CanAcceptOrReject { get; set; }
-        public bool CanCancel { get; set; }
-    }
-
-  
 }

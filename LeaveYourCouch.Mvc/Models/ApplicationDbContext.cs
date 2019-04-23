@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using LeaveYourCouch.Mvc.Controllers;
 using Microsoft.AspNet.Identity.EntityFramework;
-using SimpleInjector;
 
 namespace LeaveYourCouch.Mvc.Models
 {
@@ -36,19 +34,5 @@ namespace LeaveYourCouch.Mvc.Models
  
 
 
-    }
-
-    public class MigrationsContextFactory : IDbContextFactory<ApplicationDbContext>
-    {
-        private readonly Container _container;
-
-        public MigrationsContextFactory(Container container)
-        {
-            _container = container;
-        }
-        public ApplicationDbContext Create()
-        {
-            return _container.GetInstance<ApplicationDbContext>();
-        }
     }
 }

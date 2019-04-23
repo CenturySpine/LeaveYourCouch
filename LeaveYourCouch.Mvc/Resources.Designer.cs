@@ -79,6 +79,123 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adress.
+        /// </summary>
+        public static string event_create_address {
+            get {
+                return ResourceManager.GetString("event_create_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string event_create_date {
+            get {
+                return ResourceManager.GetString("event_create_date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string event_create_description {
+            get {
+                return ResourceManager.GetString("event_create_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meeting details.
+        /// </summary>
+        public static string event_create_meeting_point {
+            get {
+                return ResourceManager.GetString("event_create_meeting_point", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Participants.
+        /// </summary>
+        public static string event_create_participants {
+            get {
+                return ResourceManager.GetString("event_create_participants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string event_create_time {
+            get {
+                return ResourceManager.GetString("event_create_time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ttile.
+        /// </summary>
+        public static string event_create_title {
+            get {
+                return ResourceManager.GetString("event_create_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create new event.
+        /// </summary>
+        public static string event_index_createnew {
+            get {
+                return ResourceManager.GetString("event_index_createnew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string event_index_tabular_date {
+            get {
+                return ResourceManager.GetString("event_index_tabular_date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Owner.
+        /// </summary>
+        public static string event_index_tabular_owner {
+            get {
+                return ResourceManager.GetString("event_index_tabular_owner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Participants.
+        /// </summary>
+        public static string event_index_tabular_participants {
+            get {
+                return ResourceManager.GetString("event_index_tabular_participants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string event_index_tabular_time {
+            get {
+                return ResourceManager.GetString("event_index_tabular_time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string event_index_tabular_title {
+            get {
+                return ResourceManager.GetString("event_index_tabular_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organize events. Meet people. Make new friends..
         /// </summary>
         public static string jumbohome {
