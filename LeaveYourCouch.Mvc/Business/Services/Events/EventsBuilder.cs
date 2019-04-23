@@ -7,6 +7,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using LeaveYourCouch.Mvc.Business.Services.Users;
+using LeaveYourCouch.Mvc.Models.Events;
+using LeaveYourCouch.Mvc.Models.Relations;
 
 namespace LeaveYourCouch.Mvc.Business.Services.Events
 {

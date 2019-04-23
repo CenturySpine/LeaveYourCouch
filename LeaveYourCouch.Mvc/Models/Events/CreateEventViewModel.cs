@@ -37,6 +37,7 @@ namespace LeaveYourCouch.Mvc.Models.Events
         [Display(Name = "event_create_participants", ResourceType = typeof(Resources.Resources))]
         public int MaxParticipants { get; set; }
 
+        [Display(Name = "event_create_private", ResourceType = typeof(Resources.Resources))]
         public bool IsPrivate { get; set; }
 
         public ApplicationUser Owner { get; set; }

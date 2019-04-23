@@ -1,4 +1,4 @@
-﻿namespace LeaveYourCouch.Mvc.Models
+﻿namespace LeaveYourCouch.Mvc.Models.Events
 {
     public enum ParticipationStatus
     {

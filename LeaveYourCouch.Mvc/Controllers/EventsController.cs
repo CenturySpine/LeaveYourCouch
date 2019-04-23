@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using LeaveYourCouch.Mvc.Models.Events;
 
 namespace LeaveYourCouch.Mvc.Controllers
 {

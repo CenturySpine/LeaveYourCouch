@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LeaveYourCouch.Mvc.Models
+namespace LeaveYourCouch.Mvc.Models.Events
 {
     public class EventParticipation
     {

@@ -281,13 +281,9 @@
     <Compile Include="Models\AddPhoneNumberViewModel.cs" />
     <Compile Include="Models\ChangePasswordViewModel.cs" />
     <Compile Include="Models\ConfigureTwoFactorViewModel.cs" />
-    <Compile Include="Models\CreateEventViewModel.cs" />
-    <Compile Include="Models\Event.cs" />
-    <Compile Include="Models\EventDataDetailsViewModel.cs" />
-    <Compile Include="Models\EventListItem.cs" />
-    <Compile Include="Models\EventParticipation.cs" />
-    <Compile Include="Models\EventRelativeToUserInformation.cs" />
-    <Compile Include="Models\EventsListViewModel.cs" />
+    <Compile Include="Models\Events\Event.cs" />
+    <Compile Include="Models\Events\EventParticipation.cs" />
+    <Compile Include="Models\Events\EventRelativeToUserInformation.cs" />
     <Compile Include="Models\Events\CreateEventViewModel.cs" />
     <Compile Include="Models\Events\EventDataDetailsViewModel.cs" />
     <Compile Include="Models\Events\EventListItem.cs" />
@@ -297,12 +293,12 @@
     <Compile Include="Models\ManageIndexViewModel.cs" />
     <Compile Include="Models\ManageLoginsViewModel.cs" />
     <Compile Include="Models\MigrationsContextFactory.cs" />
-    <Compile Include="Models\ParticipationStatus.cs" />
-    <Compile Include="Models\RelationshipStatus.cs" />
+    <Compile Include="Models\Events\ParticipationStatus.cs" />
+    <Compile Include="Models\Relations\RelationshipStatus.cs" />
     <Compile Include="Models\Relations\RelationShipsViewModel.cs" />
     <Compile Include="Models\Relations\RelationViewModel.cs" />
     <Compile Include="Models\SetPasswordViewModel.cs" />
-    <Compile Include="Models\UserRelationship.cs" />
+    <Compile Include="Models\Relations\UserRelationship.cs" />
     <Compile Include="Models\VerifyPhoneNumberViewModel.cs" />
     <Compile Include="Resources.fr.Designer.cs">
       <AutoGen>True</AutoGen>

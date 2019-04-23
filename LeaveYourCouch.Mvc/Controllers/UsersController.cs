@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using LeaveYourCouch.Mvc.Business.Services;
 using LeaveYourCouch.Mvc.Business.Services.Users;
 using LeaveYourCouch.Mvc.Models;
+using LeaveYourCouch.Mvc.Models.Relations;
 
 namespace LeaveYourCouch.Mvc.Controllers
 {

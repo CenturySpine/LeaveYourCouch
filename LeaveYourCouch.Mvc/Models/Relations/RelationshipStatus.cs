@@ -1,4 +1,4 @@
-﻿namespace LeaveYourCouch.Mvc.Models
+﻿namespace LeaveYourCouch.Mvc.Models.Relations
 {
     public enum RelationshipStatus
     {

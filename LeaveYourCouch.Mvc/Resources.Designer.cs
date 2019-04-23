@@ -124,6 +124,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Private Event.
+        /// </summary>
+        public static string event_create_private {
+            get {
+                return ResourceManager.GetString("event_create_private", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time.
         /// </summary>
         public static string event_create_time {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using LeaveYourCouch.Mvc.Models;
+using LeaveYourCouch.Mvc.Models.Events;
 
 namespace LeaveYourCouch.Mvc.Business.Services.Events
 {

@@ -1,6 +1,6 @@
 ﻿using LeaveYourCouch.Mvc.Business;
 
-namespace LeaveYourCouch.Mvc.Models
+namespace LeaveYourCouch.Mvc.Models.Events
 {
     public class EventRelativeToUserInformation
     {

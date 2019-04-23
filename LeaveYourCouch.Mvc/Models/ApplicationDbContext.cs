@@ -2,6 +2,8 @@
 using System.Data.Entity;
 using System.Linq;
 using LeaveYourCouch.Mvc.Controllers;
+using LeaveYourCouch.Mvc.Models.Events;
+using LeaveYourCouch.Mvc.Models.Relations;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LeaveYourCouch.Mvc.Models

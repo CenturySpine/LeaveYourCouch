@@ -138,6 +138,9 @@
   <data name="event_create_participants" xml:space="preserve">
     <value>Participants</value>
   </data>
+  <data name="event_create_private" xml:space="preserve">
+    <value>Private Event</value>
+  </data>
   <data name="event_create_time" xml:space="preserve">
     <value>Time</value>
   </data>
