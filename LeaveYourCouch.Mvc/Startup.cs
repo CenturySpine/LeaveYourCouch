@@ -50,6 +50,7 @@ namespace LeaveYourCouch.Mvc
             container.Register<IUserStore<ApplicationUser>>(() => new UserStore<ApplicationUser>(container.GetInstance<ApplicationDbContext>()));
             container.RegisterInitializer<ApplicationUserManager>(manager => InitializeUserManager(manager, app));
             container.Register<SignInManager<ApplicationUser, string>, ApplicationSignInManager>();
+            container.Register<ApplicationUserManager>();
 
             container.Register<IAuthenticationManager>(() => container.IsVerifying ? new OwinContext(new Dictionary<string, object>()).Authentication : HttpContext.Current.GetOwinContext().Authentication);
 

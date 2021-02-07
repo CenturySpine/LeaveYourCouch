@@ -56,15 +56,15 @@ namespace LeaveYourCouch.Mvc
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            app.UseFacebookAuthentication(
-               appId: SecretConfiguration.Get("Authentication:Facebook:AppId"),
-               appSecret: SecretConfiguration.Get("Authentication:Facebook:AppSecret"));
+            //app.UseFacebookAuthentication(
+            //   appId: SecretConfiguration.Get("Authentication:Facebook:AppId"),
+            //   appSecret: SecretConfiguration.Get("Authentication:Facebook:AppSecret"));
 
-            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            {
-                ClientId = SecretConfiguration.Get("Authentication:Google:ClientId"),
-                ClientSecret = SecretConfiguration.Get("Authentication:Google:ClientSecret")
-            });
+            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            //{
+            //    ClientId = SecretConfiguration.Get("Authentication:Google:ClientId"),
+            //    ClientSecret = SecretConfiguration.Get("Authentication:Google:ClientSecret")
+            //});
         }
     }
 }
